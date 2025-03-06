@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم ثبت اطلاعات مراسم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Vazir', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        #staffCount {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>فرم ثبت اطلاعات مراسم</h1>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="fullName">نام و نام خانوادگی:</label>
+                <input type="text" id="fullName" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">شماره تماس:</label>
+                <input type="text" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="captcha">کد کپچا:</label>
+                <input type="text" id="captcha" required>
+                <span id="captchaCode"></span>
+                <button type="button" id="generateCaptcha">تولید کپچا</button>
+            </div>
+            <div class="form-group">
+                <label for="eventType">نوع مراسم:</label>
+                <select id="eventType" required>
+                    <option value="عروسی">عروسی</option>
+                    <option value="عقد">عقد</option>
+                    <option value="نامزدی">نامزدی</option>
+                    <option value="مهمانی شخصی">مهمانی شخصی</option>
+                    <option value="تولد">تولد</option>
+                    <option value="غیره">غیره</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="guestCount">تعداد مهمان‌ها:</label>
+                <input type="number" id="guestCount" required>
+                <p id="staffCount"></p>
+            </div>
+            <div class="form-group">
+                <label>خدمات:</label>
+                <div>
+                    <label>آب میوه:</label>
+                    <select id="juice">
+                        <option value="آب میوه - اقتصادی">آب میوه - اقتصادی</option>
+                        <option value="آب میوه - معمولی">آب میوه - معمولی</option>
+                        <option value="آب میوه - ویژه">آب میوه - ویژه</option>
+                    </select>
+                </div>
+                <div>
+                    <label>فینگر فود:</label>
+                    <select id="fingerFood">
+                        <option value="فینگر فود - اقتصادی">فینگر فود - اقتصادی</option>
+                        <option value="فینگر فود - معمولی">فینگر فود - معمولی</option>
+                        <option value="فینگر فود - ویژه">فینگر فود - ویژه</option>
+                    </select>
+                </div>
+                <div>
+                    <label>شام:</label>
+                    <select id="dinner">
+                        <option value="شام سلف سرویس">شام سلف سرویس</option>
+                        <option value="شام دیس پرس">شام دیس پرس</option>
+                    </select>
+                </div>
+                <div>
+                    <label>گل آرایی:</label>
+                    <select id="flowerArrangement">
+                        <option value="گل آرایی - اقتصادی">گل آرایی - اقتصادی</option>
+                        <option value="گل آرایی - معمولی">گل آرایی - معمولی</option>
+                        <option value="گل آرایی - ویژه">گل آرایی - ویژه</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="venue">محل برگزاری:</label>
+                <input type="text" id="venue" required>
+            </div>
+            <button type="submit">ثبت اطلاعات</button>
+        </form>
+    </div>
+    <script>
+        let captchaCode = '';
+
+        // تولید کد کپچا
+        document.getElementById('generateCaptcha').addEventListener('click', function() {
+            captchaCode = generateCaptcha();
+            document.getElementById('captchaCode').textContent = captchaCode;
+        });
+
+        // اعتبارسنجی شماره تماس
+        function validatePhone(phone) {
+            const phoneRegex = /^09\d{9}$/; // فرمت صحیح شماره تماس
+            return phoneRegex.test(phone);
+        }
+
+        // هنگام ارسال فرم
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // جمع‌آوری اطلاعات فرم
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const captcha = document.getElementById('captcha').value;
+            const eventType = document.getElementById('eventType').value;
+            const guestCount = document.getElementById('guestCount').value;
+            const venue = document.getElementById('venue').value;
+
+            // جمع‌آوری خدمات انتخابی
+            const selectedJuice = document.getElementById('juice').value;
+            const selectedFingerFood = document.getElementById('fingerFood').value;
+            const selectedDinner = document.getElementById('dinner').value;
+            const selectedFlowerArrangement = document.getElementById('flowerArrangement').value;
+
+            // اعتبارسنجی شماره تماس
+            if (!validatePhone(phone)) {
+                alert("شماره تماس نادرست است. لطفاً دوباره وارد کنید.");
+                return;
+            }
+
+            // بررسی کد کپچا
+            if (captcha !== captchaCode) {
+                alert("کد کپچا نادرست است. لطفاً دوباره تلاش کنید.");
+                return;
+            }
+
+            // محاسبه تعداد مهمانداران
+            const staffCount = Math.ceil(guestCount / 15);
+            document.getElementById('staffCount').textContent = `تعداد مهمانداران مورد نیاز: ${staffCount}`;
+
+            // تولید کد پیگیری
+            const trackingCode = generateTrackingCode();
+
+            // تولید TXT فاکتور
+            const invoiceContent = `
+فاکتور مراسم
+فاکتور شماره: ${trackingCode}
+تاریخ: ${new Date().toLocaleDateString('fa-IR')}
+نام و نام خانوادگی: ${fullName}
+شماره تماس: ${phone}
+نوع مراسم: ${eventType}
+محل برگزاری: ${venue}
+خدمات ارائه شده:
+1. آب میوه: ${selectedJuice}
+2. فینگر فود: ${selectedFingerFood}
+3. شام: ${selectedDinner}
+4. گل آرایی: ${selectedFlowerArrangement}
+تعداد مهمانداران: ${staffCount}
+
+### قول نامه:
+این فاکتور به عنوان یک توافق‌نامه بین طرفین محسوب می‌شود. طرفین متعهد به رعایت شرایط و ضوابط ذکر شده در این فاکتور هستند. در صورت بروز هرگونه اختلاف، موضوع به صورت دوستانه حل و فصل خواهد شد.
+
+امضا: ____________________
+تاریخ: ______________
+            `;
+
+            const blob = new Blob([invoiceContent], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `فاکتور_${fullName}_${trackingCode}.txt`;
+            link.click();
+
+            alert("ثبت نام شما با موفقیت انجام شد. کد پیگیری شما: " + trackingCode);
+        });
+
+        // تابع تولید کد کپچا
+        function generateCaptcha(length = 6) {
+            const characters = '!@#$%&*ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let captcha = '';
+            for (let i = 0; i < length; i++) {
+                captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return captcha;
+        }
+
+        // تابع تولید کد پیگیری
+        function generateTrackingCode() {
+            return Math.floor(100000 + Math.random() * 900000); // کد پیگیری 6 رقمی
+        }
+    </script>
+</body>
+</html>
