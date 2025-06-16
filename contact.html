@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تماس با ما | تشریفات</title>
+  <style>
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background-color: #fdfdfd;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #b30000;
+      color: white;
+      text-align: center;
+      padding: 30px 0;
+    }
+    nav {
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 15px;
+      font-size: 16px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #b30000;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #800000;
+    }
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #b30000;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, textarea {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+    }
+    button {
+      padding: 10px;
+      background-color: #b30000;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #800000;
+    }
+    footer {
+      background-color: #b30000;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>تشریفات رویایی عروسی</header>
+
+  <nav>
+    <a href="index.html">خانه</a>
+    <a href="services.html">خدمات</a>
+    <a href="portfolio.html">نمونه‌کارها</a>
+    <a href="booking.html">رزرو</a>
+    <a href="about.html">درباره ما</a>
+    <a href="contact.html">تماس با ما</a>
+  </nav>
+
+  <main>
+    <h2>تماس با ما</h2>
+    <form>
+      <label for="name">نام شما:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="phone">شماره تماس:</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <label for="message">پیام شما:</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <button type="submit">ارسال پیام</button>
+    </form>
+    <p style="margin-top: 30px;">یا از طریق اطلاعات زیر با ما تماس بگیرید:</p>
+    <ul>
+      <li>📞 ۰۹۱۲۱۲۳۴۵۶۷</li>
+      <li>📍 تهران، خیابان ولیعصر، ساختمان تشریفات</li>
+      <li>📱 اینستاگرام: @royal_wedding</li>
+    </ul>
+  </main>
+
+  <footer>
+    &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
+  </footer>
+
+</body>
+</html>
