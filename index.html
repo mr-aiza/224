@@ -1,62 +1,113 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رزرو روز مراسم</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Vazir', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        .header {
-            text-align: center;
-            background-color: #28a745;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        button {
-            padding: 12px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>تشریفات عروسی</title>
+  <style>
+    body {
+      font-family: 'Tahoma', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    header {
+      background-color: #b30000;
+      color: white;
+      padding: 30px 0;
+      text-align: center;
+      font-size: 24px;
+    }
+    nav {
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 15px;
+      font-size: 16px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #b30000;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #800000;
+    }
+    section {
+      max-width: 1000px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #b30000;
+    }
+    footer {
+      background-color: #b30000;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>رزرو روز مراسم</h1>
-    </div>
-    <div class="container">
-        <p>برای رزرو روز مراسم خود لطفاً بر روی دکمه زیر کلیک کنید:</p>
-        <button onclick="window.location.href='home.html'">رزرو مراسم</button>
 
+  <header>تشریفات رویایی عروسی</header>
 
-<div class="container">
-        <p>برای دیدن نمونه کارها روی دکمه زیر کلیک کنید:</p>
-        <button onclick="window.location.href='portfolio.html'">نمونه کارها</button>
+  <nav>
+    <a href="#home">خانه</a>
+    <a href="#services">خدمات</a>
+    <a href="#portfolio">نمونه‌کارها</a>
+    <a href="#booking">رزرو</a>
+    <a href="#about">درباره ما</a>
+    <a href="#contact">تماس با ما</a>
+  </nav>
 
+  <section id="home">
+    <h2>خانه</h2>
+    <p>به وب‌سایت رسمی تشریفات عروسی ما خوش آمدید. اینجا رویاهای شما به واقعیت تبدیل می‌شوند.</p>
+  </section>
 
-    </div>
+  <section id="services">
+    <h2>خدمات</h2>
+    <ul>
+      <li>برگزاری مراسم عقد و عروسی</li>
+      <li>طراحی دکوراسیون و گل‌آرایی</li>
+      <li>پذیرایی و کیترینگ لاکچری</li>
+      <li>موسیقی زنده و DJ</li>
+      <li>عکاسی و فیلم‌برداری حرفه‌ای</li>
+    </ul>
+  </section>
+
+  <section id="portfolio">
+    <h2>نمونه‌کارها</h2>
+    <p>برای دیدن تصاویر نمونه‌کارها به صفحه <a href="portfolio.html">نمونه‌کارها</a> بروید.</p>
+  </section>
+
+  <section id="booking">
+    <h2>رزرو مراسم</h2>
+    <p>برای رزرو مراسم خود با ما تماس بگیرید یا فرم رزرو را پر کنید.</p>
+  </section>
+
+  <section id="about">
+    <h2>درباره ما</h2>
+    <p>با بیش از ۱۰ سال تجربه در برگزاری مراسم‌های مجلل، ما در کنار شما هستیم تا بهترین شب زندگی‌تان را بسازیم.</p>
+  </section>
+
+  <section id="contact">
+    <h2>تماس با ما</h2>
+    <p>شماره تماس: ۰۹۱۲۱۲۳۴۵۶۷</p>
+    <p>اینستاگرام: @royal_wedding</p>
+    <p>آدرس: تهران، خیابان ولیعصر، ساختمان تشریفات</p>
+  </section>
+
+  <footer>
+    &copy; 2025 تشریفات عروسی. تمامی حقوق محفوظ است.
+  </footer>
+
 </body>
 </html>
