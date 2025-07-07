@@ -1,0 +1,16 @@
+{
+  "name": "wedding-booking",
+  "version": "1.0.0",
+  "description": "Booking service for wedding website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
+  }
+}
