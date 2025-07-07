@@ -1,63 +1,41 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
+const axios = require('axios');
+const { encode, decode } = require('js-base64');
 const app = express();
-const PORT = process.env.PORT || 3000;
-
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
 
-const reservedDatesPath = path.join(__dirname, 'reserved_dates.json');
-const bookingFolder = path.join(__dirname, 'booking');
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const REPO = 'mr-aiza/224';
+const FILE = 'reserved_dates.json';
 
-// اطمینان از وجود پوشه booking
-if (!fs.existsSync(bookingFolder)) {
-  fs.mkdirSync(bookingFolder);
-}
-
-app.post('/submit', (req, res) => {
-  const reservation = req.body;
-
-  // ابتدا تاریخ را به reserved_dates.json اضافه کن
-  fs.readFile(reservedDatesPath, 'utf8', (err, data) => {
-    let reservedDates = [];
-    if (!err && data) {
-      try {
-        reservedDates = JSON.parse(data);
-      } catch {
-        reservedDates = [];
-      }
+app.post('/save-form', async (req, res) => {
+  try {
+    // دریافت فایل فعلی
+    const fileResp = await axios.get(
+      `https://api.github.com/repos/${REPO}/contents/${FILE}`,
+      { headers: { Authorization: `token ${GITHUB_TOKEN}` } }
+    );
+    const sha = fileResp.data.sha;
+    let content = [];
+    if (fileResp.data.content) {
+      content = JSON.parse(decode(fileResp.data.content));
     }
+    content.push(req.body);
 
-    if (reservedDates.includes(reservation.eventDate)) {
-      return res.status(400).json({ error: 'این تاریخ قبلا رزرو شده است' });
-    }
-
-    reservedDates.push(reservation.eventDate);
-    fs.writeFile(reservedDatesPath, JSON.stringify(reservedDates, null, 2), (err) => {
-      if (err) {
-        console.error('خطا در ذخیره تاریخ رزرو:', err);
-        return res.status(500).json({ error: 'ذخیره تاریخ ناموفق بود' });
-      }
-
-      // سپس کل رزرو را در یک فایل جدا ذخیره کن
-      // نام فایل رو میذاریم مثل: booking-تاریخ-زمان.json برای یکتا بودن
-      const now = new Date();
-      const filename = `booking-${reservation.eventDate}-${now.getTime()}.json`;
-      const filepath = path.join(bookingFolder, filename);
-
-      fs.writeFile(filepath, JSON.stringify(reservation, null, 2), (err) => {
-        if (err) {
-          console.error('خطا در ذخیره فایل رزرو:', err);
-          return res.status(500).json({ error: 'ذخیره رزرو ناموفق بود' });
-        }
-
-        res.status(200).json({ message: 'رزرو با موفقیت ثبت شد' });
-      });
-    });
-  });
+    // آپدیت فایل
+    await axios.put(
+      `https://api.github.com/repos/${REPO}/contents/${FILE}`,
+      {
+        message: "update reserved_dates.json",
+        content: encode(JSON.stringify(content, null, 2)),
+        sha: sha
+      },
+      { headers: { Authorization: `token ${GITHUB_TOKEN}` } }
+    );
+    res.send('ذخیره شد');
+  } catch (e) {
+    res.status(500).send('خطا در ذخیره');
+  }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(3000);
