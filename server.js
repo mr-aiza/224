@@ -8,6 +8,8 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_OWNER = 'mr-aiza';
 const REPO_NAME = '224';
 const BRANCH = 'main';
+const path = require('path');
+app.use(express.static(path.join(__dirname)));
 
 // کمک‌فانکشن برای خواندن فایل از GitHub
 async function getFileContent(path) {
