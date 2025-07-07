@@ -1,40 +1,41 @@
+const fs = require('fs');
 const express = require('express');
-const fs = require('fs').promises;
-const path = require('path');
+const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
-app.use(express.static('public')); // فولدر public برای فایل‌های استاتیک مثل HTML
+app.use(bodyParser.json());
+app.use(express.static('public'));
 
-const reservedDatesPath = path.join(__dirname, 'public', 'reserved_dates.json');
+app.post('/submit', (req, res) => {
+  const newDate = req.body.date;
 
-// دریافت تاریخ‌های رزرو شده
-app.get('/reserved_dates.json', async (req, res) => {
-  try {
-    const data = await fs.readFile(reservedDatesPath, 'utf8');
-    res.type('json').send(data);
-  } catch {
-    res.json([]);
-  }
-});
-
-// دریافت فرم رزرو و ذخیره تاریخ
-app.post('/submit', async (req, res) => {
-  try {
-    const { eventDate } = req.body;
-    if (!eventDate) return res.status(400).send('تاریخ مراسم ضروری است.');
-
-    // خواندن فایل موجود
-    let dates = [];
-    try {
-      const data = await fs.readFile(reservedDatesPath, 'utf8');
-      dates = JSON.parse(data);
-    } catch {}
-
-    if (dates.includes(eventDate)) {
-      return res.status(409).send('این تاریخ قبلا رزرو شده است.');
+  fs.readFile('./public/reserved_dates.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error('خطا در خواندن فایل:', err);
+      return res.status(500).json({ error: 'خواندن فایل شکست خورد' });
     }
 
-    dates.push(eventDate);
-    await fs.writeFile(reservedDatesPath, JSON.stringify(dates, null, 
+    let reserved = [];
+    try {
+      reserved = JSON.parse(data);
+    } catch (parseErr) {
+      console.error('خطا در تجزیه JSON:', parseErr);
+    }
+
+    reserved.push(newDate);
+
+    fs.writeFile('./public/reserved_dates.json', JSON.stringify(reserved), (err) => {
+      if (err) {
+        console.error('خطا در نوشتن فایل:', err);
+        return res.status(500).json({ error: 'ذخیره تاریخ شکست خورد' });
+      }
+
+      res.status(200).json({ message: 'تاریخ ذخیره شد' });
+    });
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
