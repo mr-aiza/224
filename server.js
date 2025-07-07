@@ -7,19 +7,19 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// سرو فایل‌های استاتیک (مثل CSS, JS, عکس و html در پوشه public)
-app.use(express.static(path.join(__dirname, 'public')));
+// سرو فایل‌های استاتیک مستقیم از ریشه پروژه
+app.use(express.static(__dirname));
 
 // روت صفحه اصلی
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // API برای ذخیره تاریخ رزرو
 app.post('/submit', (req, res) => {
   const newDate = req.body.date;
 
-  fs.readFile(path.join(__dirname, 'public', 'reserved_dates.json'), 'utf8', (err, data) => {
+  fs.readFile(path.join(__dirname, 'reserved_dates.json'), 'utf8', (err, data) => {
     if (err) {
       console.error('خطا در خواندن فایل:', err);
       return res.status(500).json({ error: 'خواندن فایل شکست خورد' });
@@ -34,7 +34,7 @@ app.post('/submit', (req, res) => {
 
     reserved.push(newDate);
 
-    fs.writeFile(path.join(__dirname, 'public', 'reserved_dates.json'), JSON.stringify(reserved), (err) => {
+    fs.writeFile(path.join(__dirname, 'reserved_dates.json'), JSON.stringify(reserved), (err) => {
       if (err) {
         console.error('خطا در نوشتن فایل:', err);
         return res.status(500).json({ error: 'ذخیره تاریخ شکست خورد' });
