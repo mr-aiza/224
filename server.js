@@ -1,40 +1,18 @@
-const fs = require('fs');
 const express = require('express');
-const bodyParser = require('body-parser');
+const path = require('path');
 const app = express();
-const PORT = 3000;
 
-app.use(bodyParser.json());
-app.use(express.static('public'));
+const PORT = process.env.PORT || 3000;
 
-app.post('/submit', (req, res) => {
-  const newDate = req.body.date;
+// سرو کردن فایل‌های استاتیک در پوشه public (اگر فایل‌ها داخل public نیستند، آدرس را تغییر بده)
+app.use(express.static(path.join(__dirname, 'public')));
 
-  fs.readFile('./public/reserved_dates.json', 'utf8', (err, data) => {
-    if (err) {
-      console.error('خطا در خواندن فایل:', err);
-      return res.status(500).json({ error: 'خواندن فایل شکست خورد' });
-    }
-
-    let reserved = [];
-    try {
-      reserved = JSON.parse(data);
-    } catch (parseErr) {
-      console.error('خطا در تجزیه JSON:', parseErr);
-    }
-
-    reserved.push(newDate);
-
-    fs.writeFile('./public/reserved_dates.json', JSON.stringify(reserved), (err) => {
-      if (err) {
-        console.error('خطا در نوشتن فایل:', err);
-        return res.status(500).json({ error: 'ذخیره تاریخ شکست خورد' });
-      }
-
-      res.status(200).json({ message: 'تاریخ ذخیره شد' });
-    });
-  });
+// اگر فایل‌های html مثل index.html توی ریشه پروژه هستند، باید این روت را اضافه کنیم:
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
+
+// سایر روت‌ها هم اگر داری، اضافه کن
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
