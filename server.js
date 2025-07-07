@@ -4,13 +4,13 @@ const { encode, decode } = require('js-base64');
 const app = express();
 app.use(express.json());
 
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // مقدار توکن را اینجا می‌خواند
 const REPO = 'mr-aiza/224';
 const FILE = 'reserved_dates.json';
 
 app.post('/save-form', async (req, res) => {
   try {
-    // دریافت فایل فعلی
+    // فایل فعلی را از مخزن می‌خوانیم
     const fileResp = await axios.get(
       `https://api.github.com/repos/${REPO}/contents/${FILE}`,
       { headers: { Authorization: `token ${GITHUB_TOKEN}` } }
@@ -22,7 +22,7 @@ app.post('/save-form', async (req, res) => {
     }
     content.push(req.body);
 
-    // آپدیت فایل
+    // فایل را آپدیت می‌کنیم
     await axios.put(
       `https://api.github.com/repos/${REPO}/contents/${FILE}`,
       {
@@ -38,4 +38,6 @@ app.post('/save-form', async (req, res) => {
   }
 });
 
-app.listen(3000);
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+});
