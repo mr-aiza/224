@@ -1,50 +1,38 @@
-const fs = require('fs');
 const express = require('express');
-const app = express();
+const fs = require('fs');
 const path = require('path');
-
+const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname)));
 
-// سرو فایل‌های استاتیک مستقیم از ریشه پروژه
-app.use(express.static(__dirname));
-
-// روت صفحه اصلی
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// API برای ذخیره تاریخ رزرو
 app.post('/submit', (req, res) => {
-  const newDate = req.body.date;
+  const newReservation = req.body;
 
-  fs.readFile(path.join(__dirname, 'reserved_dates.json'), 'utf8', (err, data) => {
-    if (err) {
-      console.error('خطا در خواندن فایل:', err);
-      return res.status(500).json({ error: 'خواندن فایل شکست خورد' });
-    }
+  const filePath = path.join(__dirname, 'reserved_dates.json');
 
-    let reserved = [];
-    try {
-      reserved = JSON.parse(data);
-    } catch (parseErr) {
-      console.error('خطا در تجزیه JSON:', parseErr);
-    }
-
-    reserved.push(newDate);
-
-    fs.writeFile(path.join(__dirname, 'reserved_dates.json'), JSON.stringify(reserved), (err) => {
-      if (err) {
-        console.error('خطا در نوشتن فایل:', err);
-        return res.status(500).json({ error: 'ذخیره تاریخ شکست خورد' });
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    let reservations = [];
+    if (!err && data) {
+      try {
+        reservations = JSON.parse(data);
+      } catch {
+        reservations = [];
       }
+    }
+    reservations.push(newReservation);
 
-      res.status(200).json({ message: 'تاریخ ذخیره شد' });
+    fs.writeFile(filePath, JSON.stringify(reservations, null, 2), (err) => {
+      if (err) {
+        console.error('خطا در ذخیره فایل:', err);
+        return res.status(500).json({ error: 'ذخیره ناموفق بود' });
+      }
+      res.status(200).json({ message: 'رزرو با موفقیت ثبت شد' });
     });
   });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
