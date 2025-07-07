@@ -1,131 +1,157 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>خدمات | تشریفات</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>خدمات | تشریفات رویایی</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
+
     body {
-      font-family: 'Tahoma', sans-serif;
-      background-color: #fdfdfd;
       margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #b30000;
-      color: white;
-      text-align: center;
-      padding: 30px 0;
+      background-color: #111;
+      color: #ccc;
+      font-family: 'Vazir', sans-serif;
+      direction: rtl;
     }
     nav {
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background: #222;
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
+      flex-wrap: wrap;
       gap: 15px;
-      padding: 15px;
-      font-size: 16px;
+      padding: 10px 5px;
+      border-bottom: 2px solid #d4af37;
     }
     nav a {
       text-decoration: none;
-      color: #b30000;
-      font-weight: bold;
+      color: #d4af37;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 1.5px solid transparent;
+      transition: all 0.3s ease;
+      user-select: none;
     }
-    nav a:hover {
-      color: #800000;
+    nav a:hover,
+    nav a.active {
+      background-color: #d4af37;
+      color: #111;
+      border-color: #b38700;
+    }
+    header {
+      background: linear-gradient(135deg, #222, #1a1a1a);
+      text-align: center;
+      padding: 50px 20px;
+      border-bottom: 3px solid #d4af37;
+      box-shadow: 0 0 20px #b38700aa;
+    }
+    header h1 {
+      color: #d4af37;
+      margin: 0;
+      font-size: 2.8rem;
+      letter-spacing: 2px;
+      text-shadow: 0 0 12px #d4af37;
     }
     main {
       max-width: 900px;
-      margin: 40px auto;
-      background-color: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin: 40px auto 60px;
+      padding: 0 20px;
     }
-    h2 {
-      color: #b30000;
-      margin-bottom: 20px;
+    .service-list {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
     }
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+    .service-item {
+      background: #222;
+      border: 2px solid #d4af37;
+      border-radius: 14px;
+      padding: 20px 25px;
+      box-shadow: 0 0 25px #b38700aa;
+      transition: background 0.3s ease;
     }
-    .service-box {
-      background-color: #fefefe;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 0 5px rgba(0,0,0,0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .service-item:hover {
+      background: #333;
     }
-    .service-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    .service-item h2 {
+      margin-top: 0;
+      color: #d4af37;
+      font-size: 1.8rem;
+      border-bottom: 2px solid #b38700;
+      padding-bottom: 8px;
     }
-    .service-box h3 {
-      color: #800000;
-      margin-bottom: 10px;
+    .service-item p {
+      color: #ddd;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      margin-bottom: 0;
     }
     footer {
-      background-color: #b30000;
-      color: white;
+      background-color: #222;
+      color: #d4af37;
       text-align: center;
       padding: 20px;
-      margin-top: 40px;
+      font-weight: 600;
+      border-top: 2px solid #b38700;
     }
-    @media (max-width: 500px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      .service-item h2 {
+        font-size: 1.4rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <header>تشریفات رویایی عروسی</header>
+<nav>
+  <a href="index.html">خانه</a>
+  <a href="services.html" class="active">خدمات</a>
+  <a href="portfolio.html">نمونه‌کارها</a>
+  <a href="booking.html">رزرو</a>
+  <a href="about.html">درباره ما</a>
+  <a href="contact.html">تماس با ما</a>
+</nav>
 
-  <nav>
-    <a href="index.html">خانه</a>
-    <a href="services.html">خدمات</a>
-    <a href="portfolio.html">نمونه‌کارها</a>
-    <a href="booking.html">رزرو</a>
-    <a href="about.html">درباره ما</a>
-    <a href="contact.html">تماس با ما</a>
-  </nav>
+<header>
+  <h1>خدمات تشریفات رویایی</h1>
+</header>
 
-  <main>
-    <h2>خدمات ما</h2>
-    <div class="services">
-      <div class="service-box">
-        <h3>برگزاری مراسم عروسی</h3>
-        <p>مراسم‌هایی خاص و مجلل با برنامه‌ریزی دقیق و اجرای حرفه‌ای</p>
-      </div>
-      <div class="service-box">
-        <h3>طراحی دکوراسیون</h3>
-        <p>طراحی و اجرای دکور رویایی با گل‌آرایی خاص و نورپردازی مدرن</p>
-      </div>
-      <div class="service-box">
-        <h3>پذیرایی و کیترینگ</h3>
-        <p>سرو غذا و دسرهای متنوع و با کیفیت توسط تیم حرفه‌ای آشپزها</p>
-      </div>
-      <div class="service-box">
-        <h3>موسیقی زنده و DJ</h3>
-        <p>ایجاد فضایی شاد با اجرای زنده و دی‌جی‌های حرفه‌ای</p>
-      </div>
-      <div class="service-box">
-        <h3>عکاسی و فیلم‌برداری</h3>
-        <p>ثبت بهترین لحظات با تیمی از حرفه‌ای‌ترین عکاسان و فیلم‌برداران</p>
-      </div>
+<main>
+  <div class="service-list">
+    <div class="service-item">
+      <h2>برگزاری مراسم عقد و عروسی</h2>
+      <p>طراحی و اجرای کامل مراسم عقد و عروسی با بهترین امکانات و تیم حرفه‌ای، شامل مدیریت برنامه، هماهنگی زمان‌بندی و اجرای دقیق.</p>
     </div>
-  </main>
+    <div class="service-item">
+      <h2>دکوراسیون و گل‌آرایی</h2>
+      <p>گل‌آرایی‌های خلاقانه و دکوراسیون لوکس سالن و فضای مراسم با استفاده از گل‌های طبیعی و تزئینات شیک مطابق با تم انتخابی شما.</p>
+    </div>
+    <div class="service-item">
+      <h2>پذیرایی و کیترینگ</h2>
+      <p>سرو انواع غذاهای ایرانی و فرنگی، دسرهای متنوع و نوشیدنی‌های خاص با کیفیت بالا و خدمات پذیرایی مجلل برای میهمانان شما.</p>
+    </div>
+    <div class="service-item">
+      <h2>موسیقی زنده و DJ</h2>
+      <p>اجرای موسیقی زنده توسط نوازندگان حرفه‌ای و دی‌جی‌های با تجربه برای ایجاد فضایی شاد و به یادماندنی در مراسم شما.</p>
+    </div>
+    <div class="service-item">
+      <h2>عکاسی و فیلم‌برداری حرفه‌ای</h2>
+      <p>ثبت لحظات خاص و خاطره‌انگیز مراسم شما با بهترین تجهیزات و تیم عکاسی و فیلم‌برداری با تخصص و دقت بالا.</p>
+    </div>
+    <div class="service-item">
+      <h2>خدمات مشاوره و برنامه‌ریزی</h2>
+      <p>مشاوره کامل جهت انتخاب بهترین گزینه‌ها و برنامه‌ریزی دقیق برای برگزاری یک مراسم بی‌نظیر و بدون دغدغه.</p>
+    </div>
+  </div>
+</main>
 
-  <footer>
-    &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
-  </footer>
+<footer>
+  &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
+</footer>
 
 </body>
 </html>

@@ -1,113 +1,164 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>تشریفات عروسی</title>
-  <style>
-    body {
-      font-family: 'Tahoma', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>خانه | تشریفات رویایی</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Vazir', sans-serif;
+    background: #111;
+    color: #ccc;
+    line-height: 1.6;
+  }
+  nav {
+    background: #222;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 10px 5px;
+    border-bottom: 2px solid #d4af37;
+  }
+  nav a {
+    text-decoration: none;
+    color: #d4af37;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+  nav a:hover,
+  nav a.active {
+    background-color: #d4af37;
+    color: #111;
+    border-color: #b38700;
+  }
+  header {
+    background: linear-gradient(135deg, #222, #1a1a1a);
+    text-align: center;
+    padding: 60px 20px;
+    border-bottom: 3px solid #d4af37;
+    box-shadow: 0 0 20px #b38700aa;
+  }
+  header h1 {
+    font-size: 3rem;
+    color: #d4af37;
+    margin: 0 0 12px 0;
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px #d4af37;
+  }
+  header p {
+    font-size: 1.3rem;
+    color: #ccc;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.4;
+  }
+  main {
+    max-width: 980px;
+    margin: 40px auto 80px;
+    padding: 0 20px;
+  }
+  section {
+    background: #222;
+    border: 2px solid #d4af37;
+    border-radius: 14px;
+    margin-bottom: 35px;
+    padding: 25px 30px;
+    box-shadow: 0 0 25px #b38700aa;
+  }
+  section h2 {
+    color: #d4af37;
+    margin-bottom: 18px;
+    border-bottom: 2px solid #b38700;
+    padding-bottom: 8px;
+    font-weight: 700;
+  }
+  section p {
+    color: #ddd;
+    font-size: 1.05rem;
+  }
+  footer {
+    background-color: #222;
+    color: #d4af37;
+    text-align: center;
+    padding: 22px 10px;
+    font-weight: 600;
+    border-top: 2px solid #b38700;
+  }
+  @media (max-width: 600px) {
+    header h1 {
+      font-size: 2.2rem;
     }
-    header {
-      background-color: #b30000;
-      color: white;
-      padding: 30px 0;
-      text-align: center;
-      font-size: 24px;
-    }
-    nav {
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 15px;
-      font-size: 16px;
-    }
-    nav a {
-      text-decoration: none;
-      color: #b30000;
-      font-weight: bold;
-    }
-    nav a:hover {
-      color: #800000;
+    header p {
+      font-size: 1rem;
     }
     section {
-      max-width: 1000px;
-      margin: 30px auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 20px 15px;
     }
-    h2 {
-      color: #b30000;
-    }
-    footer {
-      background-color: #b30000;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-  <header>تشریفات رویایی عروسی</header>
+<nav>
+  <a href="index.html" class="active">خانه</a>
+  <a href="services.html">خدمات</a>
+  <a href="portfolio.html">نمونه‌کارها</a>
+  <a href="booking.html">رزرو</a>
+  <a href="about.html">درباره ما</a>
+  <a href="contact.html">تماس با ما</a>
+</nav>
 
-  <nav>
-    <a href="index.html">خانه</a>
-    <a href="services.html">خدمات</a>
-    <a href="portfolio.html">نمونه‌کارها</a>
-    <a href="booking.html">رزرو</a>
-    <a href="about.html">درباره ما</a>
-    <a href="contact.html">تماس با ما</a>
-  </nav>
+<header>
+  <h1>تشریفات رویایی عروسی</h1>
+  <p>به وب‌سایت رسمی ما خوش آمدید. جایی که رویاهای شما به واقعیت تبدیل می‌شوند و مراسم شما به یادماندنی‌ترین لحظه‌ها خواهد بود.</p>
+</header>
 
-  <section id="home">
-    <h2>خانه</h2>
-    <p>به وب‌سایت رسمی تشریفات عروسی ما خوش آمدید. اینجا رویاهای شما به واقعیت تبدیل می‌شوند.</p>
+<main>
+  <section id="home-intro">
+    <h2>خوش آمدید</h2>
+    <p>ما با بیش از ۱۰ سال تجربه در برگزاری مراسم‌های لوکس و مجلل، همراه شما هستیم تا خاص‌ترین شب زندگی‌تان را به بهترین شکل ممکن برگزار کنیم.</p>
   </section>
 
-  <section id="services">
-    <h2>خدمات</h2>
-    <ul>
-      <li>برگزاری مراسم عقد و عروسی</li>
-      <li>طراحی دکوراسیون و گل‌آرایی</li>
-      <li>پذیرایی و کیترینگ لاکچری</li>
-      <li>موسیقی زنده و DJ</li>
-      <li>عکاسی و فیلم‌برداری حرفه‌ای</li>
-    </ul>
+  <section id="services-summary">
+    <h2>خدمات ما</h2>
+    <p>برگزاری مراسم عقد و عروسی، طراحی دکوراسیون و گل‌آرایی، پذیرایی و کیترینگ لاکچری، موسیقی زنده و DJ، عکاسی و فیلم‌برداری حرفه‌ای، همه و همه در کنار تیم حرفه‌ای ما.</p>
   </section>
 
-  <section id="portfolio">
+  <section id="portfolio-preview">
     <h2>نمونه‌کارها</h2>
-    <p>برای دیدن تصاویر نمونه‌کارها به صفحه <a href="portfolio.html">نمونه‌کارها</a> بروید.</p>
+    <p>برای دیدن تصاویر و نمونه‌کارهای خاص ما، به صفحه <a href="portfolio.html" style="color:#d4af37; text-decoration: underline;">نمونه‌کارها</a> مراجعه کنید.</p>
   </section>
 
-  <section id="booking">
+  <section id="booking-info">
     <h2>رزرو مراسم</h2>
-    <p>برای رزرو مراسم خود با ما تماس بگیرید یا فرم رزرو را پر کنید.</p>
+    <p>برای رزرو مراسم رویایی خود، فرم رزرو را پر کنید یا با ما تماس بگیرید تا بهترین برنامه‌ریزی را برای شما داشته باشیم.</p>
   </section>
 
-  <section id="about">
+  <section id="about-brief">
     <h2>درباره ما</h2>
-    <p>با بیش از ۱۰ سال تجربه در برگزاری مراسم‌های مجلل، ما در کنار شما هستیم تا بهترین شب زندگی‌تان را بسازیم.</p>
+    <p>تشریفات رویایی با تیمی مجرب و تجهیزات به‌روز، در کنار شماست تا لحظاتی فراموش‌نشدنی خلق کند.</p>
   </section>
 
-  <section id="contact">
+  <section id="contact-brief">
     <h2>تماس با ما</h2>
-    <p>شماره تماس: ۰۹۱۲۱۲۳۴۵۶۷</p>
-    <p>اینستاگرام: @royal_wedding</p>
-    <p>آدرس: تهران، خیابان ولیعصر، ساختمان تشریفات</p>
+    <p>برای هرگونه سوال یا هماهنگی، با شماره ۰۹۱۲۱۲۳۴۵۶۷ تماس بگیرید یا به صفحه <a href="contact.html" style="color:#d4af37; text-decoration: underline;">تماس با ما</a> مراجعه کنید.</p>
   </section>
+</main>
 
-  <footer>
-    &copy; 2025 تشریفات عروسی. تمامی حقوق محفوظ است.
-  </footer>
+<footer>
+  &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
+</footer>
 
 </body>
 </html>

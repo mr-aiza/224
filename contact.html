@@ -1,123 +1,177 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>تماس با ما | تشریفات</title>
-  <style>
-    body {
-      font-family: 'Tahoma', sans-serif;
-      background-color: #fdfdfd;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #b30000;
-      color: white;
-      text-align: center;
-      padding: 30px 0;
-    }
-    nav {
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 15px;
-      font-size: 16px;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>تماس با ما | تشریفات رویایی</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Vazir', sans-serif;
+    background: #111;
+    color: #ccc;
+    line-height: 1.5;
+  }
+  nav {
+    background: #222;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 10px 5px;
+  }
+  nav a {
+    text-decoration: none;
+    color: #d4af37;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+  nav a:hover,
+  nav a.active {
+    background-color: #d4af37;
+    color: #111;
+    border-color: #b38700;
+  }
+  .container {
+    max-width: 720px;
+    margin: 40px auto;
+    background: linear-gradient(135deg, #1a1a1a, #222);
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(212,175,55,0.8);
+    padding: 30px 40px;
+    border: 2px solid #d4af37;
+  }
+  h1 {
+    text-align: center;
+    color: #d4af37;
+    margin-bottom: 30px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  label {
+    font-weight: 600;
+    color: #d4af37;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    background: #222;
+    border: 1.7px solid #aaa;
+    color: #eee;
+    padding: 14px 18px;
+    border-radius: 9px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    resize: vertical;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="tel"]:focus,
+  textarea:focus {
+    border-color: #c0c0c0;
+    outline: none;
+  }
+  textarea {
+    min-height: 110px;
+  }
+  button {
+    background: #d4af37;
+    border: none;
+    padding: 15px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 14px;
+    cursor: pointer;
+    color: #111;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background: #b9932e;
+  }
+  @media (max-width: 600px) {
+    .container {
+      margin: 20px 10px;
+      padding: 25px 20px;
     }
     nav a {
-      text-decoration: none;
-      color: #b30000;
-      font-weight: bold;
+      padding: 8px 14px;
+      font-size: 0.95rem;
     }
-    nav a:hover {
-      color: #800000;
+    h1 {
+      font-size: 1.9rem;
     }
-    main {
-      max-width: 800px;
-      margin: 40px auto;
-      background-color: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-    h2 {
-      color: #b30000;
-      margin-bottom: 20px;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    label {
-      font-weight: bold;
-    }
-    input, textarea {
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-family: inherit;
-    }
-    button {
-      padding: 10px;
-      background-color: #b30000;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #800000;
-    }
-    footer {
-      background-color: #b30000;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-  <header>تشریفات رویایی عروسی</header>
+<nav>
+  <a href="index.html">خانه</a>
+  <a href="services.html">خدمات</a>
+  <a href="portfolio.html">نمونه‌کارها</a>
+  <a href="booking.html">رزرو</a>
+  <a href="about.html">درباره ما</a>
+  <a href="contact.html" class="active">تماس با ما</a>
+</nav>
 
-  <nav>
-    <a href="index.html">خانه</a>
-    <a href="services.html">خدمات</a>
-    <a href="portfolio.html">نمونه‌کارها</a>
-    <a href="booking.html">رزرو</a>
-    <a href="about.html">درباره ما</a>
-    <a href="contact.html">تماس با ما</a>
-  </nav>
+<div class="container">
+  <h1>تماس با ما</h1>
+  <form id="contactForm" novalidate>
+    <label for="name">نام و نام خانوادگی:</label>
+    <input type="text" id="name" name="name" placeholder="مثلاً علی رضایی" required />
 
-  <main>
-    <h2>تماس با ما</h2>
-    <form>
-      <label for="name">نام شما:</label>
-      <input type="text" id="name" name="name" required>
+    <label for="email">ایمیل:</label>
+    <input type="email" id="email" name="email" placeholder="مثلاً example@mail.com" required />
 
-      <label for="phone">شماره تماس:</label>
-      <input type="tel" id="phone" name="phone" required>
+    <label for="phone">شماره تماس:</label>
+    <input type="tel" id="phone" name="phone" placeholder="مثلاً 09123456789" pattern="09\d{9}" required />
 
-      <label for="message">پیام شما:</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
+    <label for="message">پیام شما:</label>
+    <textarea id="message" name="message" placeholder="متن پیام خود را اینجا بنویسید..." required></textarea>
 
-      <button type="submit">ارسال پیام</button>
-    </form>
-    <p style="margin-top: 30px;">یا از طریق اطلاعات زیر با ما تماس بگیرید:</p>
-    <ul>
-      <li>📞 ۰۹۱۲۱۲۳۴۵۶۷</li>
-      <li>📍 تهران، خیابان ولیعصر، ساختمان تشریفات</li>
-      <li>📱 اینستاگرام: @royal_wedding</li>
-    </ul>
-  </main>
+    <button type="submit">ارسال پیام</button>
+  </form>
+</div>
 
-  <footer>
-    &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
-  </footer>
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const phone = this.phone.value.trim();
+    const phoneRegex = /^09\d{9}$/;
+
+    if(!phoneRegex.test(phone)) {
+      alert('لطفاً شماره تماس معتبر وارد کنید (با 09 شروع شود و 11 رقم باشد).');
+      this.phone.focus();
+      return;
+    }
+
+    if(!this.checkValidity()){
+      alert('لطفاً همه فیلدها را به درستی پر کنید.');
+      return;
+    }
+
+    alert('پیام شما با موفقیت ارسال شد. به زودی با شما تماس خواهیم گرفت.');
+    this.reset();
+  });
+</script>
 
 </body>
 </html>
