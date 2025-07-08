@@ -2,9 +2,10 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>رزرو مراسم | تشریفات رویایی</title>
-  <link rel="stylesheet" href="Style.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
 
@@ -24,21 +25,21 @@
 
 <main>
   <form id="bookingForm" action="/submit" method="POST" novalidate>
-    <label for="fullname">نام و نام خانوادگی:</label>
-    <input type="text" id="fullname" name="fullname" required />
+    <label for="fullname">نام و نام خانوادگی: <i class="fa-solid fa-user fa-icon"></i></label>
+    <input type="text" id="fullname" name="fullname" placeholder="مثلاً علی رضایی" required />
 
-    <label for="phone">شماره تماس:</label>
-    <input type="tel" id="phone" name="phone" pattern="09\d{9}" required />
+    <label for="phone">شماره تماس: <i class="fa-solid fa-phone fa-icon"></i></label>
+    <input type="tel" id="phone" name="phone" placeholder="مثلاً 09123456789" pattern="09\d{9}" required />
     <div class="info-text">فرمت شماره: 09xxxxxxxxx</div>
 
-    <label for="email">ایمیل:</label>
-    <input type="email" id="email" name="email" required />
+    <label for="email">ایمیل: <i class="fa-solid fa-envelope fa-icon"></i></label>
+    <input type="email" id="email" name="email" placeholder="example@mail.com" required />
 
-    <label for="eventDate">تاریخ مراسم:</label>
+    <label for="eventDate">تاریخ مراسم: <i class="fa-solid fa-calendar fa-icon"></i></label>
     <input type="date" id="eventDate" name="eventDate" required />
     <div class="info-text">تاریخ‌هایی که رزرو شده‌اند غیرفعال هستند.</div>
 
-    <label for="eventType">نوع مراسم:</label>
+    <label for="eventType">نوع مراسم: <i class="fa-solid fa-gift fa-icon"></i></label>
     <select id="eventType" name="eventType" required>
       <option value="" disabled selected>نوع مراسم را انتخاب کنید</option>
       <option value="wedding">عروسی</option>
@@ -50,27 +51,35 @@
     <fieldset class="checkbox-group">
       <legend>امکانات انتخابی:</legend>
 
-      <label><input type="checkbox" id="fingerFood" name="services" value="fingerFood" /> فینگر فود</label>
+      <label for="fingerFood">
+        <input type="checkbox" id="fingerFood" name="services" value="fingerFood" /> فینگر فود
+      </label>
       <div id="submenu-fingerFood" class="submenu">
         <label><input type="radio" name="fingerFoodLevel" value="اقتصادی" /> اقتصادی</label>
         <label><input type="radio" name="fingerFoodLevel" value="معمولی" /> معمولی</label>
         <label><input type="radio" name="fingerFoodLevel" value="ویژه" /> ویژه</label>
       </div>
 
-      <label><input type="checkbox" id="flowerDecoration" name="services" value="flowerDecoration" /> گل‌آرایی</label>
+      <label for="flowerDecoration">
+        <input type="checkbox" id="flowerDecoration" name="services" value="flowerDecoration" /> گل‌آرایی
+      </label>
       <div id="submenu-flowerDecoration" class="submenu">
         <label><input type="radio" name="flowerDecorationLevel" value="اقتصادی" /> اقتصادی</label>
         <label><input type="radio" name="flowerDecorationLevel" value="معمولی" /> معمولی</label>
         <label><input type="radio" name="flowerDecorationLevel" value="ویژه" /> ویژه</label>
       </div>
 
-      <label><input type="checkbox" id="dinner" name="services" value="dinner" /> شام</label>
+      <label for="dinner">
+        <input type="checkbox" id="dinner" name="services" value="dinner" /> شام
+      </label>
       <div id="submenu-dinner" class="submenu">
         <label><input type="radio" name="dinnerType" value="دیس پرس" /> دیس پرس</label>
         <label><input type="radio" name="dinnerType" value="سلف سرویس" /> سلف سرویس</label>
       </div>
 
-      <label><input type="checkbox" id="juice" name="services" value="juice" /> آب‌میوه</label>
+      <label for="juice">
+        <input type="checkbox" id="juice" name="services" value="juice" /> آب‌میوه
+      </label>
       <div id="submenu-juice" class="submenu">
         <label><input type="radio" name="juiceLevel" value="اقتصادی" /> اقتصادی</label>
         <label><input type="radio" name="juiceLevel" value="معمولی" /> معمولی</label>
@@ -78,8 +87,22 @@
       </div>
     </fieldset>
 
-    <label for="notes">توضیحات اضافی:</label>
-    <textarea id="notes" name="notes" rows="4"></textarea>
+    <div class="guest-inputs">
+      <div>
+        <label for="guestCount">تعداد مهمان‌ها: <i class="fa-solid fa-users fa-icon"></i></label>
+        <input type="number" id="guestCount" name="guestCount" min="1" value="1" required />
+      </div>
+      <div>
+        <label for="staffCount">تعداد مهمانداران: <i class="fa-solid fa-user-tie fa-icon"></i></label>
+        <input type="number" id="staffCount" name="staffCount" readonly value="1" />
+      </div>
+    </div>
+
+    <label for="notes">توضیحات اضافی: <i class="fa-solid fa-note-sticky fa-icon"></i></label>
+    <textarea id="notes" name="notes" rows="4" placeholder="در صورت نیاز توضیح دهید..."></textarea>
+
+    <label for="trackingCode">کد پیگیری شما: <i class="fa-solid fa-key fa-icon"></i></label>
+    <input type="text" id="trackingCode" name="trackingCode" readonly placeholder="کد پیگیری پس از ارسال نمایش داده می‌شود" />
 
     <input type="submit" value="ارسال رزرو" />
     <div id="formError" class="error-text" style="display:none;"></div>
@@ -91,96 +114,186 @@
   &copy; ۲۰۲۵ تشریفات رویایی | همه حقوق محفوظ است.
 </footer>
 
+<!-- canvas قلب‌ها -->
+<canvas id="hearts"></canvas>
+
+<!-- موزیک پس زمینه -->
+<audio id="bgMusic" src="music.mp3" loop></audio>
+<button id="audioToggle" aria-label="پخش/توقف موزیک"><i class="fa-solid fa-music"></i></button>
+
+<script src="https://unpkg.com/@persian-date/persian-date/dist/persian-date.min.js"></script>
+
 <script>
+  // تبدیل تاریخ به شمسی و حداقل تاریخ امروز شمسی
   const dateInput = document.getElementById('eventDate');
-  const form = document.getElementById('bookingForm');
-  const formError = document.getElementById('formError');
-  const formSuccess = document.getElementById('formSuccess');
+  const persianDate = window.persianDate;
+  const today = new persianDate().format('YYYY-MM-DD');
+  dateInput.min = today;
 
-  const reservedDatesUrl = 'reserved_dates.json';
-  let reservedDates = [];
-
-  async function loadReservedDates() {
-    try {
-      const response = await fetch(reservedDatesUrl);
-      if (!response.ok) throw new Error('خطا در دریافت تاریخ‌ها');
-      reservedDates = await response.json();
-      const today = new Date().toISOString().split('T')[0];
-      dateInput.min = today;
-    } catch (err) {
-      console.error(err);
+  dateInput.addEventListener('change', () => {
+    const selected = new Date(dateInput.value);
+    if (dateInput.value) {
+      const pd = new persianDate(selected);
+      alert('تاریخ انتخاب شده به شمسی: ' + pd.format('YYYY/MM/DD'));
     }
+  });
+
+  // محاسبه تعداد مهماندار
+  const guestCountInput = document.getElementById('guestCount');
+  const staffCountInput = document.getElementById('staffCount');
+
+  function updateStaffCount() {
+    let guests = parseInt(guestCountInput.value) || 1;
+    let staff = Math.ceil(guests / 15);
+    if (staff < 1) staff = 1;
+    staffCountInput.value = staff;
+  }
+  guestCountInput.addEventListener('input', updateStaffCount);
+  updateStaffCount();
+
+  // مدیریت زیرمنوهای امکانات انتخابی
+  const servicesCheckboxes = {
+    fingerFood: document.getElementById('fingerFood'),
+    flowerDecoration: document.getElementById('flowerDecoration'),
+    dinner: document.getElementById('dinner'),
+    juice: document.getElementById('juice')
+  };
+  const submenus = {
+    fingerFood: document.getElementById('submenu-fingerFood'),
+    flowerDecoration: document.getElementById('submenu-flowerDecoration'),
+    dinner: document.getElementById('submenu-dinner'),
+    juice: document.getElementById('submenu-juice')
+  };
+
+  Object.keys(servicesCheckboxes).forEach(key => {
+    servicesCheckboxes[key].addEventListener('change', () => {
+      submenus[key].style.display = servicesCheckboxes[key].checked ? 'block' : 'none';
+    });
+  });
+
+  // تولید کد پیگیری یکتا
+  function generateTrackingCode() {
+    const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4();
   }
 
-  loadReservedDates();
+  const form = document.getElementById('bookingForm');
+  const trackingCodeInput = document.getElementById('trackingCode');
+  const formError = document.getElementById('formError');
+  const formSuccess = document.getElementById('formSuccess');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     formError.style.display = 'none';
     formSuccess.style.display = 'none';
 
-    if (!dateInput.value || reservedDates.includes(dateInput.value)) {
-      formError.style.display = 'block';
-      formError.textContent = 'تاریخ نامعتبر یا رزرو شده است';
-      return;
-    }
+    // تولید کد پیگیری
+    const trackingCode = generateTrackingCode();
+    trackingCodeInput.value = trackingCode;
 
-    const phone = form.phone.value.trim();
-    if (!/^09\d{9}$/.test(phone)) {
-      formError.style.display = 'block';
-      formError.textContent = 'شماره تماس معتبر نیست';
-      return;
-    }
-
-    const services = ['fingerFood', 'flowerDecoration', 'dinner', 'juice'];
-    for (const s of services) {
-      const checkbox = document.getElementById(s);
-      const submenu = document.getElementById(`submenu-${s}`);
-      if (checkbox.checked) {
-        const radios = submenu.querySelectorAll('input[type=radio]');
-        if (![...radios].some(r => r.checked)) {
-          formError.style.display = 'block';
-          formError.textContent = `گزینه‌ای برای ${checkbox.nextSibling.textContent.trim()} انتخاب نشده است.`;
-          return;
-        }
-      }
-    }
-
+    // جمع‌آوری داده‌های فرم
     const formData = new FormData(form);
-    const obj = {};
+    // اگر نیاز بود داده‌ها را به JSON تبدیل کن
+    const data = {};
     formData.forEach((v, k) => {
-      if (obj[k]) {
-        if (!Array.isArray(obj[k])) obj[k] = [obj[k]];
-        obj[k].push(v);
+      if (data[k]) {
+        if (Array.isArray(data[k])) {
+          data[k].push(v);
+        } else {
+          data[k] = [data[k], v];
+        }
       } else {
-        obj[k] = v;
+        data[k] = v;
       }
     });
 
+    // فرض می‌کنیم اینجا باید داده‌ها به بک‌اند ارسال شود
     try {
-      const res = await fetch(form.action, {
+      // مثال ارسال به API
+      let response = await fetch('/api/booking', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(obj)
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
       });
-      if (!res.ok) throw new Error('خطا در ثبت رزرو');
+      if (!response.ok) throw new Error('خطا در ارسال اطلاعات');
+
       formSuccess.style.display = 'block';
-      form.reset();
-      loadReservedDates();
+
+      // ارسال نسخه قرارداد به ایمیل کاربر فرضی (بک‌اند اینکار را انجام می‌دهد)
+      // فرم را ریست نکن، کد پیگیری بماند
+
     } catch (err) {
+      formError.textContent = err.message;
       formError.style.display = 'block';
-      formError.textContent = err.message || 'ارسال با خطا مواجه شد';
     }
   });
 
-  ['fingerFood', 'flowerDecoration', 'dinner', 'juice'].forEach(id => {
-    const checkbox = document.getElementById(id);
-    const submenu = document.getElementById(`submenu-${id}`);
-    checkbox.addEventListener('change', () => {
-      submenu.style.display = checkbox.checked ? 'block' : 'none';
-      if (!checkbox.checked) submenu.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
-    });
+  // کنترل دکمه موزیک و انیمیشن قلب‌ها (باکس جداگانه برای کدهای پیشرفته تر)
+  const bgMusic = document.getElementById('bgMusic');
+  const audioToggle = document.getElementById('audioToggle');
+
+  audioToggle.addEventListener('click', () => {
+    if (bgMusic.paused) {
+      bgMusic.play();
+      audioToggle.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+    } else {
+      bgMusic.pause();
+      audioToggle.innerHTML = '<i class="fa-solid fa-music"></i>';
+    }
   });
+
+  // انیمیشن قلب‌ها
+  const canvas = document.getElementById('hearts');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  class Heart {
+    constructor() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.size = 10 + Math.random() * 20;
+      this.speed = 0.5 + Math.random() * 1;
+      this.opacity = 0.3 + Math.random() * 0.7;
+      this.angle = Math.random() * 2 * Math.PI;
+      this.angleSpeed = 0.01 + Math.random() * 0.02;
+    }
+    draw() {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.angle);
+      ctx.globalAlpha = this.opacity;
+      ctx.fillStyle = '#d81b60';
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(this.size / 2, -this.size / 2, this.size, this.size / 3, 0, this.size);
+      ctx.bezierCurveTo(-this.size, this.size / 3, -this.size / 2, -this.size / 2, 0, 0);
+      ctx.fill();
+      ctx.restore();
+      this.y -= this.speed;
+      this.angle += this.angleSpeed;
+      if (this.y < -this.size) {
+        this.x = Math.random() * W;
+        this.y = H + this.size;
+        this.opacity = 0.3 + Math.random() * 0.7;
+      }
+    }
+  }
+
+  let hearts = [];
+  for (let i = 0; i < 40; i++) hearts.push(new Heart());
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    hearts.forEach(h => h.draw());
+    requestAnimationFrame(animate);
+  }
+  animate();
 </script>
 
 </body>
