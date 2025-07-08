@@ -2,9 +2,58 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>خانه | تشریفات رویایی</title>
   <link rel="stylesheet" href="Style.css" />
+  <style>
+    /* دکمه موزیک روی موبایل کوچکتر و گوشه پایین سمت چپ */
+    #audioToggle {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      padding: 8px 16px;
+      font-size: 14px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px #ec407a;
+      z-index: 9999;
+      cursor: pointer;
+      background-color: #ec407a;
+      color: white;
+      border: none;
+    }
+    @media (max-width: 600px) {
+      #audioToggle {
+        padding: 6px 12px;
+        font-size: 12px;
+        bottom: 10px;
+        left: 10px;
+      }
+    }
+
+    /* کلاس قلب‌های کلیک */
+    .heart {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
+      background-size: contain;
+      animation: pop 0.6s ease-out forwards;
+      pointer-events: none;
+      user-select: none;
+      z-index: 9999;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -44,8 +93,8 @@
   &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
 </footer>
 
-<!-- 💗 اسکریپت قلب و موزیک -->
 <script>
+document.addEventListener('DOMContentLoaded', () => {
   const audio = document.getElementById('wigenAudio');
   const btn = document.getElementById('audioToggle');
   let playing = false;
@@ -61,6 +110,7 @@
     playing = !playing;
   });
 
+  // تلاش برای پخش خودکار با کلیک اول
   document.addEventListener('click', function autoPlayOnce() {
     audio.play().catch(() => {});
     document.removeEventListener('click', autoPlayOnce);
@@ -70,6 +120,10 @@
   const ctx = canvas.getContext('2d');
   let W = canvas.width = window.innerWidth;
   let H = canvas.height = window.innerHeight;
+
+  // قلب روی canvas با پارامترهای کمتر برای موبایل
+  const isMobile = window.matchMedia("(max-width: 600px)").matches;
+  const heartsCount = isMobile ? 30 : 70;
 
   function drawHeart(ctx, x, y, size, color) {
     ctx.save();
@@ -87,11 +141,11 @@
   }
 
   const hearts = [];
-  for (let i = 0; i < 70; i++) {
+  for (let i = 0; i < heartsCount; i++) {
     hearts.push({
       x: Math.random() * W,
       y: Math.random() * H,
-      size: Math.random() * 16 + 8,
+      size: isMobile ? (Math.random() * 12 + 6) : (Math.random() * 16 + 8),
       speedX: Math.random() * 0.5 + 0.2,
       speedY: Math.random() * 0.5 + 0.2,
       color: `rgba(236,64,122,${Math.random() * 0.4 + 0.3})`
@@ -125,6 +179,7 @@
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 600);
   });
+});
 </script>
 
 </body>
