@@ -180,3 +180,89 @@ footer {
     padding: 8px 14px;
   }
 }
+/* Booking Page Styles */
+form {
+  background: #222222dd;
+  padding: 30px 35px;
+  border-radius: 18px;
+  border: 2.5px solid #b29700;
+  box-shadow: 0 0 40px #b2970066;
+  margin: 40px auto;
+  max-width: 650px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #d4af37;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 11px 16px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  border: 2px solid #555;
+  background-color: #111;
+  color: #eee;
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+
+input[type="submit"] {
+  background-color: #d4af37;
+  color: #222;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  font-size: 1.15rem;
+}
+
+input[type="submit"]:hover {
+  background-color: #aa8500;
+}
+
+.info-text {
+  font-size: 0.85rem;
+  color: #bbb;
+  margin-top: -18px;
+  margin-bottom: 18px;
+}
+
+.error-text {
+  color: #ff6666;
+  font-weight: 700;
+  margin-top: -15px;
+  margin-bottom: 18px;
+}
+
+.checkbox-group legend {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #d4af37;
+  margin-bottom: 10px;
+}
+
+.checkbox-group label {
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submenu {
+  background-color: #1c1c1c;
+  border-radius: 10px;
+  border: 1.5px solid #555;
+  margin-bottom: 25px;
+  padding: 12px 18px;
+  display: none;
+}
+
+.submenu label {
+  margin-right: 18px;
+  font-weight: 600;
+}
