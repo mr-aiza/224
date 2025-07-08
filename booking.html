@@ -25,14 +25,14 @@
 <main>
   <form id="bookingForm" action="/submit" method="POST" novalidate>
     <label for="fullname">نام و نام خانوادگی:</label>
-    <input type="text" id="fullname" name="fullname" placeholder="مثلاً علی رضایی" required />
+    <input type="text" id="fullname" name="fullname" required />
 
     <label for="phone">شماره تماس:</label>
-    <input type="tel" id="phone" name="phone" placeholder="مثلاً 09123456789" pattern="09\d{9}" required />
+    <input type="tel" id="phone" name="phone" pattern="09\d{9}" required />
     <div class="info-text">فرمت شماره: 09xxxxxxxxx</div>
 
     <label for="email">ایمیل:</label>
-    <input type="email" id="email" name="email" placeholder="example@mail.com" required />
+    <input type="email" id="email" name="email" required />
 
     <label for="eventDate">تاریخ مراسم:</label>
     <input type="date" id="eventDate" name="eventDate" required />
@@ -50,35 +50,27 @@
     <fieldset class="checkbox-group">
       <legend>امکانات انتخابی:</legend>
 
-      <label for="fingerFood">
-        <input type="checkbox" id="fingerFood" name="services" value="fingerFood" /> فینگر فود
-      </label>
+      <label><input type="checkbox" id="fingerFood" name="services" value="fingerFood" /> فینگر فود</label>
       <div id="submenu-fingerFood" class="submenu">
         <label><input type="radio" name="fingerFoodLevel" value="اقتصادی" /> اقتصادی</label>
         <label><input type="radio" name="fingerFoodLevel" value="معمولی" /> معمولی</label>
         <label><input type="radio" name="fingerFoodLevel" value="ویژه" /> ویژه</label>
       </div>
 
-      <label for="flowerDecoration">
-        <input type="checkbox" id="flowerDecoration" name="services" value="flowerDecoration" /> گل‌آرایی
-      </label>
+      <label><input type="checkbox" id="flowerDecoration" name="services" value="flowerDecoration" /> گل‌آرایی</label>
       <div id="submenu-flowerDecoration" class="submenu">
         <label><input type="radio" name="flowerDecorationLevel" value="اقتصادی" /> اقتصادی</label>
         <label><input type="radio" name="flowerDecorationLevel" value="معمولی" /> معمولی</label>
         <label><input type="radio" name="flowerDecorationLevel" value="ویژه" /> ویژه</label>
       </div>
 
-      <label for="dinner">
-        <input type="checkbox" id="dinner" name="services" value="dinner" /> شام
-      </label>
+      <label><input type="checkbox" id="dinner" name="services" value="dinner" /> شام</label>
       <div id="submenu-dinner" class="submenu">
         <label><input type="radio" name="dinnerType" value="دیس پرس" /> دیس پرس</label>
         <label><input type="radio" name="dinnerType" value="سلف سرویس" /> سلف سرویس</label>
       </div>
 
-      <label for="juice">
-        <input type="checkbox" id="juice" name="services" value="juice" /> آب‌میوه
-      </label>
+      <label><input type="checkbox" id="juice" name="services" value="juice" /> آب‌میوه</label>
       <div id="submenu-juice" class="submenu">
         <label><input type="radio" name="juiceLevel" value="اقتصادی" /> اقتصادی</label>
         <label><input type="radio" name="juiceLevel" value="معمولی" /> معمولی</label>
@@ -87,11 +79,11 @@
     </fieldset>
 
     <label for="notes">توضیحات اضافی:</label>
-    <textarea id="notes" name="notes" rows="4" placeholder="در صورت نیاز توضیح دهید..."></textarea>
+    <textarea id="notes" name="notes" rows="4"></textarea>
 
     <input type="submit" value="ارسال رزرو" />
     <div id="formError" class="error-text" style="display:none;"></div>
-    <div id="formSuccess" style="color:#b3d98c; font-weight:700; display:none; margin-top:10px;">رزرو با موفقیت ثبت شد!</div>
+    <div id="formSuccess" style="color:#4caf50; font-weight:700; display:none; margin-top:10px;">رزرو با موفقیت ثبت شد!</div>
   </form>
 </main>
 
@@ -111,79 +103,44 @@
   async function loadReservedDates() {
     try {
       const response = await fetch(reservedDatesUrl);
-      if (!response.ok) throw new Error('خطا در دریافت تاریخ‌های رزرو شده');
+      if (!response.ok) throw new Error('خطا در دریافت تاریخ‌ها');
       reservedDates = await response.json();
       const today = new Date().toISOString().split('T')[0];
       dateInput.min = today;
-
-      dateInput.addEventListener('input', () => {
-        if (reservedDates.includes(dateInput.value)) {
-          alert('این تاریخ قبلاً رزرو شده است، لطفاً تاریخ دیگری انتخاب کنید.');
-          dateInput.value = '';
-        }
-      });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   }
 
   loadReservedDates();
 
-  const servicesCheckboxes = {
-    fingerFood: document.getElementById('fingerFood'),
-    flowerDecoration: document.getElementById('flowerDecoration'),
-    dinner: document.getElementById('dinner'),
-    juice: document.getElementById('juice')
-  };
-
-  const submenus = {
-    fingerFood: document.getElementById('submenu-fingerFood'),
-    flowerDecoration: document.getElementById('submenu-flowerDecoration'),
-    dinner: document.getElementById('submenu-dinner'),
-    juice: document.getElementById('submenu-juice')
-  };
-
-  Object.keys(servicesCheckboxes).forEach(key => {
-    servicesCheckboxes[key].addEventListener('change', e => {
-      submenus[key].style.display = e.target.checked ? 'block' : 'none';
-      if (!e.target.checked) {
-        const radios = submenus[key].querySelectorAll('input[type="radio"]');
-        radios.forEach(r => r.checked = false);
-      }
-    });
-  });
-
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     formError.style.display = 'none';
-    formError.textContent = '';
     formSuccess.style.display = 'none';
 
-    if (!dateInput.value) {
+    if (!dateInput.value || reservedDates.includes(dateInput.value)) {
       formError.style.display = 'block';
-      formError.textContent = 'لطفاً تاریخ مراسم را انتخاب کنید.';
-      return;
-    }
-    if (reservedDates.includes(dateInput.value)) {
-      formError.style.display = 'block';
-      formError.textContent = 'این تاریخ قبلاً رزرو شده است، لطفاً تاریخ دیگری انتخاب کنید.';
+      formError.textContent = 'تاریخ نامعتبر یا رزرو شده است';
       return;
     }
 
     const phone = form.phone.value.trim();
-    const phonePattern = /^09\d{9}$/;
-    if (!phonePattern.test(phone)) {
+    if (!/^09\d{9}$/.test(phone)) {
       formError.style.display = 'block';
-      formError.textContent = 'شماره تماس معتبر نیست. فرمت صحیح: 09xxxxxxxxx';
+      formError.textContent = 'شماره تماس معتبر نیست';
       return;
     }
 
-    for (const key of Object.keys(servicesCheckboxes)) {
-      if (servicesCheckboxes[key].checked) {
-        const radios = submenus[key].querySelectorAll('input[type="radio"]');
+    const services = ['fingerFood', 'flowerDecoration', 'dinner', 'juice'];
+    for (const s of services) {
+      const checkbox = document.getElementById(s);
+      const submenu = document.getElementById(`submenu-${s}`);
+      if (checkbox.checked) {
+        const radios = submenu.querySelectorAll('input[type=radio]');
         if (![...radios].some(r => r.checked)) {
           formError.style.display = 'block';
-          formError.textContent = `لطفاً گزینه مربوط به "${servicesCheckboxes[key].parentNode.textContent.trim()}" را انتخاب کنید.`;
+          formError.textContent = `گزینه‌ای برای ${checkbox.nextSibling.textContent.trim()} انتخاب نشده است.`;
           return;
         }
       }
@@ -191,7 +148,7 @@
 
     const formData = new FormData(form);
     const obj = {};
-    formData.forEach((v,k) => {
+    formData.forEach((v, k) => {
       if (obj[k]) {
         if (!Array.isArray(obj[k])) obj[k] = [obj[k]];
         obj[k].push(v);
@@ -206,17 +163,23 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(obj)
       });
-      if (res.ok) {
-        formSuccess.style.display = 'block';
-        form.reset();
-        loadReservedDates();
-      } else {
-        throw new Error('خطا در ثبت رزرو');
-      }
+      if (!res.ok) throw new Error('خطا در ثبت رزرو');
+      formSuccess.style.display = 'block';
+      form.reset();
+      loadReservedDates();
     } catch (err) {
       formError.style.display = 'block';
-      formError.textContent = err.message || 'خطا در ارسال داده';
+      formError.textContent = err.message || 'ارسال با خطا مواجه شد';
     }
+  });
+
+  ['fingerFood', 'flowerDecoration', 'dinner', 'juice'].forEach(id => {
+    const checkbox = document.getElementById(id);
+    const submenu = document.getElementById(`submenu-${id}`);
+    checkbox.addEventListener('change', () => {
+      submenu.style.display = checkbox.checked ? 'block' : 'none';
+      if (!checkbox.checked) submenu.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+    });
   });
 </script>
 
