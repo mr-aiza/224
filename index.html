@@ -2,266 +2,151 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>خانه | تشریفات رویایی</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تشریفات رویایی</title>
   <link rel="stylesheet" href="Style.css" />
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Vazir', sans-serif;
-      background: linear-gradient(145deg, #f2f2f2, #e3e3e3);
-      color: #333;
-      overflow-x: hidden;
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-
-    nav {
-      background: #f9f9f9;
-      border-bottom: 1px solid #e0e0e0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      padding: 14px 10px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    nav a {
-      color: #d81b60;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 10px 18px;
-      border-radius: 8px;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-
-    nav a:hover,
-    nav a.active {
-      background-color: #f8bbd0;
-      color: #fff;
-    }
-
-    header {
-      text-align: center;
-      padding: 60px 20px;
-      background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-    }
-
-    header h1 {
-      font-size: 2.8rem;
-      color: #c2185b;
-      margin-bottom: 20px;
-    }
-
-    header p {
-      font-size: 1.2rem;
-      color: #444;
-      max-width: 700px;
-      margin: auto;
-      text-align: justify;
-    }
-
-    main {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    section {
-      background: #f7f7f7;
-      border: 1px solid #f8bbd0;
-      border-radius: 16px;
-      padding: 30px;
-      margin-bottom: 35px;
-      box-shadow: 0 6px 18px rgba(248, 187, 208, 0.25);
-    }
-
-    section h2 {
-      color: #ec407a;
-      margin-bottom: 16px;
-      border-bottom: 1px solid #f48fb1;
-      padding-bottom: 6px;
-    }
-
-    footer {
-      background: #f9f9f9;
-      color: #d81b60;
-      text-align: center;
-      padding: 25px 10px;
-      border-top: 2px solid #f48fb1;
-      font-weight: 600;
-    }
-
-    #audioToggle {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      background: #ec407a;
-      color: #fff;
-      font-weight: bold;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      z-index: 3;
-      box-shadow: 0 0 10px #ec407a;
-    }
-
-    .heart {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
-      background-size: cover;
-      animation: pop 0.6s ease-out forwards;
-      pointer-events: none;
-    }
-
-    @keyframes pop {
-      0% { transform: scale(0); opacity: 1; }
-      100% { transform: scale(1.5); opacity: 0; }
-    }
-
-    @media (max-width: 768px) {
-      header h1 { font-size: 2rem; }
-      header p { font-size: 1rem; padding: 0 10px; }
-      nav a { padding: 8px 12px; font-size: 0.9rem; }
-    }
-  </style>
 </head>
 <body>
-  <canvas id="bgCanvas"></canvas>
 
-  <button id="audioToggle">پخش موسیقی</button>
-  <audio id="wigenAudio" preload="auto" loop>
-    <source src="wigen_wedding.mp3" type="audio/mpeg" />
-  </audio>
+<canvas id="bgCanvas"></canvas>
 
-  <nav>
-    <a href="index.html" class="active">خانه</a>
-    <a href="services.html">خدمات</a>
-    <a href="portfolio.html">نمونه‌کارها</a>
-    <a href="booking.html">رزرو</a>
-    <a href="about.html">درباره ما</a>
-    <a href="contact.html">تماس با ما</a>
-  </nav>
+<button id="audioToggle">🔊 پخش موسیقی</button>
+<audio id="wigenAudio" preload="auto" loop>
+  <source src="wigen_wedding.mp3" type="audio/mpeg" />
+</audio>
 
-  <header>
-    <h1>تشریفات رویایی عروسی</h1>
-    <p>هر عروسی، فقط یک بار در زندگی اتفاق می‌افتد... و ما این "یک بار" را به خاص‌ترین شکل ممکن برایتان رقم می‌زنیم. 🌸</p>
-    <p>از لحظه‌ای که وارد دنیای ما می‌شوید، همه چیز تغییر می‌کند: نورها، گل‌ها، موسیقی، لبخندها... هر جزئیات با دقت طراحی می‌شود تا همه‌چیز درست مثل رویا باشد. 🎵💐</p>
-    <p>ما فقط مراسم برگزار نمی‌کنیم؛ ما لحظاتی می‌سازیم که در ذهن مهمانان و در قلب شما تا ابد ماندگار می‌شوند. 💖</p>
-    <p>با بیش از یک دهه تجربه، تیم ما از بهترین طراحان، دیزاینرها و مجریان تشریفات تشکیل شده تا رویداد شما را بی‌نقص اجرا کند. ✨</p>
-    <p>خوش آمدید به تشریفات رویایی؛ جایی که تفاوت فقط یک کلمه نیست، بلکه یک حس است. 🎊</p>
-  </header>
+<nav>
+  <a href="index.html" class="active">خانه</a>
+  <a href="services.html">خدمات</a>
+  <a href="portfolio.html">نمونه‌کارها</a>
+  <a href="booking.html">رزرو</a>
+  <a href="about.html">درباره ما</a>
+  <a href="contact.html">تماس با ما</a>
+</nav>
 
-  <main>
-    <section>
-      <h2>برگزاری مراسم از صفر تا صد</h2>
-      <p>ما تمام مراحل مراسم را پوشش می‌دهیم: مشاوره و برنامه‌ریزی، انتخاب مکان، دکوراسیون خاص، نورپردازی و صوت، دعوت‌نامه، پذیرایی مجلل، لباس عروس و داماد، گروه موسیقی زنده، فیلمبرداری حرفه‌ای، مدیریت زمان، سورپرایزهای خاص، و حتی ماه‌عسل اختصاصی.</p>
-    </section>
+<header>
+  <h1>💍 تشریفات رویایی عروسی 💐</h1>
+  <p class="typewriter">
+    هر عروسی، فقط یک بار در زندگی اتفاق می‌افتد...<br>
+    ما این "یک بار" را به خاص‌ترین شکل ممکن برایتان رقم می‌زنیم.<br>
+    🌸 نورها، گل‌ها، موسیقی، لبخندها... همه‌چیز درست مثل رویاست.<br>
+    🎉 ما لحظاتی می‌سازیم که تا ابد در ذهن و قلب‌ها بماند.<br>
+    تیمی حرفه‌ای با یک دهه تجربه در کنار شماست... ✨<br>
+    خوش آمدید به تشریفات رویایی! 🎊
+  </p>
+</header>
 
-    <section>
-      <h2>نظرات کاربران</h2>
-      <p>برای ثبت نظر خود، لطفاً بعداً از طریق فرم بازخورد استفاده کنید.</p>
-    </section>
-  </main>
+<main>
+  <section>
+    <h2>📝 خدمات مراسم از ۰ تا ۱۰۰</h2>
+    <p>
+      برگزاری یک مراسم عروسی بی‌نقص نیاز به برنامه‌ریزی دقیق، تیم حرفه‌ای و خدماتی سطح بالا دارد. در تشریفات رویایی، ما تمامی مراحل را از ابتدا تا انتها برای شما انجام می‌دهیم:
 
-  <footer>
-    &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
-  </footer>
+      <br><br>
+      ✅ مشاوره اولیه رایگان برای شناخت سلیقه و بودجه شما<br>
+      ✅ انتخاب و رزرو مکان برگزاری (باغ، سالن، ویلا و...)<br>
+      ✅ طراحی دکوراسیون اختصاصی و گل‌آرایی لوکس<br>
+      ✅ انتخاب منوی غذایی و کیترینگ تشریفاتی با سرآشپزهای حرفه‌ای<br>
+      ✅ موزیک زنده، DJ و نورپردازی هوشمند<br>
+      ✅ فیلمبرداری سینمایی و عکاسی پرتره و مستند<br>
+      ✅ مدیریت کامل مهمان‌ها و تشریفات ورودی<br>
+      ✅ پذیرایی اختصاصی با مهمانداران آموزش‌دیده<br>
+      ✅ طراحی کارت دعوت دیجیتال یا فیزیکی<br>
+      ✅ خدمات ویژه داماد و عروس: میکاپ، لباس، ترنسفر VIP و بیشتر...
 
-  <script>
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    let W = canvas.width = window.innerWidth;
-    let H = canvas.height = window.innerHeight;
+      <br><br>
+      ما کنار شما هستیم تا رویای‌تان را به واقعیت تبدیل کنیم. ❤️
+    </p>
+  </section>
 
-    const hearts = Array.from({length: 70}, () => ({
+  <section>
+    <h2>💬 نظرات کاربران</h2>
+    <div class="comments">
+      <p><strong>نیلوفر:</strong> همه چیز فوق‌العاده بود! واقعاً خاطره‌ساز شد 🙏</p>
+      <p><strong>محمدرضا:</strong> از گل‌آرایی تا نورپردازی، همه‌چی عالی! ❤️</p>
+      <p><strong>الهام:</strong> ممنون از تیم حرفه‌ای‌تون که شب ما رو خاص کرد ✨</p>
+      <!-- جای خالی برای نظرات بیشتر -->
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
+</footer>
+
+<script>
+  // موسیقی
+  const audio = document.getElementById('wigenAudio');
+  const btn = document.getElementById('audioToggle');
+  let playing = false;
+
+  btn.addEventListener('click', () => {
+    if (playing) {
+      audio.pause();
+      btn.textContent = '🔊 پخش موسیقی';
+    } else {
+      audio.play().catch(() => alert("برای پخش، ابتدا روی صفحه کلیک کنید."));
+      btn.textContent = '⏸ توقف موسیقی';
+    }
+    playing = !playing;
+  });
+
+  document.addEventListener('click', function autoPlayOnce() {
+    audio.play().catch(() => {});
+    document.removeEventListener('click', autoPlayOnce);
+  });
+
+  // قلب متحرک
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let W = canvas.width = window.innerWidth;
+  let H = canvas.height = window.innerHeight;
+
+  function drawHeart(ctx, x, y, size, color) {
+    ctx.save();
+    ctx.beginPath();
+    const topCurveHeight = size * 0.3;
+    ctx.moveTo(x, y + topCurveHeight);
+    ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
+    ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + (size + topCurveHeight) / 1.2, x, y + size);
+    ctx.bezierCurveTo(x, y + (size + topCurveHeight) / 1.2, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
+    ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  const hearts = [];
+  for (let i = 0; i < 70; i++) {
+    hearts.push({
       x: Math.random() * W,
       y: Math.random() * H,
       size: Math.random() * 16 + 8,
       speedX: Math.random() * 0.5 + 0.2,
       speedY: Math.random() * 0.5 + 0.2,
       color: `rgba(236,64,122,${Math.random() * 0.4 + 0.3})`
-    }));
+    });
+  }
 
-    function drawHeart(ctx, x, y, size, color) {
-      ctx.save();
-      ctx.beginPath();
-      const topCurveHeight = size * 0.3;
-      ctx.moveTo(x, y + topCurveHeight);
-      ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
-      ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + (size + topCurveHeight) / 1.2, x, y + size);
-      ctx.bezierCurveTo(x, y + (size + topCurveHeight) / 1.2, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
-      ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
-      ctx.closePath();
-      ctx.fillStyle = color;
-      ctx.fill();
-      ctx.restore();
+  function update() {
+    ctx.clearRect(0, 0, W, H);
+    for (const h of hearts) {
+      h.x += h.speedX;
+      h.y += h.speedY;
+      if (h.x > W) h.x = -h.size;
+      if (h.y > H) h.y = -h.size;
+      drawHeart(ctx, h.x, h.y, h.size, h.color);
     }
+    requestAnimationFrame(update);
+  }
 
-    function update() {
-      ctx.clearRect(0, 0, W, H);
-      hearts.forEach(h => {
-        h.x += h.speedX;
-        h.y += h.speedY;
-        if (h.x > W) h.x = -h.size;
-        if (h.y > H) h.y = -h.size;
-        drawHeart(ctx, h.x, h.y, h.size, h.color);
-      });
-      requestAnimationFrame(update);
-    }
+  window.addEventListener('resize', () => {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  });
 
-    window.addEventListener('resize', () => {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    });
-
-    update();
-
-    document.body.addEventListener('click', e => {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = `${e.clientX - 15}px`;
-      heart.style.top = `${e.clientY - 15}px`;
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 600);
-    });
-
-    const audio = document.getElementById('wigenAudio');
-    const btn = document.getElementById('audioToggle');
-    let playing = false;
-
-    btn.addEventListener('click', () => {
-      if (playing) {
-        audio.pause();
-        btn.textContent = 'پخش موسیقی';
-      } else {
-        audio.play().catch(() => alert("برای پخش، ابتدا روی صفحه کلیک کنید."));
-        btn.textContent = 'توقف موسیقی';
-      }
-      playing = !playing;
-    });
-
-    document.addEventListener('click', function autoPlayOnce() {
-      audio.play().catch(() => {});
-      document.removeEventListener('click', autoPlayOnce);
-    });
-  </script>
+  update();
+</script>
 </body>
 </html>
