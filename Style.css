@@ -2,45 +2,8 @@
 
 * {
   box-sizing: border-box;
-}
-.intro-text-glass {
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 30px;
-  border-radius: 20px;
-  max-width: 900px;
-  margin: 0 auto;
-  box-shadow: 0 0 20px rgba(248, 187, 208, 0.25);
-  text-align: center;
-}
-
-.intro-text-glass h1 {
-  color: #c2185b;
-  font-size: 2.2rem;
-  margin-bottom: 20px;
-}
-
-.intro-text-glass p {
-  font-size: 1.2rem;
-  color: #333;
-  line-height: 2;
-  margin-bottom: 16px;
-}
-
-@media (max-width: 600px) {
-  .intro-text-glass {
-    padding: 20px 15px;
-  }
-
-  .intro-text-glass h1 {
-    font-size: 1.5rem;
-  }
-
-  .intro-text-glass p {
-    font-size: 1rem;
-    line-height: 1.8;
-  }
+  padding: 0;
+  margin: 0;
 }
 
 body {
@@ -49,29 +12,43 @@ body {
   background: linear-gradient(145deg, #f2f2f2, #e3e3e3);
   color: #333;
   overflow-x: hidden;
-  position: relative;
 }
 
 canvas {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 0;
-  width: 100vw;
-  height: 100vh;
+  z-index: -1;
+}
+
+/* 🎵 دکمه موسیقی */
+#audioToggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background: #ec407a;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 3;
+  box-shadow: 0 0 10px #ec407a;
 }
 
 nav {
-  background: #f9f9f9cc;
+  background: #f9f9f9;
   border-bottom: 1px solid #e0e0e0;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
   gap: 20px;
   padding: 14px 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 10;
+  flex-wrap: wrap;
 }
 
 nav a {
@@ -89,58 +66,44 @@ nav a.active {
   color: #fff;
 }
 
-header {
-  text-align: center;
-  padding: 60px 20px 40px;
+/* 🧊 هدر شیشه‌ای */
+header.hero-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 60px 20px;
   background: transparent;
-  z-index: 1;
-  position: relative;
-}
-
-header h1,
-header p {
-  background: rgba(255, 255, 255, 0.65);
-  display: inline-block;
-  padding: 8px 14px;
-  margin: 10px 0;
-  border-radius: 12px;
-}
-
-main {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 0 20px;
-  z-index: 1;
-  position: relative;
-}
-
-section {
-  background: #f7f7f7cc;
-  border: 1px solid #f8bbd0;
-  border-radius: 16px;
-  padding: 30px;
-  margin-bottom: 35px;
-  box-shadow: 0 6px 18px rgba(248, 187, 208, 0.25);
-}
-
-section h2 {
-  color: #ec407a;
-  margin-bottom: 16px;
-  border-bottom: 1px solid #f48fb1;
-  padding-bottom: 6px;
-}
-
-footer {
-  background: #f9f9f9;
-  color: #d81b60;
   text-align: center;
-  padding: 25px 10px;
-  border-top: 2px solid #f48fb1;
-  font-weight: 600;
-  z-index: 1;
   position: relative;
+  z-index: 1;
 }
 
+.intro-text-glass {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 24px;
+  max-width: 900px;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(248, 187, 208, 0.25);
+}
+
+.intro-text-glass h1 {
+  color: #c2185b;
+  font-size: 2.4rem;
+  margin-bottom: 20px;
+}
+
+.intro-text-glass p {
+  font-size: 1.25rem;
+  color: #444;
+  line-height: 2;
+  margin-bottom: 18px;
+}
+
+/* ❤️ افکت قلب */
 .heart {
   position: absolute;
   width: 30px;
@@ -149,7 +112,6 @@ footer {
   background-size: cover;
   animation: pop 0.6s ease-out forwards;
   pointer-events: none;
-  z-index: 999;
 }
 
 @keyframes pop {
@@ -163,33 +125,48 @@ footer {
   }
 }
 
-#audioToggle {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  padding: 10px 20px;
-  background: #ec407a;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  z-index: 3;
-  box-shadow: 0 0 10px #ec407a;
+/* 📱 ریسپانسیو */
+@media (max-width: 600px) {
+  header.hero-header {
+    padding: 30px 10px;
+  }
+
+  .intro-text-glass {
+    padding: 20px 15px;
+    border-radius: 16px;
+  }
+
+  .intro-text-glass h1 {
+    font-size: 1.5rem;
+  }
+
+  .intro-text-glass p {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  #audioToggle {
+    left: 10px;
+    bottom: 10px;
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+
+  nav {
+    gap: 10px;
+    font-size: 0.85rem;
+  }
+
+  nav a {
+    padding: 8px 12px;
+  }
 }
 
-@media (max-width: 600px) {
-  header h1 {
-    font-size: 1.8rem;
-  }
-  header p {
-    font-size: 1rem;
-  }
-  section {
-    padding: 20px 15px;
-  }
-  nav {
-    flex-direction: column;
-    align-items: center;
-  }
+footer {
+  background: #f9f9f9;
+  color: #d81b60;
+  text-align: center;
+  padding: 25px 10px;
+  border-top: 2px solid #f48fb1;
+  font-weight: 600;
 }
