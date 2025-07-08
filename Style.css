@@ -97,6 +97,7 @@ footer {
   font-weight: 600;
 }
 
+/* قلب هنگام کلیک */
 .heart {
   position: absolute;
   width: 30px;
@@ -118,6 +119,7 @@ footer {
   }
 }
 
+/* دکمه کنترل موسیقی */
 #audioToggle {
   position: fixed;
   bottom: 20px;
