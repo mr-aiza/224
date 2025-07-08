@@ -1,0 +1,11 @@
+fullname: زهرا جعفری
+phone: 09388088657
+email: 
+eventDate: 2025-07-09
+eventType: birthday
+services: fingerFood, flowerDecoration, dinner, juice
+fingerFoodLevel: معمولی
+flowerDecorationLevel: اقتصادی
+dinnerType: سلف سرویس
+juiceLevel: معمولی
+notes: سلام بچه نداریم
