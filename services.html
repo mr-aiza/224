@@ -2,111 +2,22 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>خدمات | تشریفات رویایی</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
-
-    body {
-      margin: 0;
-      background-color: #111;
-      color: #ccc;
-      font-family: 'Vazir', sans-serif;
-      direction: rtl;
-    }
-    nav {
-      background: #222;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      padding: 10px 5px;
-      border-bottom: 2px solid #d4af37;
-    }
-    nav a {
-      text-decoration: none;
-      color: #d4af37;
-      font-weight: 600;
-      padding: 10px 18px;
-      border-radius: 8px;
-      border: 1.5px solid transparent;
-      transition: all 0.3s ease;
-      user-select: none;
-    }
-    nav a:hover,
-    nav a.active {
-      background-color: #d4af37;
-      color: #111;
-      border-color: #b38700;
-    }
-    header {
-      background: linear-gradient(135deg, #222, #1a1a1a);
-      text-align: center;
-      padding: 50px 20px;
-      border-bottom: 3px solid #d4af37;
-      box-shadow: 0 0 20px #b38700aa;
-    }
-    header h1 {
-      color: #d4af37;
-      margin: 0;
-      font-size: 2.8rem;
-      letter-spacing: 2px;
-      text-shadow: 0 0 12px #d4af37;
-    }
-    main {
-      max-width: 900px;
-      margin: 40px auto 60px;
-      padding: 0 20px;
-    }
-    .service-list {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-    }
-    .service-item {
-      background: #222;
-      border: 2px solid #d4af37;
-      border-radius: 14px;
-      padding: 20px 25px;
-      box-shadow: 0 0 25px #b38700aa;
-      transition: background 0.3s ease;
-    }
-    .service-item:hover {
-      background: #333;
-    }
-    .service-item h2 {
-      margin-top: 0;
-      color: #d4af37;
-      font-size: 1.8rem;
-      border-bottom: 2px solid #b38700;
-      padding-bottom: 8px;
-    }
-    .service-item p {
-      color: #ddd;
-      font-size: 1.05rem;
-      line-height: 1.5;
-      margin-bottom: 0;
-    }
-    footer {
-      background-color: #222;
-      color: #d4af37;
-      text-align: center;
-      padding: 20px;
-      font-weight: 600;
-      border-top: 2px solid #b38700;
-    }
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
-      }
-      .service-item h2 {
-        font-size: 1.4rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="Style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<canvas id="bgCanvas"></canvas>
+
+<!-- دکمه و موزیک -->
+<button id="audioToggle">🎵 پخش موسیقی</button>
+<audio id="wigenAudio" preload="auto" loop>
+  <source src="wigen_wedding.mp3" type="audio/mpeg" />
+</audio>
+
+<!-- نوار بالا -->
 <nav>
   <a href="index.html">خانه</a>
   <a href="services.html" class="active">خدمات</a>
@@ -116,42 +27,140 @@
   <a href="contact.html">تماس با ما</a>
 </nav>
 
+<!-- هدر خدمات -->
 <header>
-  <h1>خدمات تشریفات رویایی</h1>
+  <h1>💫 خدمات تشریفات رویایی 💫</h1>
 </header>
 
 <main>
-  <div class="service-list">
-    <div class="service-item">
-      <h2>برگزاری مراسم عقد و عروسی</h2>
-      <p>طراحی و اجرای کامل مراسم عقد و عروسی با بهترین امکانات و تیم حرفه‌ای، شامل مدیریت برنامه، هماهنگی زمان‌بندی و اجرای دقیق.</p>
-    </div>
-    <div class="service-item">
-      <h2>دکوراسیون و گل‌آرایی</h2>
-      <p>گل‌آرایی‌های خلاقانه و دکوراسیون لوکس سالن و فضای مراسم با استفاده از گل‌های طبیعی و تزئینات شیک مطابق با تم انتخابی شما.</p>
-    </div>
-    <div class="service-item">
-      <h2>پذیرایی و کیترینگ</h2>
-      <p>سرو انواع غذاهای ایرانی و فرنگی، دسرهای متنوع و نوشیدنی‌های خاص با کیفیت بالا و خدمات پذیرایی مجلل برای میهمانان شما.</p>
-    </div>
-    <div class="service-item">
-      <h2>موسیقی زنده و DJ</h2>
-      <p>اجرای موسیقی زنده توسط نوازندگان حرفه‌ای و دی‌جی‌های با تجربه برای ایجاد فضایی شاد و به یادماندنی در مراسم شما.</p>
-    </div>
-    <div class="service-item">
-      <h2>عکاسی و فیلم‌برداری حرفه‌ای</h2>
-      <p>ثبت لحظات خاص و خاطره‌انگیز مراسم شما با بهترین تجهیزات و تیم عکاسی و فیلم‌برداری با تخصص و دقت بالا.</p>
-    </div>
-    <div class="service-item">
-      <h2>خدمات مشاوره و برنامه‌ریزی</h2>
-      <p>مشاوره کامل جهت انتخاب بهترین گزینه‌ها و برنامه‌ریزی دقیق برای برگزاری یک مراسم بی‌نظیر و بدون دغدغه.</p>
-    </div>
-  </div>
+  <section class="service-box">
+    <h2>✨ برگزاری مراسم عقد و عروسی</h2>
+    <ul>
+      <li>✔️ طراحی و اجرای کامل مراسم با مدیریت دقیق زمان‌بندی</li>
+      <li>✔️ تیم حرفه‌ای جهت مدیریت اجرا، نور، صدا و تشریفات</li>
+    </ul>
+  </section>
+
+  <section class="service-box">
+    <h2>🌸 دکوراسیون و گل‌آرایی</h2>
+    <ul>
+      <li>✔️ گل‌آرایی لوکس با گل‌های طبیعی مطابق تم مورد نظر</li>
+      <li>✔️ طراحی دکور اختصاصی برای فضای مراسم</li>
+    </ul>
+  </section>
+
+  <section class="service-box">
+    <h2>🍽️ پذیرایی و کیترینگ</h2>
+    <ul>
+      <li>✔️ سرو غذاهای ایرانی و بین‌المللی با کیفیت بالا</li>
+      <li>✔️ نوشیدنی‌ها و دسرهای خاص با تزئینات خاص</li>
+    </ul>
+  </section>
+
+  <section class="service-box">
+    <h2>🎶 موسیقی زنده و DJ</h2>
+    <ul>
+      <li>✔️ اجرای زنده توسط نوازندگان ماهر</li>
+      <li>✔️ DJ با موسیقی متناسب با سلیقه مهمانان</li>
+    </ul>
+  </section>
+
+  <section class="service-box">
+    <h2>📷 عکاسی و فیلم‌برداری حرفه‌ای</h2>
+    <ul>
+      <li>✔️ ثبت کامل لحظات مراسم با تجهیزات پیشرفته</li>
+      <li>✔️ تیم مجرب عکاس و فیلمبردار برای مستندسازی کامل</li>
+    </ul>
+  </section>
+
+  <section class="service-box">
+    <h2>🧠 مشاوره و برنامه‌ریزی اختصاصی</h2>
+    <ul>
+      <li>✔️ مشاوره جهت انتخاب بهترین گزینه‌ها بر اساس بودجه</li>
+      <li>✔️ برنامه‌ریزی دقیق و بدون استرس تا روز مراسم</li>
+    </ul>
+  </section>
 </main>
 
 <footer>
   &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
 </footer>
+
+<!-- اسکریپت قلب و موزیک -->
+<script>
+  // موسیقی
+  const audio = document.getElementById('wigenAudio');
+  const btn = document.getElementById('audioToggle');
+  let playing = false;
+
+  btn.addEventListener('click', () => {
+    if (playing) {
+      audio.pause();
+      btn.textContent = '🎵 پخش موسیقی';
+    } else {
+      audio.play().catch(() => alert("برای پخش، ابتدا روی صفحه کلیک کنید."));
+      btn.textContent = '⏸ توقف موسیقی';
+    }
+    playing = !playing;
+  });
+
+  document.addEventListener('click', function autoPlayOnce() {
+    audio.play().catch(() => {});
+    document.removeEventListener('click', autoPlayOnce);
+  });
+
+  // قلب‌های پس‌زمینه
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let W = canvas.width = window.innerWidth;
+  let H = canvas.height = window.innerHeight;
+
+  function drawHeart(ctx, x, y, size, color) {
+    ctx.save();
+    ctx.beginPath();
+    const topCurveHeight = size * 0.3;
+    ctx.moveTo(x, y + topCurveHeight);
+    ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
+    ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + (size + topCurveHeight) / 1.2, x, y + size);
+    ctx.bezierCurveTo(x, y + (size + topCurveHeight) / 1.2, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
+    ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  const hearts = [];
+  for (let i = 0; i < 70; i++) {
+    hearts.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      size: Math.random() * 16 + 8,
+      speedX: Math.random() * 0.5 + 0.2,
+      speedY: Math.random() * 0.5 + 0.2,
+      color: `rgba(236,64,122,${Math.random() * 0.4 + 0.3})`
+    });
+  }
+
+  function update() {
+    ctx.clearRect(0, 0, W, H);
+    for (const h of hearts) {
+      h.x += h.speedX;
+      h.y += h.speedY;
+      if (h.x > W) h.x = -h.size;
+      if (h.y > H) h.y = -h.size;
+      drawHeart(ctx, h.x, h.y, h.size, h.color);
+    }
+    requestAnimationFrame(update);
+  }
+
+  window.addEventListener('resize', () => {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  });
+
+  update();
+</script>
 
 </body>
 </html>
