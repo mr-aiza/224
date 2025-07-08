@@ -13,11 +13,11 @@ body {
   color: #333;
   line-height: 1.8;
   overflow-x: hidden;
-  position: relative;
   min-height: 100vh;
+  position: relative;
 }
 
-canvas#hearts {
+canvas {
   position: fixed;
   top: 0;
   left: 0;
@@ -88,8 +88,8 @@ header h1 {
   margin-bottom: 20px;
 }
 
-header p {
-  font-size: 1.1rem;
+.intro-text p {
+  font-size: 1.2rem;
   font-weight: bold;
   text-shadow: 0 0 2px #fff;
   margin: 8px 0;
@@ -103,35 +103,34 @@ main {
   padding: 0 20px;
 }
 
-/* فرم - رنگ پس‌زمینه سفید با کمی شفافیت و رنگ‌های زرد گرم‌تر مشابه سایت */
-form {
+/* فرم رزرو */
+form#bookingForm {
   background: rgba(255, 250, 250, 0.9);
   padding: 30px 35px;
   border-radius: 18px;
-  border: 2.5px solid #d81b60; /* رنگ صورتی-سرخابی که توی ناوبری بود */
+  border: 2.5px solid #d81b60;
   box-shadow: 0 6px 18px rgba(216, 27, 96, 0.2);
   margin: 40px auto;
   max-width: 650px;
-  color: #3a003a; /* رنگ متن تیره‌تر برای خوانایی */
+  color: #3a003a;
   font-weight: 600;
   font-size: 1.05rem;
-  font-family: 'Vazir', sans-serif;
   direction: rtl;
+  font-family: 'Vazir', sans-serif;
 }
 
-label {
+form#bookingForm label {
   display: block;
   margin-bottom: 10px;
   font-weight: 700;
   font-size: 1.1rem;
-  color: #d81b60; /* رنگ صورتی */
+  color: #d81b60;
   user-select: none;
   position: relative;
-  padding-right: 28px; /* جای آیکون */
+  padding-right: 28px;
 }
 
-/* آیکون کنار label */
-label .fa-icon {
+form#bookingForm label .fa-icon {
   position: absolute;
   right: 0;
   top: 50%;
@@ -140,8 +139,9 @@ label .fa-icon {
   font-size: 1.1rem;
 }
 
-/* فیلدهای فرم */
-input, select, textarea {
+form#bookingForm input,
+form#bookingForm select,
+form#bookingForm textarea {
   width: 100%;
   padding: 11px 16px;
   margin-bottom: 25px;
@@ -151,17 +151,17 @@ input, select, textarea {
   color: #333;
   font-size: 1rem;
   transition: 0.3s ease;
-  font-family: 'Vazir', sans-serif;
 }
 
-input:focus, select:focus, textarea:focus {
+form#bookingForm input:focus,
+form#bookingForm select:focus,
+form#bookingForm textarea:focus {
   outline: none;
   border-color: #f48fb1;
   box-shadow: 0 0 10px #f48fb1cc;
 }
 
-/* دکمه ارسال */
-input[type="submit"] {
+form#bookingForm input[type="submit"] {
   background-color: #d81b60;
   color: #fff;
   font-weight: 700;
@@ -173,12 +173,11 @@ input[type="submit"] {
   border-radius: 12px;
 }
 
-input[type="submit"]:hover {
+form#bookingForm input[type="submit"]:hover {
   background-color: #a3154a;
 }
 
-/* متن‌های کمکی */
-.info-text {
+form#bookingForm .info-text {
   font-size: 0.85rem;
   color: #b71c4f;
   margin-top: -18px;
@@ -187,7 +186,7 @@ input[type="submit"]:hover {
   font-weight: 600;
 }
 
-.error-text {
+form#bookingForm .error-text {
   color: #ff1744;
   font-weight: 700;
   margin-top: -15px;
@@ -195,7 +194,7 @@ input[type="submit"]:hover {
   user-select: none;
 }
 
-.checkbox-group legend {
+form#bookingForm .checkbox-group legend {
   font-size: 1.15rem;
   font-weight: 700;
   color: #d81b60;
@@ -203,7 +202,7 @@ input[type="submit"]:hover {
   user-select: none;
 }
 
-.checkbox-group label {
+form#bookingForm .checkbox-group label {
   display: inline-block;
   margin-bottom: 10px;
   margin-right: 20px;
@@ -212,7 +211,7 @@ input[type="submit"]:hover {
   user-select: none;
 }
 
-.submenu {
+form#bookingForm .submenu {
   background-color: #fce4ec;
   border-radius: 10px;
   border: 1.5px solid #d81b60;
@@ -223,31 +222,30 @@ input[type="submit"]:hover {
   color: #880e4f;
 }
 
-.submenu label {
+form#bookingForm .submenu label {
   margin-right: 18px;
   font-weight: 600;
   user-select: none;
   cursor: pointer;
 }
 
-/* فیلد تعداد مهمان و مهماندار */
-.guest-inputs {
+form#bookingForm .guest-inputs {
   display: flex;
   gap: 18px;
   flex-wrap: wrap;
 }
 
-.guest-inputs > div {
+form#bookingForm .guest-inputs > div {
   flex: 1 1 150px;
 }
 
-.guest-inputs label {
+form#bookingForm .guest-inputs label {
   padding-right: 0;
   position: static;
   color: #d81b60;
 }
 
-.guest-inputs label .fa-icon {
+form#bookingForm .guest-inputs label .fa-icon {
   position: static;
   margin-left: 6px;
   color: #d81b60;
@@ -255,12 +253,26 @@ input[type="submit"]:hover {
   vertical-align: middle;
 }
 
-.guest-inputs input[readonly] {
+form#bookingForm .guest-inputs input[readonly] {
   background-color: #fce4ec !important;
   cursor: not-allowed;
   user-select: text;
   color: #880e4f;
   font-weight: 700;
+}
+
+/* پیام موفقیت رزرو */
+#successMessage {
+  max-width: 650px;
+  margin: 10px auto 40px;
+  padding: 15px 20px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  user-select: none;
 }
 
 /* فوتر */
@@ -286,7 +298,7 @@ footer {
     font-size: 1.8rem;
   }
 
-  header p {
+  .intro-text p {
     font-size: 1rem;
   }
 
@@ -295,7 +307,7 @@ footer {
     padding: 8px 14px;
   }
 
-  .guest-inputs {
+  form#bookingForm .guest-inputs {
     flex-direction: column;
   }
 }
