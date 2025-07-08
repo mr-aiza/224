@@ -12,6 +12,8 @@ body {
   color: #333;
   overflow-x: hidden;
   line-height: 1.7;
+  max-width: 100vw; /* جلوگیری از اسکرول افقی */
+  overflow-wrap: break-word;
 }
 
 canvas {
@@ -26,7 +28,7 @@ canvas {
 nav {
   background: #fff0f5;
   display: flex;
-  flex-wrap: nowrap; /* هیچ شکست خطی نداشته باشه */
+  flex-wrap: nowrap !important; /* جلوگیری از ستون شدن در موبایل */
   justify-content: center;
   gap: 10px;
   padding: 12px;
@@ -34,13 +36,8 @@ nav {
   position: sticky;
   top: 0;
   z-index: 10;
-  overflow-x: auto; /* اگر جا نشد، اسکرول افقی فعال بشه */
-  -webkit-overflow-scrolling: touch; /* اسکرول نرم برای موبایل */
-  scrollbar-width: none; /* مخفی کردن اسکرول در فایرفاکس */
-}
-
-nav::-webkit-scrollbar {
-  display: none; /* مخفی کردن اسکرول در وبکیت */
+  overflow-x: auto; /* اضافه کردن اسکرول افقی اگر کمبود فضا بود */
+  -webkit-overflow-scrolling: touch;
 }
 
 nav a {
@@ -50,8 +47,8 @@ nav a {
   border-radius: 8px;
   font-weight: bold;
   transition: 0.3s;
-  white-space: nowrap; /* جلوگیری از شکست متن */
-  flex-shrink: 0; /* از کوچک شدن جلوگیری کن */
+  white-space: nowrap; /* جلوگیری از شکستن متن لینک */
+  flex-shrink: 0; /* جلوگیری از کوچک شدن لینک‌ها */
 }
 
 nav a:hover,
@@ -79,6 +76,8 @@ header h1 {
   margin: 0 auto;
   line-height: 1.6;
   white-space: pre-line;
+  padding: 0 10px; /* اضافه کردن padding برای جلوگیری از چسبیدن به لبه صفحه */
+  word-break: break-word;
 }
 
 main {
@@ -141,7 +140,6 @@ main {
   font-size: 1.6rem;
   margin-bottom: 20px;
   text-align: center;
-  user-select: none;
 }
 
 /* اسلایدر نظرات */
@@ -156,8 +154,6 @@ main {
   box-shadow: 0 0 20px rgba(200, 50, 90, 0.15);
   position: relative;
   transition: transform 0.6s ease-in-out;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
 }
 
 .comment {
@@ -171,7 +167,7 @@ main {
   justify-content: center;
   font-style: italic;
   text-align: center;
-  scroll-snap-align: start;
+  word-break: break-word;
 }
 
 /* دکمه پخش موسیقی */
@@ -212,9 +208,10 @@ main {
     font-size: 0.9rem;
   }
 
-  /* این قسمت حذف شد که nav بصورت ستونی نشه */
-  /* nav {
-    flex-direction: column;
+  /* حذف تغییر حالت ناوبری در موبایل، همون حالت افقی بمونه */
+  nav {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
     gap: 8px;
-  } */
+  }
 }
