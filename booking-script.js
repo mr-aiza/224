@@ -1,191 +1,119 @@
-// دریافت المنت‌ها
-const dateInput = document.getElementById('eventDate');
-const form = document.getElementById('bookingForm');
-const formError = document.getElementById('formError');
-const formSuccess = document.getElementById('formSuccess');
-const trackingCodeElem = document.getElementById('trackingCode');
+// --- مدیریت زیرمنوهای خدمات ---
+const servicesCheckboxes = document.querySelectorAll('input[type="checkbox"][name="services"]');
+servicesCheckboxes.forEach(chk => {
+  chk.addEventListener('change', () => {
+    const submenu = document.getElementById('submenu-' + chk.value);
+    if (submenu) {
+      submenu.style.display = chk.checked ? 'block' : 'none';
+
+      // اگر تیک خورده نیست، رادیوهای داخل را ریست کن
+      if (!chk.checked) {
+        const radios = submenu.querySelectorAll('input[type="radio"]');
+        radios.forEach(r => r.checked = false);
+      }
+    }
+  });
+});
+
+// --- محاسبه تعداد مهمانداران بر اساس تعداد مهمان‌ها ---
 const guestCountInput = document.getElementById('guestCount');
 const staffCountText = document.getElementById('staffCountText');
-const bgMusic = document.getElementById('bgMusic');
-const audioToggle = document.getElementById('audioToggle');
 
-const reservedDatesUrl = 'reserved_dates.json';
-let reservedDates = [];
-
-// شمسی‌سازی تاریخ با moment-jalaali
-function toJalaali(dateStr) {
-  if (window.moment && window.moment.loadPersian) {
-    return window.moment(dateStr).format('jYYYY/jMM/jDD');
-  }
-  return dateStr;
+function updateStaffCount() {
+  let guestCount = parseInt(guestCountInput.value);
+  if (isNaN(guestCount) || guestCount < 1) guestCount = 0;
+  const staffCount = Math.ceil(guestCount / 15);
+  staffCountText.textContent = `تعداد مهمانداران: ${staffCount}`;
 }
+guestCountInput.addEventListener('input', updateStaffCount);
+updateStaffCount();
 
-// بارگذاری تاریخ‌های رزرو شده و غیر فعال‌سازی آن‌ها
-async function loadReservedDates() {
-  try {
-    const response = await fetch(reservedDatesUrl);
-    if (!response.ok) throw new Error('خطا در دریافت تاریخ‌ها');
-    reservedDates = await response.json();
-    const today = new Date().toISOString().split('T')[0];
-    dateInput.min = today;
+// --- کنترل موسیقی ---
+const audio = document.getElementById('bgMusic');
+const audioToggleBtn = document.getElementById('audioToggle');
+let isPlaying = false;
 
-    dateInput.addEventListener('input', () => {
-      if (reservedDates.includes(dateInput.value)) {
-        alert('این تاریخ قبلاً رزرو شده است.');
-        dateInput.value = '';
-      }
-    });
-  } catch (err) {
-    console.error(err);
-  }
-}
-loadReservedDates();
-
-// نمایش زیرمنوها
-const servicesCheckboxes = {
-  fingerFood: document.getElementById('fingerFood'),
-  flowerDecoration: document.getElementById('flowerDecoration'),
-  dinner: document.getElementById('dinner'),
-  juice: document.getElementById('juice'),
-};
-const submenus = {
-  fingerFood: document.getElementById('submenu-fingerFood'),
-  flowerDecoration: document.getElementById('submenu-flowerDecoration'),
-  dinner: document.getElementById('submenu-dinner'),
-  juice: document.getElementById('submenu-juice'),
-};
-Object.keys(servicesCheckboxes).forEach((key) => {
-  servicesCheckboxes[key].addEventListener('change', (e) => {
-    submenus[key].style.display = e.target.checked ? 'block' : 'none';
-    if (!e.target.checked) {
-      const radios = submenus[key].querySelectorAll('input[type="radio"]');
-      radios.forEach((r) => (r.checked = false));
-    }
-  });
-});
-
-// محاسبه مهماندار
-guestCountInput.addEventListener('input', () => {
-  const guests = parseInt(guestCountInput.value, 10);
-  const staff = !isNaN(guests) && guests > 0 ? Math.ceil(guests / 15) : 0;
-  staffCountText.textContent = `تعداد مهمانداران: ${staff}`;
-});
-
-// کنترل موزیک
-audioToggle.addEventListener('click', () => {
-  if (bgMusic.paused) {
-    bgMusic.play();
-    audioToggle.style.backgroundColor = '#b71c1c';
+audioToggleBtn.addEventListener('click', () => {
+  if (isPlaying) {
+    audio.pause();
+    audioToggleBtn.innerHTML = '<i class="fa fa-music"></i>';
   } else {
-    bgMusic.pause();
-    audioToggle.style.backgroundColor = '#ec407a';
+    audio.play().catch(() => alert("برای پخش موسیقی ابتدا روی صفحه کلیک کنید."));
+    audioToggleBtn.innerHTML = '<i class="fa fa-pause"></i>';
   }
+  isPlaying = !isPlaying;
 });
 
-// تولید کد پیگیری
+document.addEventListener('click', function autoPlayOnce() {
+  audio.play().catch(() => {});
+  document.removeEventListener('click', autoPlayOnce);
+});
+
+// --- نمایش تاریخ شمسی در input تاریخ ---
+const eventDateInput = document.getElementById('eventDate');
+
+// وقتی کاربر تاریخ انتخاب می‌کند، تاریخ شمسی را در یک div نمایش بده (می‌تونی در صورت نیاز فعال کنی)
+const persianDateDisplay = document.createElement('div');
+ persianDateDisplay.style.marginTop = '6px';
+ persianDateDisplay.style.color = '#880e4f';
+ eventDateInput.parentNode.insertBefore(persianDateDisplay, eventDateInput.nextSibling);
+
+ eventDateInput.addEventListener('change', () => {
+  if (eventDateInput.value) {
+    const m = moment(eventDateInput.value, 'YYYY-MM-DD');
+     persianDateDisplay.textContent = 'تاریخ شمسی: ' + m.format('jYYYY/jMM/jDD');
+/  } else {
+     persianDateDisplay.textContent = '';
+   }
+});
+
+// --- اعتبارسنجی و ارسال فرم ---
+
+const bookingForm = document.getElementById('bookingForm');
+const formError = document.getElementById('formError');
+const formSuccess = document.getElementById('formSuccess');
+const trackingCodeDiv = document.getElementById('trackingCode');
+
 function generateTrackingCode() {
-  return 'TRK-' + Date.now().toString(36).toUpperCase();
+  // یک کد پیگیری یکتا ساده بر اساس زمان و عدد تصادفی
+  const now = Date.now().toString(36).toUpperCase();
+  const rand = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+  return `RW-${now}-${rand}`;
 }
 
-// ارسال فرم
-form.addEventListener('submit', async (e) => {
+bookingForm.addEventListener('submit', (e) => {
   e.preventDefault();
+
   formError.style.display = 'none';
-  formError.textContent = '';
   formSuccess.style.display = 'none';
-  trackingCodeElem.style.display = 'none';
+  trackingCodeDiv.style.display = 'none';
 
-  // اعتبارسنجی شماره و تاریخ
-  if (!dateInput.value || reservedDates.includes(dateInput.value)) {
+  // اعتبارسنجی ساده فرم
+  if (!bookingForm.checkValidity()) {
+    formError.textContent = 'لطفاً تمام فیلدهای اجباری را به درستی پر کنید.';
     formError.style.display = 'block';
-    formError.textContent = 'تاریخ نامعتبر یا رزرو شده انتخاب شده است.';
-    return;
-  }
-  const phonePattern = /^09\d{9}$/;
-  if (!phonePattern.test(form.phone.value)) {
-    formError.style.display = 'block';
-    formError.textContent = 'فرمت شماره تلفن نادرست است.';
     return;
   }
 
-  // زیرگزینه‌ها
-  for (const key of Object.keys(servicesCheckboxes)) {
-    if (servicesCheckboxes[key].checked) {
-      const radios = submenus[key].querySelectorAll('input[type="radio"]');
-      if (![...radios].some((r) => r.checked)) {
-        formError.style.display = 'block';
-        formError.textContent = `لطفاً سطح ${key} را مشخص کنید.`;
-        return;
-      }
-    }
+  // حداقل یک خدمت باید انتخاب شود
+  const anyServiceChecked = [...servicesCheckboxes].some(chk => chk.checked);
+  if (!anyServiceChecked) {
+    formError.textContent = 'لطفاً حداقل یک خدمت را انتخاب کنید.';
+    formError.style.display = 'block';
+    return;
   }
 
+  // تولید کد پیگیری و نمایش موفقیت
   const trackingCode = generateTrackingCode();
-  const selectedServices = [];
-  document.querySelectorAll('input[name="services"]:checked').forEach((el) => {
-    selectedServices.push(el.value);
-  });
+  formSuccess.textContent = 'رزرو شما با موفقیت ثبت شد!';
+  formSuccess.style.display = 'block';
+  trackingCodeDiv.textContent = 'کد پیگیری شما: ' + trackingCode;
+  trackingCodeDiv.style.display = 'block';
 
-  const contractText = `
-fullname: ${form.fullname.value}
-phone: ${form.phone.value}
-email: ${form.email.value}
-eventDate: ${form.eventDate.value}
-eventType: ${form.eventType.value}
-services: ${selectedServices.join(', ')}
-fingerFoodLevel: ${(form.fingerFoodLevel?.value) || ''}
-flowerDecorationLevel: ${(form.flowerDecorationLevel?.value) || ''}
-dinnerType: ${(form.dinnerType?.value) || ''}
-juiceLevel: ${(form.juiceLevel?.value) || ''}
-guestCount: ${form.guestCount.value}
-notes: ${form.notes.value}
-trackingCode: ${trackingCode}
-  `.trim();
+  // اینجا می‌توانی کد ارسال داده‌ها به سرور یا ذخیره در گیت‌هاب را قرار دهی
 
-  // ارسال به بک‌اند
-  try {
-    const res = await fetch(form.action, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        fullname: form.fullname.value,
-        phone: form.phone.value,
-        email: form.email.value,
-        eventDate: form.eventDate.value,
-        eventType: form.eventType.value,
-        services: selectedServices,
-        fingerFoodLevel: form.fingerFoodLevel?.value || '',
-        flowerDecorationLevel: form.flowerDecorationLevel?.value || '',
-        dinnerType: form.dinnerType?.value || '',
-        juiceLevel: form.juiceLevel?.value || '',
-        guestCount: form.guestCount.value,
-        notes: form.notes.value,
-        trackingCode,
-        contractText,
-      }),
-    });
+  // ریست فرم در صورت نیاز
+  // bookingForm.reset();
+  // به‌روزرسانی زیرمنوها و مهمانداران بعد از ریست اگر استفاده کردی
 
-    if (res.ok) {
-      formSuccess.style.display = 'block';
-      formSuccess.textContent = 'رزرو با موفقیت ثبت شد!';
-      trackingCodeElem.style.display = 'block';
-      trackingCodeElem.textContent = `کد پیگیری: ${trackingCode}`;
-
-      // دانلود فایل قرارداد
-      const blob = new Blob([contractText], { type: 'text/plain;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `contract-${trackingCode}.txt`;
-      link.click();
-
-      form.reset();
-      loadReservedDates();
-      staffCountText.textContent = 'تعداد مهمانداران: 0';
-    } else {
-      throw new Error('خطا در ارسال رزرو');
-    }
-  } catch (err) {
-    formError.style.display = 'block';
-    formError.textContent = err.message || 'خطا در ارسال';
-  }
 });
