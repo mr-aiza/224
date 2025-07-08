@@ -1,4 +1,3 @@
-/* فایل style.css */
 @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
 
 * {
@@ -9,10 +8,10 @@
 
 body {
   font-family: 'Vazir', sans-serif;
-  background: linear-gradient(to right, #fff0f5, #ffe4e1);
+  background: linear-gradient(145deg, #f9f4f6, #fce4ec);
   color: #333;
+  line-height: 1.8;
   overflow-x: hidden;
-  direction: rtl;
 }
 
 canvas {
@@ -22,97 +21,162 @@ canvas {
   z-index: -1;
 }
 
+/* نوار ناوبری */
 nav {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;
-  background-color: #fff;
-  padding: 15px;
-  border-bottom: 2px solid #f8bbd0;
-  flex-wrap: nowrap;
+  background: #ffffffd9;
+  backdrop-filter: blur(5px);
+  border-bottom: 1px solid #f8bbd0;
+  padding: 12px 10px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 nav a {
+  margin: 5px 10px;
+  padding: 8px 14px;
+  border-radius: 8px;
   color: #d81b60;
-  font-weight: bold;
   text-decoration: none;
-  font-size: 1rem;
-}
-
-header.hero-text {
-  text-align: center;
-  padding: 40px 20px;
-  background-color: rgba(255,255,255,0.6);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-
-header.hero-text h1, header.hero-text p {
   font-weight: bold;
-  text-shadow: 1px 1px 2px #d81b60;
-  margin-bottom: 14px;
-  font-size: 1.3rem;
+  transition: 0.3s ease;
 }
 
-header.hero-text h1 {
-  font-size: 2rem;
-  color: #c2185b;
+nav a:hover,
+nav a.active {
+  background-color: #f48fb1;
+  color: #fff;
 }
 
-main {
-  padding: 30px 20px;
-  max-width: 900px;
-  margin: auto;
-}
-
-section {
-  margin-bottom: 50px;
-  padding: 30px;
-  background-color: rgba(255, 255, 255, 0.8);
+/* دکمه موزیک */
+#audioToggle {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  padding: 10px 18px;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #ec407a;
+  color: #fff;
+  border: none;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 0 10px #ec407a;
 }
 
-section h2 {
-  font-size: 1.5rem;
-  color: #ec407a;
+/* هدر */
+header {
+  text-align: center;
+  padding: 60px 20px 30px;
+  background: linear-gradient(to bottom, #fff0f5, #fce4ec);
+}
+
+header h1 {
+  font-size: 2.4rem;
+  color: #c2185b;
+  text-shadow: 0 0 3px #f48fb1;
   margin-bottom: 20px;
 }
 
-section ul {
+.intro-text p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: 0 0 2px #fff;
+  margin: 8px 0;
+  color: #880e4f;
+}
+
+/* بدنه اصلی */
+main {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+/* بخش خدمات */
+.service-box {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #f48fb1;
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 6px 18px rgba(248, 187, 208, 0.25);
+}
+
+.service-box h2 {
+  font-size: 1.6rem;
+  color: #c2185b;
+  margin-bottom: 15px;
+}
+
+.service-box ul {
   list-style: none;
-  padding-right: 0;
-  line-height: 2.2;
+}
+
+.service-box li {
+  margin-bottom: 10px;
+  color: #444;
+  font-size: 1.05rem;
+}
+
+/* نظرات کاربران */
+.comments {
+  background: rgba(255,255,255,0.8);
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 60px;
+  border: 2px solid #f8bbd0;
+}
+
+.comments h2 {
+  font-size: 1.5rem;
+  color: #d81b60;
+  margin-bottom: 20px;
+}
+
+.comment {
+  background: rgba(255,255,255,0.85);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 6px rgba(220, 20, 60, 0.08);
+  color: #555;
   font-size: 1rem;
 }
 
-.comment-box p {
-  background: rgba(248,187,208,0.3);
-  border-right: 5px solid #ec407a;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: bold;
-}
-
+/* فوتر */
 footer {
-  background: #fce4ec;
-  color: #880e4f;
   text-align: center;
+  background: #fce4ec;
   padding: 20px;
-  font-weight: bold;
+  color: #c2185b;
+  font-weight: 600;
+  border-top: 2px solid #f48fb1;
 }
 
-@media screen and (max-width: 768px) {
+/* ریسپانسیو */
+@media (max-width: 768px) {
   nav {
     flex-direction: row;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  header.hero-text h1 {
-    font-size: 1.6rem;
+
+  header h1 {
+    font-size: 1.8rem;
   }
-  header.hero-text p {
+
+  .intro-text p {
     font-size: 1rem;
+  }
+
+  #audioToggle {
+    font-size: 12px;
+    padding: 8px 14px;
   }
 }
