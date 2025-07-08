@@ -6,6 +6,70 @@
   <title>نمونه‌کارها | تشریفات رویایی</title>
   <link rel="stylesheet" href="Style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+  <style>
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(248, 187, 208, 0.25);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .item:hover {
+      transform: translateY(-8px);
+    }
+
+    .item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: 0.3s ease all;
+    }
+
+    .item:hover img {
+      filter: brightness(65%);
+    }
+
+    .item p {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 14px;
+      margin: 0;
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+      font-weight: 600;
+      line-height: 1.5;
+      transition: all 0.3s ease-in-out;
+      opacity: 0;
+    }
+
+    .item:hover p {
+      opacity: 1;
+    }
+
+    @media (max-width: 600px) {
+      .item img {
+        height: 180px;
+      }
+
+      .item p {
+        font-size: 0.9rem;
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -33,31 +97,31 @@
   <div class="gallery">
     <div class="item">
       <img src="image/1.jpg" alt="مراسم عروسی کلاسیک" />
-      <p>💍 مراسم کلاسیک در تالاری مجلل با گل‌آرایی قرمز و طلایی</p>
+      <p>💍 مراسم کلاسیک در تالار مجلل با گل‌آرایی قرمز و طلایی</p>
     </div>
     <div class="item">
       <img src="image/2.jpg" alt="جشن عقد فضای باز" />
-      <p>🌸 جشن عقد در فضای باز با نورپردازی رمانتیک و طراحی لاکچری</p>
+      <p>🌸 جشن عقد در فضای باز با نورپردازی عاشقانه و طراحی لاکچری</p>
     </div>
     <div class="item">
       <img src="image/3.jpg" alt="میز شام عروسی" />
-      <p>🍽️ چیدمان اختصاصی میز شام با دسرهای خاص و رنگ‌بندی شیک</p>
+      <p>🍽️ چیدمان ویژه میز شام با دسرهای خاص و طراحی صورتی-طلایی</p>
     </div>
     <div class="item">
       <img src="image/4.jpg" alt="گل‌آرایی ویژه" />
-      <p>🌷 گل‌آرایی طبیعی سالن با دیزاین هنری و ترکیب رنگ خاص</p>
+      <p>🌷 گل‌آرایی خاص سالن با گل‌های طبیعی و دیزاین هنری</p>
     </div>
     <div class="item">
       <img src="image/5.jpg" alt="موسیقی زنده" />
-      <p>🎶 اجرای موسیقی زنده توسط نوازندگان مجرب در فضای باز</p>
+      <p>🎶 اجرای زنده با نوازندگان و DJ حرفه‌ای در مراسم‌های شاد</p>
     </div>
     <div class="item">
-      <img src="image/6.jpg" alt="مراسم VIP" />
-      <p>🚘 مراسم VIP با ترنسفر لاکچری و طراحی اختصاصی جایگاه عروس و داماد</p>
+      <img src="image/6.jpg" alt="ترنسفر VIP" />
+      <p>🚘 ترنسفر VIP برای عروس و داماد با خودروهای لاکچری</p>
     </div>
     <div class="item">
       <img src="image/7.jpg" alt="سالن عقد خاص" />
-      <p>💒 طراحی سالن عقد با میز شیشه‌ای، شمع، گل و موسیقی زنده</p>
+      <p>💒 طراحی خاص سالن عقد با نورپردازی و گل‌آرایی شیشه‌ای</p>
     </div>
   </div>
 </main>
