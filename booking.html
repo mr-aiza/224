@@ -1,22 +1,13 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>رزرو مراسم | تشریفات رویایی</title>
-  
-  <!-- فونت و آیکون‌ها -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Vazir&display=swap"
-    rel="stylesheet"
-  />
-  <!-- استفاده از CDN مستقیم فونت‌آوسام به جای kit -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
-  
-  <link rel="stylesheet" href="Style.css" />
+
+  <link rel="stylesheet" href="Style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
 
@@ -35,38 +26,19 @@
 </header>
 
 <main>
-  <form id="bookingForm" action="/submit" method="POST" novalidate>
+  <form id="bookingForm" class="service-box" action="/submit" method="POST" novalidate>
     <label for="fullname">نام و نام خانوادگی:</label>
-    <input
-      type="text"
-      id="fullname"
-      name="fullname"
-      placeholder="مثلاً علی رضایی"
-      required
-    />
+    <input type="text" id="fullname" name="fullname" placeholder="مثلاً علی رضایی" required>
 
     <label for="phone">شماره تماس:</label>
-    <input
-      type="tel"
-      id="phone"
-      name="phone"
-      placeholder="مثلاً 09123456789"
-      pattern="09\d{9}"
-      required
-    />
+    <input type="tel" id="phone" name="phone" placeholder="مثلاً 09123456789" pattern="09\d{9}" required>
     <div class="info-text">فرمت شماره: 09xxxxxxxxx</div>
 
     <label for="email">ایمیل:</label>
-    <input
-      type="email"
-      id="email"
-      name="email"
-      placeholder="example@mail.com"
-      required
-    />
+    <input type="email" id="email" name="email" placeholder="example@mail.com" required>
 
     <label for="eventDate">تاریخ مراسم:</label>
-    <input type="date" id="eventDate" name="eventDate" required />
+    <input type="date" id="eventDate" name="eventDate" required>
     <div class="info-text">تاریخ‌هایی که رزرو شده‌اند غیرفعال هستند.</div>
 
     <label for="eventType">نوع مراسم:</label>
@@ -81,125 +53,45 @@
     <fieldset class="checkbox-group">
       <legend>امکانات انتخابی:</legend>
 
-      <label for="fingerFood"
-        ><input
-          type="checkbox"
-          id="fingerFood"
-          name="services"
-          value="fingerFood"
-        />فینگر فود</label
-      >
+      <label><input type="checkbox" id="fingerFood" name="services" value="fingerFood">فینگر فود</label>
       <div id="submenu-fingerFood" class="submenu">
-        <label
-          ><input
-            type="radio"
-            name="fingerFoodLevel"
-            value="اقتصادی"
-          />اقتصادی</label
-        >
-        <label
-          ><input type="radio" name="fingerFoodLevel" value="معمولی" />معمولی</label
-        >
-        <label
-          ><input type="radio" name="fingerFoodLevel" value="ویژه" />ویژه</label
-        >
+        <label><input type="radio" name="fingerFoodLevel" value="اقتصادی">اقتصادی</label>
+        <label><input type="radio" name="fingerFoodLevel" value="معمولی">معمولی</label>
+        <label><input type="radio" name="fingerFoodLevel" value="ویژه">ویژه</label>
       </div>
 
-      <label for="flowerDecoration"
-        ><input
-          type="checkbox"
-          id="flowerDecoration"
-          name="services"
-          value="flowerDecoration"
-        />گل‌آرایی</label
-      >
+      <label><input type="checkbox" id="flowerDecoration" name="services" value="flowerDecoration">گل‌آرایی</label>
       <div id="submenu-flowerDecoration" class="submenu">
-        <label
-          ><input
-            type="radio"
-            name="flowerDecorationLevel"
-            value="اقتصادی"
-          />اقتصادی</label
-        >
-        <label
-          ><input
-            type="radio"
-            name="flowerDecorationLevel"
-            value="معمولی"
-          />معمولی</label
-        >
-        <label
-          ><input type="radio" name="flowerDecorationLevel" value="ویژه" />ویژه</label
-        >
+        <label><input type="radio" name="flowerDecorationLevel" value="اقتصادی">اقتصادی</label>
+        <label><input type="radio" name="flowerDecorationLevel" value="معمولی">معمولی</label>
+        <label><input type="radio" name="flowerDecorationLevel" value="ویژه">ویژه</label>
       </div>
 
-      <label for="juice"
-        ><input
-          type="checkbox"
-          id="juice"
-          name="services"
-          value="juice"
-        />آب‌میوه</label
-      >
+      <label><input type="checkbox" id="juice" name="services" value="juice">آب‌میوه</label>
       <div id="submenu-juice" class="submenu">
-        <label
-          ><input type="radio" name="juiceLevel" value="اقتصادی" />اقتصادی</label
-        >
-        <label
-          ><input type="radio" name="juiceLevel" value="معمولی" />معمولی</label
-        >
-        <label><input type="radio" name="juiceLevel" value="ویژه" />ویژه</label>
+        <label><input type="radio" name="juiceLevel" value="اقتصادی">اقتصادی</label>
+        <label><input type="radio" name="juiceLevel" value="معمولی">معمولی</label>
+        <label><input type="radio" name="juiceLevel" value="ویژه">ویژه</label>
       </div>
 
-      <label for="dinner"
-        ><input
-          type="checkbox"
-          id="dinner"
-          name="services"
-          value="dinner"
-        />شام</label
-      >
+      <label><input type="checkbox" id="dinner" name="services" value="dinner">شام</label>
       <div id="submenu-dinner" class="submenu">
-        <label
-          ><input type="radio" name="dinnerType" value="دیس پرس" />دیس پرس</label
-        >
-        <label
-          ><input type="radio" name="dinnerType" value="سلف سرویس" />سلف سرویس</label
-        >
+        <label><input type="radio" name="dinnerType" value="دیس پرس">دیس پرس</label>
+        <label><input type="radio" name="dinnerType" value="سلف سرویس">سلف سرویس</label>
       </div>
     </fieldset>
 
     <label for="guestCount">تعداد مهمان‌ها:</label>
-    <input
-      type="number"
-      id="guestCount"
-      name="guestCount"
-      placeholder="مثلاً 50"
-      min="1"
-      required
-    />
+    <input type="number" id="guestCount" name="guestCount" placeholder="مثلاً 50" min="1" required>
     <div class="info-text" id="staffCountText">تعداد مهمانداران: 0</div>
 
     <label for="notes">توضیحات اضافی:</label>
-    <textarea
-      id="notes"
-      name="notes"
-      rows="4"
-      placeholder="در صورت نیاز توضیح دهید..."
-    ></textarea>
+    <textarea id="notes" name="notes" rows="4" placeholder="در صورت نیاز توضیح دهید..."></textarea>
 
-    <input type="submit" value="ارسال رزرو" />
-
-    <div
-      id="formError"
-      class="error-text"
-      style="display: none; margin-top: 15px"
-    ></div>
-    <div
-      id="formSuccess"
-      style="color: #b3d98c; font-weight: 700; display: none; margin-top: 15px"
-    ></div>
-    <div id="trackingCode" style="color:#b3d98c; font-weight: 700; margin-top: 15px; display:none;"></div>
+    <input type="submit" value="ارسال رزرو">
+    <div id="formError" class="error-text" style="display:none;margin-top:15px"></div>
+    <div id="formSuccess" style="color:#b3d98c;font-weight:700;display:none;margin-top:15px"></div>
+    <div id="trackingCode" style="color:#b3d98c;font-weight:700;margin-top:15px;display:none;"></div>
   </form>
 </main>
 
@@ -212,224 +104,7 @@
   <i class="fa fa-music"></i>
 </button>
 
-<script>
-  const dateInput = document.getElementById('eventDate');
-  const form = document.getElementById('bookingForm');
-  const formError = document.getElementById('formError');
-  const formSuccess = document.getElementById('formSuccess');
-  const trackingCodeElem = document.getElementById('trackingCode');
-
-  const guestCountInput = document.getElementById('guestCount');
-  const staffCountText = document.getElementById('staffCountText');
-
-  const bgMusic = document.getElementById('bgMusic');
-  const audioToggle = document.getElementById('audioToggle');
-
-  const reservedDatesUrl = 'reserved_dates.json';
-  let reservedDates = [];
-
-  // شمسی سازی تاریخ با moment-jalaali
-  function toJalaali(dateStr) {
-    if (window.moment && window.moment.loadPersian) {
-      return window.moment(dateStr).format('jYYYY/jMM/jDD');
-    }
-    return dateStr;
-  }
-
-  async function loadReservedDates() {
-    try {
-      const response = await fetch(reservedDatesUrl);
-      if (!response.ok) throw new Error('خطا در دریافت تاریخ‌های رزرو شده');
-      reservedDates = await response.json();
-
-      const today = new Date().toISOString().split('T')[0];
-      dateInput.min = today;
-
-      dateInput.addEventListener('input', () => {
-        if (reservedDates.includes(dateInput.value)) {
-          alert('این تاریخ قبلاً رزرو شده است، لطفاً تاریخ دیگری انتخاب کنید.');
-          dateInput.value = '';
-        }
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  loadReservedDates();
-
-  // نمایش زیرمنوها
-  const servicesCheckboxes = {
-    fingerFood: document.getElementById('fingerFood'),
-    flowerDecoration: document.getElementById('flowerDecoration'),
-    dinner: document.getElementById('dinner'),
-    juice: document.getElementById('juice'),
-  };
-
-  const submenus = {
-    fingerFood: document.getElementById('submenu-fingerFood'),
-    flowerDecoration: document.getElementById('submenu-flowerDecoration'),
-    dinner: document.getElementById('submenu-dinner'),
-    juice: document.getElementById('submenu-juice'),
-  };
-
-  Object.keys(servicesCheckboxes).forEach((key) => {
-    servicesCheckboxes[key].addEventListener('change', (e) => {
-      submenus[key].style.display = e.target.checked ? 'block' : 'none';
-      if (!e.target.checked) {
-        const radios = submenus[key].querySelectorAll('input[type="radio"]');
-        radios.forEach((r) => (r.checked = false));
-      }
-    });
-  });
-
-   // محاسبه تعداد مهمانداران
-  guestCountInput.addEventListener('input', () => {
-    const guests = parseInt(guestCountInput.value, 10);
-    if (!isNaN(guests) && guests > 0) {
-      // هر 15 مهمان یک مهماندار، گرد کردن به بالا
-      const staff = Math.ceil(guests / 15);
-      staffCountText.textContent = `تعداد مهمانداران: ${staff}`;
-    } else {
-      staffCountText.textContent = 'تعداد مهمانداران: 0';
-    }
-  });
-
-  // پخش/توقف موسیقی پس زمینه
-  audioToggle.addEventListener('click', () => {
-    if (bgMusic.paused) {
-      bgMusic.play();
-      audioToggle.style.backgroundColor = '#b71c1c';
-    } else {
-      bgMusic.pause();
-      audioToggle.style.backgroundColor = '#ec407a';
-    }
-  });
-
-  // ساخت کد پیگیری یکتا
-  function generateTrackingCode() {
-    return 'TRK-' + Date.now().toString(36).toUpperCase();
-  }
-
-  // ارسال فرم
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    formError.style.display = 'none';
-    formError.textContent = '';
-    formSuccess.style.display = 'none';
-    trackingCodeElem.style.display = 'none';
-    trackingCodeElem.textContent = '';
-
-    if (!dateInput.value) {
-      formError.style.display = 'block';
-      formError.textContent = 'لطفاً تاریخ مراسم را انتخاب کنید.';
-      return;
-    }
-    if (reservedDates.includes(dateInput.value)) {
-      formError.style.display = 'block';
-      formError.textContent = 'این تاریخ قبلاً رزرو شده است، لطفاً تاریخ دیگری انتخاب کنید.';
-      return;
-    }
-
-    const phone = form.phone.value.trim();
-    const phonePattern = /^09\d{9}$/;
-    if (!phonePattern.test(phone)) {
-      formError.style.display = 'block';
-      formError.textContent = 'شماره تماس معتبر نیست. فرمت صحیح: 09xxxxxxxxx';
-      return;
-    }
-
-    for (const key of Object.keys(servicesCheckboxes)) {
-      if (servicesCheckboxes[key].checked) {
-        const radios = submenus[key].querySelectorAll('input[type="radio"]');
-        if (![...radios].some((r) => r.checked)) {
-          formError.style.display = 'block';
-          formError.textContent = `لطفاً گزینه مربوط به "${servicesCheckboxes[key].parentNode.textContent.trim()}" را انتخاب کنید.`;
-          return;
-        }
-      }
-    }
-
-    const trackingCode = generateTrackingCode();
-
-    // ساخت متن قرارداد
-    let contractText = '';
-    contractText += `fullname: ${form.fullname.value}\n`;
-    contractText += `phone: ${form.phone.value}\n`;
-    contractText += `email: ${form.email.value}\n`;
-    contractText += `eventDate: ${form.eventDate.value}\n`;
-    contractText += `eventType: ${form.eventType.value}\n`;
-
-    const selectedServices = [];
-    document.querySelectorAll('input[name="services"]:checked').forEach((el) => {
-      selectedServices.push(el.value);
-    });
-
-    contractText += `services: ${selectedServices.join(', ')}\n`;
-
-    // اضافه کردن زیرگزینه‌ها
-    ['fingerFoodLevel', 'flowerDecorationLevel', 'dinnerType', 'juiceLevel'].forEach((name) => {
-      const sel = form.querySelector(`input[name="${name}"]:checked`);
-      if (sel) {
-        contractText += `${name}: ${sel.value}\n`;
-      }
-    });
-
-    contractText += `guestCount: ${form.guestCount.value}\n`;
-    contractText += `notes: ${form.notes.value}\n`;
-    contractText += `trackingCode: ${trackingCode}\n`;
-
-    // ارسال داده به سرور (رندر)
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fullname: form.fullname.value,
-          phone: form.phone.value,
-          email: form.email.value,
-          eventDate: form.eventDate.value,
-          eventType: form.eventType.value,
-          services: selectedServices,
-          fingerFoodLevel: form.fingerFoodLevel.value || '',
-          flowerDecorationLevel: form.flowerDecorationLevel.value || '',
-          dinnerType: form.dinnerType.value || '',
-          juiceLevel: form.juiceLevel.value || '',
-          guestCount: form.guestCount.value,
-          notes: form.notes.value,
-          trackingCode,
-          contractText,
-        }),
-      });
-
-      if (res.ok) {
-        formSuccess.style.display = 'block';
-        formSuccess.textContent = 'رزرو با موفقیت ثبت شد!';
-
-        trackingCodeElem.style.display = 'block';
-        trackingCodeElem.textContent = `کد پیگیری شما: ${trackingCode}`;
-
-        // دانلود فایل txt قرارداد برای کاربر
-        const blob = new Blob([contractText], { type: 'text/plain;charset=utf-8' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `contract-${trackingCode}.txt`;
-        link.click();
-
-        form.reset();
-        loadReservedDates();
-        staffCountText.textContent = 'تعداد مهمانداران: 0';
-      } else {
-        throw new Error('خطا در ثبت رزرو');
-      }
-    } catch (err) {
-      formError.style.display = 'block';
-      formError.textContent = err.message || 'خطا در ارسال داده';
-    }
-  });
-</script>
-
-<!-- اضافه کردن کتابخانه moment-jalaali برای شمسی کردن تاریخ اگر خواستی -->
+<script src="booking-script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment-jalaali@0.9.2/build/moment-jalaali.js"></script>
 
