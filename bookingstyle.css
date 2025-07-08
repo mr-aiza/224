@@ -14,100 +14,177 @@ body {
   overflow-x: hidden;
 }
 
-main {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 0 20px;
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
-form {
-  background: rgba(255, 255, 255, 0.95);
+/* نوار ناوبری */
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: #ffffffd9;
+  backdrop-filter: blur(5px);
+  border-bottom: 1px solid #f8bbd0;
+  padding: 12px 10px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+nav a {
+  margin: 6px 12px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  color: #d81b60;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+nav a:hover,
+nav a.active {
+  background-color: #f48fb1;
+  color: #fff;
+}
+
+/* دکمه موزیک */
+#audioToggle {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  padding: 10px 18px;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #ec407a;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 0 10px #ec407a;
+}
+
+/* هدر */
+header {
+  text-align: center;
+  padding: 50px 20px 30px;
+  background: linear-gradient(to bottom, #fff0f5, #fce4ec);
+}
+
+header h1 {
+  font-size: 2.2rem;
+  color: #c2185b;
+  text-shadow: 0 0 3px #f48fb1;
+  margin-bottom: 15px;
+}
+
+header p {
+  font-size: 1.2rem;
+  color: #880e4f;
+  text-shadow: 0 0 2px #fff;
+  font-weight: bold;
+}
+
+/* فرم رزرو */
+form.service-box {
+  background: #fff;
   border: 2px solid #f48fb1;
   border-radius: 16px;
   padding: 30px;
+  margin: 40px auto;
+  max-width: 700px;
   box-shadow: 0 6px 18px rgba(248, 187, 208, 0.25);
 }
 
 form label {
   display: block;
-  margin: 15px 0 6px;
+  margin-bottom: 6px;
+  margin-top: 20px;
+  color: #c2185b;
   font-weight: bold;
-  color: #880e4f;
 }
 
 form input[type="text"],
-form input[type="tel"],
 form input[type="email"],
-form input[type="date"],
+form input[type="tel"],
 form input[type="number"],
+form input[type="date"],
 form select,
 form textarea {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #f48fb1;
+  padding: 10px;
+  border: 1px solid #f8bbd0;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 4px;
+  background-color: #fff7f9;
+  color: #333;
+}
+
+form textarea {
+  resize: vertical;
+}
+
+input[type="submit"] {
+  background-color: #ec407a;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
   border-radius: 10px;
-  background-color: #fff;
-  font-family: inherit;
-  margin-bottom: 10px;
-  transition: border-color 0.3s;
+  font-size: 1.1rem;
+  margin-top: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(220, 20, 60, 0.3);
+  transition: 0.3s;
 }
 
-form input:focus,
-form select:focus,
-form textarea:focus {
-  border-color: #d81b60;
-  outline: none;
+input[type="submit"]:hover {
+  background-color: #d81b60;
 }
 
-form .info-text {
-  font-size: 0.9rem;
-  color: #b71c1c;
-  margin-top: -8px;
-  margin-bottom: 12px;
+/* زیرمنو خدمات */
+.submenu {
+  display: none;
+  margin-top: 10px;
+  margin-right: 20px;
+  background: #fff8fb;
+  border: 1px solid #f8bbd0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.submenu label {
+  display: inline-block;
+  margin-left: 12px;
+  font-weight: normal;
+  color: #444;
+}
+
+/* گروه چک‌باکس‌ها */
+.checkbox-group {
+  margin-top: 20px;
+  border: 1px solid #f8bbd0;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: #fff6fa;
 }
 
 .checkbox-group legend {
   font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 10px;
   color: #c2185b;
+  margin-bottom: 10px;
 }
 
-.checkbox-group label {
-  display: block;
-  margin: 6px 0;
-  cursor: pointer;
-  color: #444;
-}
-
-.submenu {
-  padding-right: 20px;
-  margin-top: 4px;
-  display: none;
-}
-
-.submenu label {
-  display: block;
-  margin: 4px 0;
-  font-size: 0.95rem;
-  color: #555;
-}
-
-input[type="submit"] {
-  display: inline-block;
-  background: #d81b60;
-  color: white;
-  border: none;
-  padding: 12px 28px;
-  margin-top: 20px;
-  font-size: 1rem;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-input[type="submit"]:hover {
-  background: #ad1457;
+/* متن‌های راهنما و پیام‌ها */
+.info-text {
+  font-size: 0.85rem;
+  color: #880e4f;
+  margin-top: 5px;
 }
 
 .error-text {
@@ -115,24 +192,33 @@ input[type="submit"]:hover {
   font-weight: bold;
 }
 
-#formSuccess {
-  color: #388e3c;
-  font-weight: bold;
-  margin-top: 15px;
+/* فوتر */
+footer {
+  text-align: center;
+  background: #fce4ec;
+  padding: 20px;
+  color: #c2185b;
+  font-weight: 600;
+  border-top: 2px solid #f48fb1;
 }
 
-#trackingCode {
-  color: #00796b;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
+/* ریسپانسیو */
 @media (max-width: 768px) {
-  form {
-    padding: 20px;
+  header h1 {
+    font-size: 1.6rem;
   }
 
-  input[type="submit"] {
-    width: 100%;
+  header p {
+    font-size: 1rem;
+  }
+
+  nav a {
+    padding: 6px 10px;
+    font-size: 0.95rem;
+  }
+
+  #audioToggle {
+    font-size: 12px;
+    padding: 8px 14px;
   }
 }
