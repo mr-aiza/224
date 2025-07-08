@@ -2,16 +2,16 @@
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  direction: rtl;
 }
 
 body {
   margin: 0;
   font-family: 'Vazir', sans-serif;
-  background: linear-gradient(145deg, #f2f2f2, #e3e3e3);
+  background: linear-gradient(135deg, #fdf0f5, #ffffff);
   color: #333;
   overflow-x: hidden;
+  line-height: 1.8;
 }
 
 canvas {
@@ -21,89 +21,98 @@ canvas {
   z-index: -1;
 }
 
-/* 🎵 دکمه موسیقی */
-#audioToggle {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  padding: 10px 20px;
-  background: #ec407a;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  z-index: 3;
-  box-shadow: 0 0 10px #ec407a;
-}
-
 nav {
-  background: #f9f9f9;
-  border-bottom: 1px solid #e0e0e0;
+  background: #fff0f5;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
-  padding: 14px 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  gap: 10px;
+  padding: 12px;
+  border-bottom: 1px solid #f8bbd0;
   position: sticky;
   top: 0;
   z-index: 10;
-  flex-wrap: wrap;
 }
 
 nav a {
   color: #d81b60;
   text-decoration: none;
-  font-weight: bold;
-  padding: 10px 18px;
+  padding: 10px 16px;
   border-radius: 8px;
-  transition: background 0.3s ease, color 0.3s ease;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
 nav a:hover,
 nav a.active {
-  background-color: #f8bbd0;
-  color: #fff;
+  background: #f8bbd0;
+  color: white;
 }
 
-/* 🧊 هدر شیشه‌ای */
-header.hero-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+header {
+  text-align: center;
   padding: 60px 20px;
   background: transparent;
-  text-align: center;
-  position: relative;
-  z-index: 1;
+  color: #b71c1c;
 }
 
-.intro-text-glass {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 30px;
-  border-radius: 24px;
-  max-width: 900px;
-  width: 100%;
-  box-shadow: 0 0 20px rgba(248, 187, 208, 0.25);
-}
-
-.intro-text-glass h1 {
-  color: #c2185b;
-  font-size: 2.4rem;
+header h1 {
+  font-size: 2.2rem;
   margin-bottom: 20px;
 }
 
-.intro-text-glass p {
-  font-size: 1.25rem;
+header p {
+  max-width: 720px;
+  margin: auto;
+  font-size: 1.1rem;
   color: #444;
-  line-height: 2;
-  margin-bottom: 18px;
 }
 
-/* ❤️ افکت قلب */
+main {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+section {
+  background: #fff8fb;
+  border: 1px solid #f8bbd0;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(248, 187, 208, 0.2);
+}
+
+section h2 {
+  color: #ec407a;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+footer {
+  text-align: center;
+  background: #fff0f5;
+  padding: 20px;
+  border-top: 1px solid #f8bbd0;
+  font-weight: bold;
+  color: #d81b60;
+}
+
+#audioToggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px 16px;
+  background: #ec407a;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  z-index: 999;
+  cursor: pointer;
+  box-shadow: 0 0 10px #ec407a;
+}
+
 .heart {
   position: absolute;
   width: 30px;
@@ -125,48 +134,47 @@ header.hero-header {
   }
 }
 
-/* 📱 ریسپانسیو */
+/* تایپ شدن متن */
+.typewriter {
+  overflow: hidden;
+  white-space: pre-line;
+  border-right: 3px solid #ec407a;
+  width: 0;
+  animation: typing 10s steps(90, end) forwards, blink 0.8s step-end infinite;
+}
+
+@keyframes typing {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* ریسپانسیو */
 @media (max-width: 600px) {
-  header.hero-header {
-    padding: 30px 10px;
+  header h1 {
+    font-size: 1.6rem;
   }
 
-  .intro-text-glass {
-    padding: 20px 15px;
-    border-radius: 16px;
-  }
-
-  .intro-text-glass h1 {
-    font-size: 1.5rem;
-  }
-
-  .intro-text-glass p {
+  header p,
+  .typewriter {
     font-size: 1rem;
-    line-height: 1.8;
+    padding: 0 10px;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: center;
   }
 
   #audioToggle {
     left: 10px;
     bottom: 10px;
     font-size: 0.9rem;
-    padding: 8px 14px;
   }
-
-  nav {
-    gap: 10px;
-    font-size: 0.85rem;
-  }
-
-  nav a {
-    padding: 8px 12px;
-  }
-}
-
-footer {
-  background: #f9f9f9;
-  color: #d81b60;
-  text-align: center;
-  padding: 25px 10px;
-  border-top: 2px solid #f48fb1;
-  font-weight: 600;
 }
