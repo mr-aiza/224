@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Vazir', sans-serif;
+  background: linear-gradient(145deg, #f2f2f2, #e3e3e3);
+  color: #333;
+  overflow-x: hidden;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+nav {
+  background: #f9f9f9;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 14px 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+nav a {
+  color: #d81b60;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 8px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover,
+nav a.active {
+  background-color: #f8bbd0;
+  color: #fff;
+}
+
+header {
+  text-align: center;
+  padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+}
+
+header h1 {
+  font-size: 2.8rem;
+  color: #c2185b;
+  margin-bottom: 10px;
+}
+
+header p {
+  font-size: 1.3rem;
+  color: #555;
+  max-width: 700px;
+  margin: auto;
+}
+
+main {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+section {
+  background: #f7f7f7;
+  border: 1px solid #f8bbd0;
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 35px;
+  box-shadow: 0 6px 18px rgba(248, 187, 208, 0.25);
+}
+
+section h2 {
+  color: #ec407a;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f48fb1;
+  padding-bottom: 6px;
+}
+
+footer {
+  background: #f9f9f9;
+  color: #d81b60;
+  text-align: center;
+  padding: 25px 10px;
+  border-top: 2px solid #f48fb1;
+  font-weight: 600;
+}
+
+.heart {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
+  background-size: cover;
+  animation: pop 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+#audioToggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background: #ec407a;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 3;
+  box-shadow: 0 0 10px #ec407a;
+}
+
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  header p {
+    font-size: 1rem;
+  }
+  section {
+    padding: 20px 15px;
+  }
+}
