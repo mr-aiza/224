@@ -1,0 +1,26 @@
+fullname: علیرضا عبدلی
+phone: 09388088657
+email: aliabdoli161@gmail.com
+eventDate: 2025-07-11
+eventType: engagement
+services: fingerFood, flowerDecoration, juice, dinner
+fingerFoodLevel: اقتصادی
+flowerDecorationLevel: معمولی
+dinnerType: سلف سرویس
+juiceLevel: معمولی
+guestCount: 250
+notes: 000
+trackingCode: TRK-MCV3OL6D
+contractText: fullname: علیرضا عبدلی
+phone: 09388088657
+email: aliabdoli161@gmail.com
+eventDate: 2025-07-11
+eventType: engagement
+services: fingerFood, flowerDecoration, juice, dinner
+fingerFoodLevel: اقتصادی
+flowerDecorationLevel: معمولی
+dinnerType: سلف سرویس
+juiceLevel: معمولی
+guestCount: 250
+notes: 000
+trackingCode: TRK-MCV3OL6D
