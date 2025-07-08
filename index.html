@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>خانه | تشریفات رویایی</title>
   <link rel="stylesheet" href="Style.css" />
 </head>
@@ -44,8 +44,8 @@
   &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
 </footer>
 
-<!-- اسکریپت قلب و موزیک -->
 <script>
+  // موسیقی
   const audio = document.getElementById('wigenAudio');
   const btn = document.getElementById('audioToggle');
   let playing = false;
@@ -66,6 +66,7 @@
     document.removeEventListener('click', autoPlayOnce);
   });
 
+  // قلب‌ها
   const canvas = document.getElementById('bgCanvas');
   const ctx = canvas.getContext('2d');
   let W = canvas.width = window.innerWidth;
