@@ -1,61 +1,151 @@
-<!-- فایل index.html -->
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تشریفات رویایی عروسی</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>خانه | تشریفات رویایی</title>
+  <link rel="stylesheet" href="Style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
 </head>
 <body>
-  <canvas id="bgCanvas"></canvas>
 
-  <nav>
-    <a href="#">خانه</a>
-    <a href="#services">خدمات</a>
-    <a href="#comments">نظرات</a>
-  </nav>
+<canvas id="bgCanvas"></canvas>
 
-  <header class="hero-text">
-    <h1>💍 تشریفات رویایی عروسی 💐</h1>
+<!-- دکمه و موزیک -->
+<button id="audioToggle">🎵 پخش موسیقی</button>
+<audio id="wigenAudio" preload="auto" loop>
+  <source src="wigen_wedding.mp3" type="audio/mpeg" />
+</audio>
+
+<!-- نوار بالا -->
+<nav>
+  <a href="index.html" class="active">خانه</a>
+  <a href="services.html">خدمات</a>
+  <a href="portfolio.html">نمونه‌کارها</a>
+  <a href="booking.html">رزرو</a>
+  <a href="about.html">درباره ما</a>
+  <a href="contact.html">تماس با ما</a>
+</nav>
+
+<!-- هدر اصلی -->
+<header>
+  <h1>💍 تشریفات رویایی عروسی 💐</h1>
+  <div class="intro-text">
     <p>هر عروسی، فقط یک بار در زندگی اتفاق می‌افتد...</p>
     <p>ما این "یک بار" را به خاص‌ترین شکل ممکن برایتان رقم می‌زنیم.</p>
     <p>🌸 نورها، گل‌ها، موسیقی، لبخندها... همه‌چیز درست مثل رویاست.</p>
     <p>🎉 ما لحظاتی می‌سازیم که تا ابد در ذهن و قلب‌ها بماند.</p>
     <p>تیمی حرفه‌ای با یک دهه تجربه در کنار شماست... ✨</p>
     <p>خوش آمدید به تشریفات رویایی! 🎊</p>
-  </header>
+  </div>
+</header>
 
-  <main>
-    <section id="services">
-      <h2>📝 خدمات مراسم از ۰ تا ۱۰۰</h2>
-      <p>برگزاری یک مراسم عروسی بی‌نقص نیاز به برنامه‌ریزی دقیق، تیم حرفه‌ای و خدماتی سطح بالا دارد. در تشریفات رویایی، ما تمامی مراحل را از ابتدا تا انتها برای شما انجام می‌دهیم:</p>
-      <ul>
-        <li>✅ مشاوره اولیه رایگان برای شناخت سلیقه و بودجه شما</li>
-        <li>✅ انتخاب و رزرو مکان برگزاری (باغ، سالن، ویلا و...)</li>
-        <li>✅ طراحی دکوراسیون اختصاصی و گل‌آرایی لوکس</li>
-        <li>✅ انتخاب منوی غذایی و کیترینگ تشریفاتی با سرآشپزهای حرفه‌ای</li>
-        <li>✅ موزیک زنده، DJ و نورپردازی هوشمند</li>
-        <li>✅ فیلمبرداری سینمایی و عکاسی پرتره و مستند</li>
-        <li>✅ مدیریت کامل مهمان‌ها و تشریفات ورودی</li>
-        <li>✅ پذیرایی اختصاصی با مهمانداران آموزش‌دیده</li>
-        <li>✅ طراحی کارت دعوت دیجیتال یا فیزیکی</li>
-        <li>✅ خدمات ویژه داماد و عروس: میکاپ، لباس، ترنسفر VIP و بیشتر...</li>
-      </ul>
-    </section>
+<main>
+  <!-- خدمات مراسم -->
+  <section class="service-box">
+    <h2>📝 خدمات مراسم از ۰ تا ۱۰۰</h2>
+    <ul>
+      <li>✅ مشاوره اولیه رایگان برای شناخت سلیقه و بودجه شما</li>
+      <li>✅ انتخاب و رزرو مکان برگزاری (باغ، سالن، ویلا و...)</li>
+      <li>✅ طراحی دکوراسیون اختصاصی و گل‌آرایی لوکس</li>
+      <li>✅ انتخاب منوی غذایی و کیترینگ تشریفاتی با سرآشپزهای حرفه‌ای</li>
+      <li>✅ موزیک زنده، DJ و نورپردازی هوشمند</li>
+      <li>✅ فیلمبرداری سینمایی و عکاسی پرتره و مستند</li>
+      <li>✅ مدیریت کامل مهمان‌ها و تشریفات ورودی</li>
+      <li>✅ پذیرایی اختصاصی با مهمانداران آموزش‌دیده</li>
+      <li>✅ طراحی کارت دعوت دیجیتال یا فیزیکی</li>
+      <li>✅ خدمات ویژه داماد و عروس: میکاپ، لباس، ترنسفر VIP و بیشتر...</li>
+    </ul>
+  </section>
 
-    <section id="comments">
-      <h2>💬 نظرات کاربران</h2>
-      <div class="comment-box">
-        <p>🌟 واقعا بهترین شب زندگیمون بود، ممنون از تیم فوق‌العادتون!</p>
-        <p>🌸 همه‌چیز بی‌نقص بود، دکور، غذا، موزیک... عالی!</p>
-        <p>🎉 اصلاً فکر نمی‌کردم مراسم به این قشنگی بشه، عالی بودید.</p>
-      </div>
-    </section>
-  </main>
+  <!-- نظرات کاربران -->
+  <section class="comments">
+    <h2>📣 نظرات کاربران</h2>
+    <div class="comment">✨ خیلی عالی بود، همه‌چیز دقیقاً مثل رویامون پیش رفت! – نسرین و سامان</div>
+    <div class="comment">💖 از موسیقی تا گل‌آرایی فوق‌العاده بود. ممنون از تیم حرفه‌ای‌تون. – لیلا</div>
+    <div class="comment">🎊 برنامه‌ریزی بی‌نقصی داشتید، مهمون‌هامون هنوز هم تعریف می‌کنن. – محمدرضا</div>
+  </section>
+</main>
 
-  <footer>
-    &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
-  </footer>
+<footer>
+  &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
+</footer>
+
+<!-- اسکریپت قلب و موزیک -->
+<script>
+  // موسیقی
+  const audio = document.getElementById('wigenAudio');
+  const btn = document.getElementById('audioToggle');
+  let playing = false;
+
+  btn.addEventListener('click', () => {
+    if (playing) {
+      audio.pause();
+      btn.textContent = '🎵 پخش موسیقی';
+    } else {
+      audio.play().catch(() => alert("برای پخش، ابتدا روی صفحه کلیک کنید."));
+      btn.textContent = '⏸ توقف موسیقی';
+    }
+    playing = !playing;
+  });
+
+  document.addEventListener('click', function autoPlayOnce() {
+    audio.play().catch(() => {});
+    document.removeEventListener('click', autoPlayOnce);
+  });
+
+  // قلب‌های پس‌زمینه
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let W = canvas.width = window.innerWidth;
+  let H = canvas.height = window.innerHeight;
+
+  function drawHeart(ctx, x, y, size, color) {
+    ctx.save();
+    ctx.beginPath();
+    const topCurveHeight = size * 0.3;
+    ctx.moveTo(x, y + topCurveHeight);
+    ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
+    ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + (size + topCurveHeight) / 1.2, x, y + size);
+    ctx.bezierCurveTo(x, y + (size + topCurveHeight) / 1.2, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
+    ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  const hearts = [];
+  for (let i = 0; i < 70; i++) {
+    hearts.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      size: Math.random() * 16 + 8,
+      speedX: Math.random() * 0.5 + 0.2,
+      speedY: Math.random() * 0.5 + 0.2,
+      color: `rgba(236,64,122,${Math.random() * 0.4 + 0.3})`
+    });
+  }
+
+  function update() {
+    ctx.clearRect(0, 0, W, H);
+    for (const h of hearts) {
+      h.x += h.speedX;
+      h.y += h.speedY;
+      if (h.x > W) h.x = -h.size;
+      if (h.y > H) h.y = -h.size;
+      drawHeart(ctx, h.x, h.y, h.size, h.color);
+    }
+    requestAnimationFrame(update);
+  }
+
+  window.addEventListener('resize', () => {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  });
+
+  update();
+</script>
+
 </body>
 </html>
