@@ -3,6 +3,45 @@
 * {
   box-sizing: border-box;
 }
+.intro-text-glass {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 0 20px rgba(248, 187, 208, 0.25);
+  text-align: center;
+}
+
+.intro-text-glass h1 {
+  color: #c2185b;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+}
+
+.intro-text-glass p {
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 2;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+  .intro-text-glass {
+    padding: 20px 15px;
+  }
+
+  .intro-text-glass h1 {
+    font-size: 1.5rem;
+  }
+
+  .intro-text-glass p {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+}
 
 body {
   margin: 0;
