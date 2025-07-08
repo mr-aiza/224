@@ -1,188 +1,10 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>رزرو مراسم | تشریفات رویایی</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
-
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    background-color: #121212;
-    color: #cfcfcf;
-    font-family: 'Vazir', sans-serif;
-    direction: rtl;
-    line-height: 1.6;
-  }
-  nav {
-    background: #1e1e1e;
-    border-bottom: 3px solid #b29700;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 18px;
-    padding: 14px 10px;
-  }
-  nav a {
-    font-weight: 700;
-    padding: 12px 22px;
-    border-radius: 12px;
-    border: 2.5px solid transparent;
-    transition: 0.25s ease all;
-    user-select: none;
-    color: #d4af37;
-    font-size: 1.1rem;
-  }
-  nav a.active, nav a:hover {
-    background-color: #d4af37;
-    color: #111;
-    border-color: #aa8500;
-  }
-  header {
-    background: linear-gradient(135deg, #1a1a1a, #111111);
-    text-align: center;
-    padding: 60px 20px 50px;
-    border-bottom: 3px solid #b29700;
-    box-shadow: 0 0 24px #b2970044;
-  }
-  header h1 {
-    margin: 0;
-    font-size: 3rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    color: #d4af37;
-    text-shadow: 0 0 14px #d4af37bb;
-  }
-  header p {
-    margin-top: 12px;
-    font-size: 1.2rem;
-    color: #bbb;
-    user-select: none;
-  }
-  main {
-    max-width: 650px;
-    margin: 45px auto 70px;
-    padding: 0 22px;
-  }
-  form {
-    background: #222222dd;
-    padding: 30px 35px;
-    border-radius: 18px;
-    border: 2.5px solid #b29700;
-    box-shadow: 0 0 40px #b2970066;
-  }
-  label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 700;
-    font-size: 1.15rem;
-    color: #d4af37;
-    user-select: none;
-  }
-  input, select, textarea {
-    width: 100%;
-    padding: 11px 16px;
-    margin-bottom: 25px;
-    border-radius: 12px;
-    border: 2px solid #555;
-    background-color: #111;
-    color: #eee;
-    font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    font-family: 'Vazir', sans-serif;
-  }
-  input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: #d4af37;
-    box-shadow: 0 0 10px #d4af37cc;
-  }
-  input[type="submit"] {
-    background-color: #d4af37;
-    color: #222;
-    font-weight: 800;
-    border: none;
-    cursor: pointer;
-    user-select: none;
-    font-size: 1.15rem;
-    transition: background-color 0.3s ease;
-  }
-  input[type="submit"]:hover {
-    background-color: #aa8500;
-  }
-  .info-text {
-    font-size: 0.85rem;
-    color: #bbb;
-    margin-top: -18px;
-    margin-bottom: 18px;
-    user-select: none;
-  }
-  .error-text {
-    color: #ff6666;
-    font-weight: 700;
-    margin-top: -15px;
-    margin-bottom: 18px;
-  }
-  .checkbox-group {
-    margin-bottom: 30px;
-  }
-  .checkbox-group label {
-    font-weight: 600;
-    margin-right: 16px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .checkbox-group input[type="checkbox"] {
-    margin-left: 6px;
-    width: 18px;
-    height: 18px;
-    vertical-align: middle;
-    cursor: pointer;
-  }
-  .submenu {
-    margin: 0 0 25px 24px;
-    padding: 12px 18px;
-    background-color: #1c1c1c;
-    border-radius: 10px;
-    border: 1.5px solid #555;
-    display: none;
-    font-size: 0.95rem;
-  }
-  .submenu label {
-    font-weight: 600;
-    margin-right: 16px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .submenu input[type="radio"] {
-    margin-left: 6px;
-    cursor: pointer;
-  }
-  footer {
-    text-align: center;
-    padding: 20px 10px;
-    background-color: #1c1c1c;
-    color: #888;
-    font-size: 0.9rem;
-    user-select: none;
-  }
-  @media (max-width: 480px) {
-    nav a {
-      font-size: 1rem;
-      padding: 10px 14px;
-    }
-    main {
-      margin: 30px 15px 50px;
-      padding: 0 15px;
-    }
-    form {
-      padding: 25px 20px;
-    }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>رزرو مراسم | تشریفات رویایی</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -226,50 +48,46 @@
     </select>
 
     <fieldset class="checkbox-group">
-      <legend style="color:#d4af37; font-weight:700; margin-bottom:10px;">امکانات انتخابی:</legend>
+      <legend>امکانات انتخابی:</legend>
 
       <label for="fingerFood">
-        <input type="checkbox" id="fingerFood" name="services" value="fingerFood" />
-        فینگر فود
+        <input type="checkbox" id="fingerFood" name="services" value="fingerFood" /> فینگر فود
       </label>
       <div id="submenu-fingerFood" class="submenu">
-        <label><input type="radio" name="fingerFoodLevel" value="اقتصادی" required /> اقتصادی</label>
+        <label><input type="radio" name="fingerFoodLevel" value="اقتصادی" /> اقتصادی</label>
         <label><input type="radio" name="fingerFoodLevel" value="معمولی" /> معمولی</label>
         <label><input type="radio" name="fingerFoodLevel" value="ویژه" /> ویژه</label>
       </div>
 
       <label for="flowerDecoration">
-        <input type="checkbox" id="flowerDecoration" name="services" value="flowerDecoration" />
-        گل‌آرایی
+        <input type="checkbox" id="flowerDecoration" name="services" value="flowerDecoration" /> گل‌آرایی
       </label>
       <div id="submenu-flowerDecoration" class="submenu">
-        <label><input type="radio" name="flowerDecorationLevel" value="اقتصادی" required /> اقتصادی</label>
+        <label><input type="radio" name="flowerDecorationLevel" value="اقتصادی" /> اقتصادی</label>
         <label><input type="radio" name="flowerDecorationLevel" value="معمولی" /> معمولی</label>
         <label><input type="radio" name="flowerDecorationLevel" value="ویژه" /> ویژه</label>
       </div>
 
       <label for="dinner">
-        <input type="checkbox" id="dinner" name="services" value="dinner" />
-        شام
+        <input type="checkbox" id="dinner" name="services" value="dinner" /> شام
       </label>
       <div id="submenu-dinner" class="submenu">
-        <label><input type="radio" name="dinnerType" value="دیس پرس" required /> دیس پرس</label>
+        <label><input type="radio" name="dinnerType" value="دیس پرس" /> دیس پرس</label>
         <label><input type="radio" name="dinnerType" value="سلف سرویس" /> سلف سرویس</label>
       </div>
 
       <label for="juice">
-        <input type="checkbox" id="juice" name="services" value="juice" />
-        آب‌میوه
+        <input type="checkbox" id="juice" name="services" value="juice" /> آب‌میوه
       </label>
       <div id="submenu-juice" class="submenu">
-        <label><input type="radio" name="juiceLevel" value="اقتصادی" required /> اقتصادی</label>
+        <label><input type="radio" name="juiceLevel" value="اقتصادی" /> اقتصادی</label>
         <label><input type="radio" name="juiceLevel" value="معمولی" /> معمولی</label>
         <label><input type="radio" name="juiceLevel" value="ویژه" /> ویژه</label>
       </div>
     </fieldset>
 
     <label for="notes">توضیحات اضافی:</label>
-    <textarea id="notes" name="notes" rows="5" placeholder="در صورت نیاز توضیح دهید..."></textarea>
+    <textarea id="notes" name="notes" rows="4" placeholder="در صورت نیاز توضیح دهید..."></textarea>
 
     <input type="submit" value="ارسال رزرو" />
     <div id="formError" class="error-text" style="display:none;"></div>
@@ -288,7 +106,6 @@
   const formSuccess = document.getElementById('formSuccess');
 
   const reservedDatesUrl = 'reserved_dates.json';
-
   let reservedDates = [];
 
   async function loadReservedDates() {
@@ -296,33 +113,29 @@
       const response = await fetch(reservedDatesUrl);
       if (!response.ok) throw new Error('خطا در دریافت تاریخ‌های رزرو شده');
       reservedDates = await response.json();
-
       const today = new Date().toISOString().split('T')[0];
       dateInput.min = today;
 
       dateInput.addEventListener('input', () => {
-        const selectedDate = dateInput.value;
-        if (reservedDates.includes(selectedDate)) {
+        if (reservedDates.includes(dateInput.value)) {
           alert('این تاریخ قبلاً رزرو شده است، لطفاً تاریخ دیگری انتخاب کنید.');
           dateInput.value = '';
         }
       });
     } catch (error) {
       console.error(error);
-      const today = new Date().toISOString().split('T')[0];
-      dateInput.min = today;
     }
   }
 
   loadReservedDates();
 
-  // مدیریت نمایش زیرمنوها
   const servicesCheckboxes = {
     fingerFood: document.getElementById('fingerFood'),
     flowerDecoration: document.getElementById('flowerDecoration'),
     dinner: document.getElementById('dinner'),
     juice: document.getElementById('juice')
   };
+
   const submenus = {
     fingerFood: document.getElementById('submenu-fingerFood'),
     flowerDecoration: document.getElementById('submenu-flowerDecoration'),
@@ -333,8 +146,6 @@
   Object.keys(servicesCheckboxes).forEach(key => {
     servicesCheckboxes[key].addEventListener('change', e => {
       submenus[key].style.display = e.target.checked ? 'block' : 'none';
-
-      // اگر غیر فعال شد، رادیوهای زیرمنو را پاک کن
       if (!e.target.checked) {
         const radios = submenus[key].querySelectorAll('input[type="radio"]');
         radios.forEach(r => r.checked = false);
@@ -342,7 +153,6 @@
     });
   });
 
-  // اعتبارسنجی فرم
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     formError.style.display = 'none';
@@ -352,13 +162,11 @@
     if (!dateInput.value) {
       formError.style.display = 'block';
       formError.textContent = 'لطفاً تاریخ مراسم را انتخاب کنید.';
-      dateInput.focus();
       return;
     }
     if (reservedDates.includes(dateInput.value)) {
       formError.style.display = 'block';
       formError.textContent = 'این تاریخ قبلاً رزرو شده است، لطفاً تاریخ دیگری انتخاب کنید.';
-      dateInput.focus();
       return;
     }
 
@@ -367,11 +175,9 @@
     if (!phonePattern.test(phone)) {
       formError.style.display = 'block';
       formError.textContent = 'شماره تماس معتبر نیست. فرمت صحیح: 09xxxxxxxxx';
-      form.phone.focus();
       return;
     }
 
-    // اعتبارسنجی زیرمنوهای فعال
     for (const key of Object.keys(servicesCheckboxes)) {
       if (servicesCheckboxes[key].checked) {
         const radios = submenus[key].querySelectorAll('input[type="radio"]');
@@ -383,12 +189,10 @@
       }
     }
 
-    // ارسال داده‌ها به سرور
     const formData = new FormData(form);
     const obj = {};
     formData.forEach((v,k) => {
       if (obj[k]) {
-        // اگر قبلا وجود داشت، آرایه کن
         if (!Array.isArray(obj[k])) obj[k] = [obj[k]];
         obj[k].push(v);
       } else {
@@ -405,7 +209,6 @@
       if (res.ok) {
         formSuccess.style.display = 'block';
         form.reset();
-        // به‌روزرسانی لیست تاریخ‌های رزرو شده برای جلوگیری از رزرو مجدد
         loadReservedDates();
       } else {
         throw new Error('خطا در ثبت رزرو');
