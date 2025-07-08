@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
 * {
   box-sizing: border-box;
@@ -12,13 +13,17 @@ body {
   color: #333;
   line-height: 1.8;
   overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
 }
 
-canvas {
+canvas#hearts {
   position: fixed;
   top: 0;
   left: 0;
   z-index: -1;
+  width: 100vw;
+  height: 100vh;
 }
 
 /* نوار ناوبری */
@@ -83,8 +88,8 @@ header h1 {
   margin-bottom: 20px;
 }
 
-.intro-text p {
-  font-size: 1.2rem;
+header p {
+  font-size: 1.1rem;
   font-weight: bold;
   text-shadow: 0 0 2px #fff;
   margin: 8px 0;
@@ -98,55 +103,164 @@ main {
   padding: 0 20px;
 }
 
-/* بخش خدمات */
-.service-box {
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid #f48fb1;
-  border-radius: 16px;
-  padding: 30px;
-  margin-bottom: 40px;
-  box-shadow: 0 6px 18px rgba(248, 187, 208, 0.25);
-}
-
-.service-box h2 {
-  font-size: 1.6rem;
-  color: #c2185b;
-  margin-bottom: 15px;
-}
-
-.service-box ul {
-  list-style: none;
-}
-
-.service-box li {
-  margin-bottom: 10px;
-  color: #444;
+/* فرم - رنگ پس‌زمینه سفید با کمی شفافیت و رنگ‌های زرد گرم‌تر مشابه سایت */
+form {
+  background: rgba(255, 250, 250, 0.9);
+  padding: 30px 35px;
+  border-radius: 18px;
+  border: 2.5px solid #d81b60; /* رنگ صورتی-سرخابی که توی ناوبری بود */
+  box-shadow: 0 6px 18px rgba(216, 27, 96, 0.2);
+  margin: 40px auto;
+  max-width: 650px;
+  color: #3a003a; /* رنگ متن تیره‌تر برای خوانایی */
+  font-weight: 600;
   font-size: 1.05rem;
+  font-family: 'Vazir', sans-serif;
+  direction: rtl;
 }
 
-/* نظرات کاربران */
-.comments {
-  background: rgba(255,255,255,0.8);
-  border-radius: 16px;
-  padding: 25px;
-  margin-bottom: 60px;
-  border: 2px solid #f8bbd0;
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #d81b60; /* رنگ صورتی */
+  user-select: none;
+  position: relative;
+  padding-right: 28px; /* جای آیکون */
 }
 
-.comments h2 {
-  font-size: 1.5rem;
+/* آیکون کنار label */
+label .fa-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
   color: #d81b60;
-  margin-bottom: 20px;
+  font-size: 1.1rem;
 }
 
-.comment {
-  background: rgba(255,255,255,0.85);
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 12px;
-  box-shadow: 0 0 6px rgba(220, 20, 60, 0.08);
-  color: #555;
+/* فیلدهای فرم */
+input, select, textarea {
+  width: 100%;
+  padding: 11px 16px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  border: 2px solid #d81b60;
+  background-color: #fff;
+  color: #333;
   font-size: 1rem;
+  transition: 0.3s ease;
+  font-family: 'Vazir', sans-serif;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #f48fb1;
+  box-shadow: 0 0 10px #f48fb1cc;
+}
+
+/* دکمه ارسال */
+input[type="submit"] {
+  background-color: #d81b60;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  font-size: 1.15rem;
+  user-select: none;
+  transition: background-color 0.3s ease;
+  border-radius: 12px;
+}
+
+input[type="submit"]:hover {
+  background-color: #a3154a;
+}
+
+/* متن‌های کمکی */
+.info-text {
+  font-size: 0.85rem;
+  color: #b71c4f;
+  margin-top: -18px;
+  margin-bottom: 18px;
+  user-select: none;
+  font-weight: 600;
+}
+
+.error-text {
+  color: #ff1744;
+  font-weight: 700;
+  margin-top: -15px;
+  margin-bottom: 18px;
+  user-select: none;
+}
+
+.checkbox-group legend {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #d81b60;
+  margin-bottom: 10px;
+  user-select: none;
+}
+
+.checkbox-group label {
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.submenu {
+  background-color: #fce4ec;
+  border-radius: 10px;
+  border: 1.5px solid #d81b60;
+  margin-bottom: 25px;
+  padding: 12px 18px;
+  display: none;
+  user-select: none;
+  color: #880e4f;
+}
+
+.submenu label {
+  margin-right: 18px;
+  font-weight: 600;
+  user-select: none;
+  cursor: pointer;
+}
+
+/* فیلد تعداد مهمان و مهماندار */
+.guest-inputs {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.guest-inputs > div {
+  flex: 1 1 150px;
+}
+
+.guest-inputs label {
+  padding-right: 0;
+  position: static;
+  color: #d81b60;
+}
+
+.guest-inputs label .fa-icon {
+  position: static;
+  margin-left: 6px;
+  color: #d81b60;
+  font-size: 1.15rem;
+  vertical-align: middle;
+}
+
+.guest-inputs input[readonly] {
+  background-color: #fce4ec !important;
+  cursor: not-allowed;
+  user-select: text;
+  color: #880e4f;
+  font-weight: 700;
 }
 
 /* فوتر */
@@ -157,6 +271,7 @@ footer {
   color: #c2185b;
   font-weight: 600;
   border-top: 2px solid #f48fb1;
+  user-select: none;
 }
 
 /* ریسپانسیو */
@@ -171,7 +286,7 @@ footer {
     font-size: 1.8rem;
   }
 
-  .intro-text p {
+  header p {
     font-size: 1rem;
   }
 
@@ -179,90 +294,8 @@ footer {
     font-size: 12px;
     padding: 8px 14px;
   }
-}
-/* Booking Page Styles */
-form {
-  background: #222222dd;
-  padding: 30px 35px;
-  border-radius: 18px;
-  border: 2.5px solid #b29700;
-  box-shadow: 0 0 40px #b2970066;
-  margin: 40px auto;
-  max-width: 650px;
-}
 
-label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: #d4af37;
-}
-
-input, select, textarea {
-  width: 100%;
-  padding: 11px 16px;
-  margin-bottom: 25px;
-  border-radius: 12px;
-  border: 2px solid #555;
-  background-color: #111;
-  color: #eee;
-  font-size: 1rem;
-  transition: 0.3s ease;
-}
-
-input[type="submit"] {
-  background-color: #d4af37;
-  color: #222;
-  font-weight: 800;
-  border: none;
-  cursor: pointer;
-  font-size: 1.15rem;
-}
-
-input[type="submit"]:hover {
-  background-color: #aa8500;
-}
-
-.info-text {
-  font-size: 0.85rem;
-  color: #bbb;
-  margin-top: -18px;
-  margin-bottom: 18px;
-}
-
-.error-text {
-  color: #ff6666;
-  font-weight: 700;
-  margin-top: -15px;
-  margin-bottom: 18px;
-}
-
-.checkbox-group legend {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #d4af37;
-  margin-bottom: 10px;
-}
-
-.checkbox-group label {
-  display: inline-block;
-  margin-bottom: 10px;
-  margin-right: 20px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.submenu {
-  background-color: #1c1c1c;
-  border-radius: 10px;
-  border: 1.5px solid #555;
-  margin-bottom: 25px;
-  padding: 12px 18px;
-  display: none;
-}
-
-.submenu label {
-  margin-right: 18px;
-  font-weight: 600;
+  .guest-inputs {
+    flex-direction: column;
+  }
 }
