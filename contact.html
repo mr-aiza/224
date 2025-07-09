@@ -1,126 +1,20 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>تماس با ما | تشریفات رویایی</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
-
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0; padding: 0;
-    font-family: 'Vazir', sans-serif;
-    background: #111;
-    color: #ccc;
-    line-height: 1.5;
-  }
-  nav {
-    background: #222;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    padding: 10px 5px;
-  }
-  nav a {
-    text-decoration: none;
-    color: #d4af37;
-    font-weight: 600;
-    padding: 10px 18px;
-    border-radius: 8px;
-    border: 1.5px solid transparent;
-    transition: all 0.3s ease;
-    user-select: none;
-  }
-  nav a:hover,
-  nav a.active {
-    background-color: #d4af37;
-    color: #111;
-    border-color: #b38700;
-  }
-  .container {
-    max-width: 720px;
-    margin: 40px auto;
-    background: linear-gradient(135deg, #1a1a1a, #222);
-    border-radius: 15px;
-    box-shadow: 0 0 25px rgba(212,175,55,0.8);
-    padding: 30px 40px;
-    border: 2px solid #d4af37;
-  }
-  h1 {
-    text-align: center;
-    color: #d4af37;
-    margin-bottom: 30px;
-    font-weight: 700;
-    letter-spacing: 1.3px;
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-  }
-  label {
-    font-weight: 600;
-    color: #d4af37;
-    margin-bottom: 8px;
-    font-size: 1.1rem;
-  }
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  textarea {
-    background: #222;
-    border: 1.7px solid #aaa;
-    color: #eee;
-    padding: 14px 18px;
-    border-radius: 9px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-    resize: vertical;
-  }
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  input[type="tel"]:focus,
-  textarea:focus {
-    border-color: #c0c0c0;
-    outline: none;
-  }
-  textarea {
-    min-height: 110px;
-  }
-  button {
-    background: #d4af37;
-    border: none;
-    padding: 15px;
-    font-size: 1.3rem;
-    font-weight: 700;
-    border-radius: 14px;
-    cursor: pointer;
-    color: #111;
-    transition: background-color 0.3s;
-  }
-  button:hover {
-    background: #b9932e;
-  }
-  @media (max-width: 600px) {
-    .container {
-      margin: 20px 10px;
-      padding: 25px 20px;
-    }
-    nav a {
-      padding: 8px 14px;
-      font-size: 0.95rem;
-    }
-    h1 {
-      font-size: 1.9rem;
-    }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>تماس با ما | تشریفات رویایی</title>
+  <link rel="stylesheet" href="Style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<canvas id="bgCanvas"></canvas>
+
+<button id="audioToggle">🎵 پخش موسیقی</button>
+<audio id="wigenAudio" preload="auto" loop>
+  <source src="wigen_wedding.mp3" type="audio/mpeg" />
+</audio>
 
 <nav>
   <a href="index.html">خانه</a>
@@ -131,26 +25,110 @@
   <a href="contact.html" class="active">تماس با ما</a>
 </nav>
 
-<div class="container">
-  <h1>تماس با ما</h1>
-  <form id="contactForm" novalidate>
-    <label for="name">نام و نام خانوادگی:</label>
-    <input type="text" id="name" name="name" placeholder="مثلاً علی رضایی" required />
+<header>
+  <h1>📞 تماس با تشریفات رویایی</h1>
+  <div class="intro-text">
+    <p>همیشه آماده شنیدن صدای شما هستیم...</p>
+  </div>
+</header>
 
-    <label for="email">ایمیل:</label>
-    <input type="email" id="email" name="email" placeholder="مثلاً example@mail.com" required />
+<main>
+  <section class="service-box">
+    <h2>📬 فرم ارتباط با ما</h2>
+    <form id="contactForm" novalidate>
+      <label for="name">نام و نام خانوادگی:</label>
+      <input type="text" id="name" name="name" placeholder="مثلاً علی رضایی" required />
 
-    <label for="phone">شماره تماس:</label>
-    <input type="tel" id="phone" name="phone" placeholder="مثلاً 09123456789" pattern="09\d{9}" required />
+      <label for="email">ایمیل:</label>
+      <input type="email" id="email" name="email" placeholder="مثلاً example@mail.com" required />
 
-    <label for="message">پیام شما:</label>
-    <textarea id="message" name="message" placeholder="متن پیام خود را اینجا بنویسید..." required></textarea>
+      <label for="phone">شماره تماس:</label>
+      <input type="tel" id="phone" name="phone" placeholder="مثلاً 09123456789" pattern="09\d{9}" required />
 
-    <button type="submit">ارسال پیام</button>
-  </form>
-</div>
+      <label for="message">پیام شما:</label>
+      <textarea id="message" name="message" placeholder="متن پیام خود را اینجا بنویسید..." required></textarea>
+
+      <button type="submit">ارسال پیام</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 تشریفات رویایی. تمامی حقوق محفوظ است.
+</footer>
 
 <script>
+  const audio = document.getElementById('wigenAudio');
+  const btn = document.getElementById('audioToggle');
+  let playing = false;
+
+  btn.addEventListener('click', () => {
+    if (playing) {
+      audio.pause();
+      btn.textContent = '🎵 پخش موسیقی';
+    } else {
+      audio.play().catch(() => alert("برای پخش، ابتدا روی صفحه کلیک کنید."));
+      btn.textContent = '⏸ توقف موسیقی';
+    }
+    playing = !playing;
+  });
+
+  document.addEventListener('click', function autoPlayOnce() {
+    audio.play().catch(() => {});
+    document.removeEventListener('click', autoPlayOnce);
+  });
+
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let W = canvas.width = window.innerWidth;
+  let H = canvas.height = window.innerHeight;
+
+  function drawHeart(ctx, x, y, size, color) {
+    ctx.save();
+    ctx.beginPath();
+    const topCurveHeight = size * 0.3;
+    ctx.moveTo(x, y + topCurveHeight);
+    ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
+    ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + (size + topCurveHeight) / 1.2, x, y + size);
+    ctx.bezierCurveTo(x, y + (size + topCurveHeight) / 1.2, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
+    ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  const hearts = [];
+  for (let i = 0; i < 70; i++) {
+    hearts.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      size: Math.random() * 16 + 8,
+      speedX: Math.random() * 0.5 + 0.2,
+      speedY: Math.random() * 0.5 + 0.2,
+      color: `rgba(236,64,122,${Math.random() * 0.4 + 0.3})`
+    });
+  }
+
+  function update() {
+    ctx.clearRect(0, 0, W, H);
+    for (const h of hearts) {
+      h.x += h.speedX;
+      h.y += h.speedY;
+      if (h.x > W) h.x = -h.size;
+      if (h.y > H) h.y = -h.size;
+      drawHeart(ctx, h.x, h.y, h.size, h.color);
+    }
+    requestAnimationFrame(update);
+  }
+
+  window.addEventListener('resize', () => {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  });
+
+  update();
+
   document.getElementById('contactForm').addEventListener('submit', function(e){
     e.preventDefault();
 
