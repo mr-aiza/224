@@ -1,0 +1,11 @@
+fullname: علیرضا عبدلی
+phone: 09388088657
+email: aliabdoli161@gmail.com
+eventDate: 2025-07-16
+eventType: نامزدی
+services: juice
+juiceLevel: معمولی
+guestCount: 77
+notes: 
+shamsiDate: 1404/04/25
+trackingCode: TRK-212068
