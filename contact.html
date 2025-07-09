@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>تماس با ما | تشریفات رویایی</title>
   <link rel="stylesheet" href="Style.css" />
+  <link rel="stylesheet" href="bookingstyle.css" />
   <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -33,24 +34,23 @@
 </header>
 
 <main>
-  <section class="service-box">
+  <form id="contactForm" class="service-box">
     <h2>📬 فرم ارتباط با ما</h2>
-    <form id="contactForm" novalidate>
-      <label for="name">نام و نام خانوادگی:</label>
-      <input type="text" id="name" name="name" placeholder="مثلاً علی رضایی" required />
 
-      <label for="email">ایمیل:</label>
-      <input type="email" id="email" name="email" placeholder="مثلاً example@mail.com" required />
+    <label for="name">نام و نام خانوادگی:</label>
+    <input type="text" id="name" name="name" placeholder="مثلاً علی رضایی" required />
 
-      <label for="phone">شماره تماس:</label>
-      <input type="tel" id="phone" name="phone" placeholder="مثلاً 09123456789" pattern="09\d{9}" required />
+    <label for="email">ایمیل:</label>
+    <input type="email" id="email" name="email" placeholder="مثلاً example@mail.com" required />
 
-      <label for="message">پیام شما:</label>
-      <textarea id="message" name="message" placeholder="متن پیام خود را اینجا بنویسید..." required></textarea>
+    <label for="phone">شماره تماس:</label>
+    <input type="tel" id="phone" name="phone" placeholder="مثلاً 09123456789" pattern="09\d{9}" required />
 
-      <button type="submit">ارسال پیام</button>
-    </form>
-  </section>
+    <label for="message">پیام شما:</label>
+    <textarea id="message" name="message" placeholder="متن پیام خود را اینجا بنویسید..." required></textarea>
+
+    <input type="submit" value="ارسال پیام" />
+  </form>
 </main>
 
 <footer>
@@ -129,40 +129,45 @@
 
   update();
 
-  document.getElementById('contactForm').addEventListener('submit', async function(e){
+  document.getElementById('contactForm').addEventListener('submit', function(e){
     e.preventDefault();
 
-    const data = {
-      name: this.name.value.trim(),
-      email: this.email.value.trim(),
-      phone: this.phone.value.trim(),
-      message: this.message.value.trim()
-    };
-
+    const phone = this.phone.value.trim();
     const phoneRegex = /^09\d{9}$/;
-    if (!phoneRegex.test(data.phone)) {
-      alert('شماره تماس معتبر نیست.');
+
+    if(!phoneRegex.test(phone)) {
+      alert('لطفاً شماره تماس معتبر وارد کنید (با 09 شروع شود و 11 رقم باشد).');
       this.phone.focus();
       return;
     }
 
-    try {
-      const res = await fetch("/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
+    if(!this.checkValidity()){
+      alert('لطفاً همه فیلدها را به درستی پر کنید.');
+      return;
+    }
 
-      if (res.ok) {
-        alert("پیام شما با موفقیت ارسال شد.");
+    const data = {
+      name: this.name.value,
+      email: this.email.value,
+      phone: this.phone.value,
+      message: this.message.value
+    };
+
+    fetch('/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(result => {
+      if (result.message) {
+        alert(result.message);
         this.reset();
       } else {
-        const error = await res.json();
-        alert("خطا در ارسال: " + error.message);
+        alert(result.error || 'خطا در ارسال پیام.');
       }
-    } catch (err) {
-      alert("ارتباط با سرور ممکن نیست.");
-    }
+    })
+    .catch(() => alert('خطا در ارسال پیام.'));
   });
 </script>
 
