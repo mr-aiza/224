@@ -50,12 +50,6 @@
     <label>تاریخ مراسم:</label>
     <input type="date" id="eventDate" name="eventDate" required>
     <div class="info-text">تاریخ به شمسی تبدیل می‌شود</div>
-const dateInput = document.getElementById("eventDate");
-
-dateInput.addEventListener("change", () => {
-  const selectedDate = moment(dateInput.value, "YYYY-MM-DD").format("jYYYY/jMM/jDD");
-  alert("تاریخ شمسی انتخاب شده: " + selectedDate);
-});
 
     <label>نوع مراسم:</label>
     <select name="eventType" required>
