@@ -1,0 +1,11 @@
+fullname: علی
+phone: 09388088657
+email: aliabdoli161@gmail.com
+eventDate: 2025-07-11
+eventType: عروسی
+services: fingerFood
+fingerFoodLevel: اقتصادی
+guestCount: 33
+notes: 
+shamsiDate: 1404/04/20
+trackingCode: TRK-180142
