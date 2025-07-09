@@ -33,13 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // تبدیل تاریخ میلادی به شمسی و ذخیره در data attribute
-  dateInput.addEventListener("change", () => {
-    const miladi = dateInput.value;
-    if (miladi && moment(miladi, "YYYY-MM-DD").isValid()) {
-      const jalali = moment(miladi, "YYYY-MM-DD").format("jYYYY/jMM/jDD");
-      dateInput.setAttribute("data-shamsi", jalali);
-    }
-  });
+dateInput.addEventListener("change", () => {
+  const miladi = dateInput.value;
+  if (miladi && moment(miladi, "YYYY-MM-DD").isValid()) {
+    const jalali = moment(miladi, "YYYY-MM-DD").format("jYYYY/jMM/jDD");
+    dateInput.setAttribute("data-shamsi", jalali);
+    document.getElementById("shamsiDateDisplay").textContent = jalali;
+  }
+});
+
 
   // دریافت تاریخ‌های رزرو شده و بررسی تکراری بودن
   fetch("reserved_dates.json")
