@@ -1,0 +1,13 @@
+fullname: ز ج
+phone: 09123679509
+email: hahs@gmail.com
+eventDate: 2025-07-14
+eventType: نامزدی
+services: fingerFood, flowerDecoration, juice
+fingerFoodLevel: معمولی
+flowerDecorationLevel: معمولی
+juiceLevel: اقتصادی
+guestCount: 350
+notes: ...
+shamsiDate: 1404/04/23
+trackingCode: TRK-478586
