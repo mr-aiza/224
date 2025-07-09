@@ -63,6 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.warn("خطا در خواندن reserved_dates.json:", err));
 
+ document.addEventListener("DOMContentLoaded", () => {
+  // ... (کد قبلی بدون تغییر)
+
   // ارسال فرم به بک‌اند
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -80,6 +83,38 @@ document.addEventListener("DOMContentLoaded", () => {
         json[key] = value;
       }
     });
+
+    const shamsiDate = dateInput.getAttribute("data-shamsi") || "بدون تاریخ شمسی";
+    const code = `TRK-${Date.now().toString().slice(-6)}`;
+    json.shamsiDate = shamsiDate;
+    json.trackingCode = code;
+
+    try {
+      const res = await fetch("/submit", {      // ← <-- مسیر اینجا
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(json),
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        formSuccess.textContent = "رزرو با موفقیت ثبت شد ✅";
+        formSuccess.style.display = "block";
+        trackingCode.innerHTML = `کد پیگیری شما: <strong>${code}</strong>`;
+        trackingCode.style.display = "block";
+        form.reset();
+        staffText.textContent = "تعداد مهمانداران: 0";
+      } else {
+        formError.textContent = result.message || "خطا در ارسال فرم.";
+        formError.style.display = "block";
+      }
+    } catch (err) {
+      formError.textContent = "ارسال اطلاعات با مشکل مواجه شد.";
+      formError.style.display = "block";
+    }
+  });
+});
+
 
     // افزودن تاریخ شمسی و کد پیگیری
     const shamsiDate = dateInput.getAttribute("data-shamsi") || "بدون تاریخ شمسی";
