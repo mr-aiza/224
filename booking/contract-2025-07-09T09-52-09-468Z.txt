@@ -1,0 +1,11 @@
+fullname: علیرضا عبدلی
+phone: 09388088657
+email: aliabdoli161@gmail.com
+eventDate: 2025-07-25
+eventType: سایر
+services: dinner
+dinnerType: دیس پرس
+guestCount: 150
+notes: 
+shamsiDate: 1404/05/03
+trackingCode: TRK-730241
