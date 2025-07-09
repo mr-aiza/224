@@ -1,0 +1,11 @@
+fullname: ع
+phone: 09123698547
+email: dd@gmail.com
+eventDate: 2025-07-13
+eventType: نامزدی
+services: fingerFood
+fingerFoodLevel: معمولی
+guestCount: 333
+notes: 
+shamsiDate: 1404/04/22
+trackingCode: TRK-318056
