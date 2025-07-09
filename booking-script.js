@@ -88,7 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
     json.trackingCode = code;
 
     try {
-      const res = await fetch("https://two24-96ud.onrender.com/booking", {
+      - const res = await fetch("https://two24-96ud.onrender.com/booking", {
++ const res = await fetch("/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(json),
