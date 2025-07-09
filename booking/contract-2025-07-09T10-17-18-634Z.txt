@@ -1,0 +1,12 @@
+fullname: محمد
+phone: 09123679509
+email: mm@gmail.com
+eventDate: 2025-07-12
+eventType: نامزدی
+services: fingerFood, flowerDecoration
+fingerFoodLevel: اقتصادی
+flowerDecorationLevel: معمولی
+guestCount: 22
+notes: 
+shamsiDate: 1404/04/21
+trackingCode: TRK-238357
