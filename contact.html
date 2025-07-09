@@ -51,8 +51,6 @@
       <button type="submit">ارسال پیام</button>
     </form>
   </section>
-  <form id="contactForm" action="/contact" method="POST">
-
 </main>
 
 <footer>
@@ -131,25 +129,40 @@
 
   update();
 
-  document.getElementById('contactForm').addEventListener('submit', function(e){
+  document.getElementById('contactForm').addEventListener('submit', async function(e){
     e.preventDefault();
 
-    const phone = this.phone.value.trim();
-    const phoneRegex = /^09\d{9}$/;
+    const data = {
+      name: this.name.value.trim(),
+      email: this.email.value.trim(),
+      phone: this.phone.value.trim(),
+      message: this.message.value.trim()
+    };
 
-    if(!phoneRegex.test(phone)) {
-      alert('لطفاً شماره تماس معتبر وارد کنید (با 09 شروع شود و 11 رقم باشد).');
+    const phoneRegex = /^09\d{9}$/;
+    if (!phoneRegex.test(data.phone)) {
+      alert('شماره تماس معتبر نیست.');
       this.phone.focus();
       return;
     }
 
-    if(!this.checkValidity()){
-      alert('لطفاً همه فیلدها را به درستی پر کنید.');
-      return;
-    }
+    try {
+      const res = await fetch("/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
 
-    alert('پیام شما با موفقیت ارسال شد. به زودی با شما تماس خواهیم گرفت.');
-    this.reset();
+      if (res.ok) {
+        alert("پیام شما با موفقیت ارسال شد.");
+        this.reset();
+      } else {
+        const error = await res.json();
+        alert("خطا در ارسال: " + error.message);
+      }
+    } catch (err) {
+      alert("ارتباط با سرور ممکن نیست.");
+    }
   });
 </script>
 
