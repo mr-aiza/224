@@ -1,12 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
 
-canvas#heartCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -21,7 +14,7 @@ body {
   overflow-x: hidden;
 }
 
-canvas {
+canvas#bgCanvas {
   position: fixed;
   top: 0;
   left: 0;
@@ -187,7 +180,7 @@ input[type="submit"]:hover {
   margin-bottom: 10px;
 }
 
-/* متن‌های راهنما و پیام‌ها */
+/* پیام‌ها */
 .info-text {
   font-size: 0.85rem;
   color: #880e4f;
@@ -197,6 +190,13 @@ input[type="submit"]:hover {
 .error-text {
   color: #c62828;
   font-weight: bold;
+  margin-top: 10px;
+}
+
+.success-text {
+  color: #2e7d32;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 /* فوتر */
