@@ -1,0 +1,11 @@
+fullname: 
+phone: 
+email: 
+eventDate: 2025-09-15
+eventType: نامزدی
+services: fingerFood
+fingerFoodLevel: اقتصادی
+guestCount: 1
+notes: 
+shamsiDate: 1404/06/24
+trackingCode: TRK-686927
