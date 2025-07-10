@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://two24-96ud.onrender.com/sitemap.xml
