@@ -1,0 +1,13 @@
+fullname: حسین پارسا
+phone: 09388088657
+email: abkon@gmail.com
+eventDate: 2025-07-20
+services: fingerFood, flowerDecoration, juice, dinner
+fingerFoodLevel: ویژه
+flowerDecorationLevel: ویژه
+juiceLevel: ویژه
+dinnerType: سلف سرویس
+guestCount: 500
+notes: جنده هم بیار
+shamsiDate: 1404/04/29
+trackingCode: TRK-030915
