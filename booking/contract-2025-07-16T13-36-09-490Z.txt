@@ -1,0 +1,8 @@
+fullname: علیرضا عبدلی
+phone: 09388088657
+email: aliabdoli161@gmail.com
+eventDate: 2025-07-17
+eventType: نامزدی
+services: fingerFood
+guestCount: 58
+notes: 
