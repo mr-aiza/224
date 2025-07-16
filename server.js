@@ -196,63 +196,33 @@ app.post('/change-password', async (req, res) => {
 });
 
 // --- رزرو مراسم ---
-app.post('/submit', async (req, res) => {
+app.post('/update-profile', async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     const user = verifyToken(token);
     if (!user) return res.status(401).json({ error: 'توکن نامعتبر' });
 
-    const eventDate = req.body.eventDate;
-    if (!eventDate) return res.status(400).json({ error: 'تاریخ رزرو ارسال نشده' });
+    const { fullname, phone } = req.body;
+    if (!fullname || !phone) return res.status(400).json({ error: 'اطلاعات ناقص است' });
 
-    const reservedData = await getFileContent(RESERVED_DATES_FILE);
-    let reservedDates = [];
-    let reservedSha = null;
-    if (reservedData) {
-      reservedDates = JSON.parse(Buffer.from(reservedData.content, 'base64').toString('utf8'));
-      reservedSha = reservedData.sha;
-    }
-
-    if (reservedDates.includes(eventDate)) {
-      return res.status(400).json({ error: 'این تاریخ قبلاً رزرو شده است.' });
-    }
-
-    const usersData = await getFileContent(USERS_FILE);
-    const users = JSON.parse(Buffer.from(usersData.content, 'base64').toString('utf8'));
+    const fileData = await getFileContent(USERS_FILE);
+    const users = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
     const currentUser = users.find(u => u.phone === user.phone);
     if (!currentUser) return res.status(404).json({ error: 'کاربر یافت نشد' });
 
-    if (!currentUser.reservations) currentUser.reservations = [];
-    if (currentUser.reservations.includes(eventDate)) {
-      return res.status(400).json({ error: 'شما قبلا این تاریخ را رزرو کرده‌اید.' });
-    }
-    currentUser.reservations.push(eventDate);
+    currentUser.fullname = fullname;
+    currentUser.phone = phone;
 
-    const usersBase64 = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
-    await uploadFile(USERS_FILE, usersBase64, `آپدیت رزرو برای کاربر ${user.phone}`, usersData.sha);
+    const base64 = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
+    await uploadFile(USERS_FILE, base64, `بروزرسانی پروفایل ${user.phone}`, fileData.sha);
 
-    reservedDates.push(eventDate);
-    const reservedBase64 = Buffer.from(JSON.stringify(reservedDates, null, 2)).toString('base64');
-    await uploadFile(RESERVED_DATES_FILE, reservedBase64, `افزودن تاریخ رزرو ${eventDate}`, reservedSha);
-
-    const bookingDir = 'booking';
-    const now = new Date();
-    const timeStr = now.toISOString().replace(/[:.]/g, '-');
-    const contractContent = Object.entries(req.body)
-      .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(', ') : value}`)
-      .join('\n');
-    const contractBase64 = Buffer.from(contractContent).toString('base64');
-    const contractFilename = `contract-${timeStr}.txt`;
-    const contractPath = `${bookingDir}/${contractFilename}`;
-    await uploadFile(contractPath, contractBase64, `افزودن فایل رزرو جدید برای ${eventDate}`);
-
-    res.status(200).json({ message: 'رزرو با موفقیت ثبت و ذخیره شد!' });
-
+    res.status(200).json({ message: 'پروفایل با موفقیت به‌روزرسانی شد' });
   } catch (err) {
-    console.error('❌ خطا در ذخیره رزرو:', err.response?.data || err.message);
-    res.status(500).json({ error: 'خطا در ثبت رزرو' });
+    console.error('❌ خطا در بروزرسانی پروفایل:', err);
+    res.status(500).json({ error: 'خطا در بروزرسانی پروفایل' });
   }
 });
+
 
 // --- داینامیک sitemap.xml ---
 app.get('/sitemap.xml', (req, res) => {
