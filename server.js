@@ -187,8 +187,8 @@ app.post('/cooperation', async (req, res) => {
     const cooperationDir = 'cooperation1';
     const now = new Date();
     const timeStr = now.toISOString().replace(/[:.]/g, '-');
-    const fileName = partner-${timeStr}.txt;
-    const filePath = ${cooperationDir}/${fileName};
+    const fileName = `partner-${timeStr}.txt`;
+    const filePath = `${cooperationDir}/${fileName}`;
 
     const { fullname, phone, type, location, description } = req.body;
 
