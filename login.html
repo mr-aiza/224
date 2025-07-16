@@ -1,22 +1,63 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>ورود به پنل</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="auth-style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>پنل پروفایل کاربر</title>
+  <style>
+    body { font-family: Vazir, sans-serif; padding: 20px; }
+    .error { color: red; }
+    .profile-info { margin-top: 20px; }
+    button { margin-top: 20px; padding: 8px 12px; cursor: pointer; }
+  </style>
 </head>
 <body>
-  <div class="auth-container">
-    <h2>ورود به حساب</h2>
-    <form id="loginForm">
-      <input type="tel" name="phone" placeholder="شماره تلفن" required>
-      <input type="password" name="password" placeholder="رمز عبور" required>
-      <button type="submit">ورود</button>
-      <p class="link">حساب ندارید؟ <a href="register.html">ثبت‌نام</a></p>
-    </form>
-    <p id="loginMessage" class="message"></p>
-  </div>
-  <script src="login.js"></script>
+  <h1>پنل پروفایل</h1>
+  <div id="message"></div>
+  <div class="profile-info" id="profileInfo"></div>
+  <button id="logoutBtn">خروج</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const message = document.getElementById('message');
+      const profileInfo = document.getElementById('profileInfo');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      fetch('/profile', {
+        headers: { Authorization: 'Bearer ' + token }
+      })
+        .then(res => {
+          if (!res.ok) throw new Error('توکن نامعتبر یا منقضی شده است.');
+          return res.json();
+        })
+        .then(data => {
+          const user = data.user;
+          profileInfo.innerHTML = `
+            <p><strong>نام کامل:</strong> ${user.fullname || '---'}</p>
+            <p><strong>شماره تلفن:</strong> ${user.phone}</p>
+            <p><strong>نقش:</strong> ${user.role}</p>
+          `;
+        })
+        .catch(err => {
+          message.textContent = err.message;
+          message.className = 'error';
+          setTimeout(() => {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+          }, 2000);
+        });
+
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+      });
+    });
+  </script>
 </body>
 </html>
