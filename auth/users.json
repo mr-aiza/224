@@ -24,5 +24,12 @@
     "password": "$2b$10$8C6doW/7AXJ3o/c7k75YpOXubalnpvuQtPDYVR1gRS0rbi8bhFWt.",
     "role": "waiter",
     "reservations": []
+  },
+  {
+    "fullname": "علیرضا عبدلی",
+    "phone": "09388088659",
+    "password": "$2b$10$RGgP2FHd/GUAMcDgt3saAuz1ct5UpUX9ci.5mT1qPNKvX4k9RQZF.",
+    "role": "waiter",
+    "reservations": []
   }
 ]
