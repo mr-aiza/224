@@ -30,6 +30,8 @@
     "phone": "09388088659",
     "password": "$2b$10$RGgP2FHd/GUAMcDgt3saAuz1ct5UpUX9ci.5mT1qPNKvX4k9RQZF.",
     "role": "waiter",
-    "reservations": []
+    "reservations": [
+      "2025-07-30"
+    ]
   }
 ]
