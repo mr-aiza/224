@@ -10,7 +10,6 @@
     input, select { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
     button { margin-top: 20px; padding: 10px; width: 100%; cursor: pointer; background-color: #28a745; color: white; border: none; }
     .error { color: red; margin-top: 10px; }
-    .success { color: green; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -28,16 +27,17 @@
 
     <label for="role">نقش کاربری:</label>
     <select id="role" name="role" required>
-      <option value="" disabled selected>انتخاب کنید</option>
+      <option value="">انتخاب کنید</option>
       <option value="customer">مشتری</option>
       <option value="staff">کارکنان</option>
+      <option value="admin">مدیر</option>
     </select>
 
     <button type="submit">ثبت‌نام</button>
   </form>
 
   <div id="message"></div>
-  <p>قبلا ثبت‌نام کرده‌اید؟ <a href="login.html">وارد شوید</a></p>
+  <p>حساب کاربری دارید؟ <a href="login.html">وارد شوید</a></p>
 
   <script>
     const form = document.getElementById('registerForm');
@@ -53,8 +53,8 @@
       const password = form.password.value;
       const role = form.role.value;
 
-      if (!fullname || !phone || !password || !role) {
-        messageDiv.textContent = 'لطفا همه فیلدها را پر کنید.';
+      if (!role) {
+        messageDiv.textContent = 'لطفاً نقش کاربری را انتخاب کنید.';
         messageDiv.className = 'error';
         return;
       }
@@ -68,12 +68,9 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'خطا در ثبت‌نام');
 
-        messageDiv.textContent = 'ثبت‌نام با موفقیت انجام شد! اکنون وارد شوید.';
+        messageDiv.textContent = 'ثبت‌نام موفقیت‌آمیز بود. لطفاً به صفحه ورود بروید.';
         messageDiv.className = 'success';
-
-        setTimeout(() => {
-          window.location.href = 'login.html';
-        }, 2000);
+        form.reset();
       } catch (err) {
         messageDiv.textContent = err.message;
         messageDiv.className = 'error';
