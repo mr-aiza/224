@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دعوت به همکاری | تشریفات رویایی</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="cooperation-script.js" defer></script>
+</head>
+<body>
+
+  <div id="musicControl">
+    <audio id="bgMusic" src="wigen_wedding.mp3" autoplay loop></audio>
+    <button onclick="toggleMusic()">🎵</button>
+  </div>
+
+  <canvas id="heartCanvas"></canvas>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">خانه</a></li>
+      <li><a href="services.html">خدمات</a></li>
+      <li><a href="booking.html">رزرو</a></li>
+      <li><a href="contact.html">تماس با ما</a></li>
+      <li><a href="cooperation.html" class="active">همکاری</a></li>
+    </ul>
+  </nav>
+
+  <main class="cooperation-page">
+    <section class="intro">
+      <h1>📣 دعوت به همکاری با تشریفات رویایی</h1>
+      <p>اگر صاحب باغ، سالن، یا خدمات مرتبط هستید، فرم زیر را پر کنید تا با شما تماس بگیریم.</p>
+    </section>
+
+    <section class="form-section">
+      <form id="cooperationForm">
+        <label>نام کامل:
+          <input type="text" name="fullname" required />
+        </label>
+
+        <label>شماره تماس:
+          <input type="tel" name="phone" required />
+        </label>
+
+        <label>نوع همکاری:
+          <select name="type" required>
+            <option value="">انتخاب کنید</option>
+            <option value="باغ">باغ</option>
+            <option value="سالن">سالن</option>
+            <option value="پذیرایی">پذیرایی</option>
+            <option value="موزیک">موزیک</option>
+            <option value="گل‌آرایی">گل‌آرایی</option>
+            <option value="آشپز">آشپز</option>
+            <option value="فیلم بردار">فیلم بردار</option>
+            <option value="سایر">سایر</option>
+          </select>
+        </label>
+
+        <label>منطقه / شهر:
+          <input type="text" name="location" required />
+        </label>
+
+        <label>توضیحات بیشتر:
+          <textarea name="description" rows="4" placeholder="مثلاً ظرفیت یا تجربه..."></textarea>
+        </label>
+
+        <label>
+          <input type="checkbox" required />
+          با شرایط همکاری موافقم.
+        </label>
+
+        <button type="submit">📩 ارسال فرم همکاری</button>
+        <p id="formMessage"></p>
+      </form>
+    </section>
+  </main>
+
+</body>
+</html>
