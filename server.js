@@ -57,6 +57,42 @@ function verifyToken(token) {
   }
 }
 
+// --- مدیریت کاربران توسط ادمین ---
+app.get('/admin/users', async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  const user = verifyToken(token);
+  if (!user || user.role !== 'admin') return res.status(403).json({ error: 'دسترسی غیرمجاز' });
+
+  try {
+    const fileData = await getFileContent(USERS_FILE);
+    const decoded = Buffer.from(fileData.content, 'base64').toString('utf8');
+    const users = JSON.parse(decoded);
+    res.status(200).json({ users });
+  } catch (err) {
+    console.error('❌ خطا در دریافت کاربران:', err);
+    res.status(500).json({ error: 'خطا در دریافت کاربران' });
+  }
+});
+
+app.post('/admin/delete-user', async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  const user = verifyToken(token);
+  if (!user || user.role !== 'admin') return res.status(403).json({ error: 'دسترسی غیرمجاز' });
+
+  const { phone } = req.body;
+  try {
+    const fileData = await getFileContent(USERS_FILE);
+    const users = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
+    const updatedUsers = users.filter(u => u.phone !== phone);
+    const base64 = Buffer.from(JSON.stringify(updatedUsers, null, 2)).toString('base64');
+    await uploadFile(USERS_FILE, base64, `حذف کاربر: ${phone}`, fileData.sha);
+    res.status(200).json({ message: 'کاربر حذف شد' });
+  } catch (err) {
+    console.error('❌ خطا در حذف کاربر:', err);
+    res.status(500).json({ error: 'خطا در حذف کاربر' });
+  }
+});
+
 // --- ثبت‌نام ---
 app.post('/register', async (req, res) => {
   try {
@@ -140,6 +176,7 @@ app.post('/change-password', async (req, res) => {
     res.status(500).json({ error: 'خطا در تغییر رمز' });
   }
 });
+
 
 
 // تابع کمکی: دریافت محتویات فایل از GitHub
