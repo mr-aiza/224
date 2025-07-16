@@ -3,7 +3,10 @@
     "fullname": "علیرضا عبدلی",
     "phone": "09388088657",
     "password": "$2b$10$kWzevqFnrB/ylf8kkXLPi.A4zpmq30/ig7YpdXREXazEMvG2Ioexe",
-    "role": "admin"
+    "role": "admin",
+    "reservations": [
+      "2025-07-17"
+    ]
   },
   {
     "fullname": "تست",
