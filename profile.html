@@ -1,0 +1,129 @@
+<!-- profile.html - رابط کاربری پنل کاربر (مشتری یا کارمند یا مدیر) -->
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>پنل کاربری</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Vazir', sans-serif;
+      background: #f2f2f2;
+      padding: 2rem;
+    }
+    .panel {
+      background: white;
+      border-radius: 16px;
+      max-width: 600px;
+      margin: auto;
+      padding: 2rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    h2 { margin-bottom: 1rem; color: #333; }
+    .info-box { margin-bottom: 1.5rem; }
+    label { font-weight: bold; }
+    input, select, button {
+      width: 100%; padding: 0.5rem; margin-top: 0.3rem; margin-bottom: 1rem;
+      border: 1px solid #ccc; border-radius: 8px;
+    }
+    .reservations {
+      margin-top: 2rem;
+      border-top: 1px solid #ddd;
+      padding-top: 1rem;
+    }
+    .reservation-item {
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 0.8rem;
+      border-radius: 8px;
+    }
+    .admin-controls {
+      background: #fff0f5;
+      border: 1px dashed #cc3366;
+      padding: 1rem;
+      margin-top: 2rem;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h2>پنل کاربری</h2>
+    <div id="userInfo" class="info-box">
+      <p><strong>نام:</strong> <span id="fullname"></span></p>
+      <p><strong>شماره:</strong> <span id="phone"></span></p>
+      <p><strong>نقش:</strong> <span id="role"></span></p>
+    </div>
+
+    <div>
+      <label for="fullnameInput">تغییر نام:</label>
+      <input type="text" id="fullnameInput" placeholder="نام جدید">
+
+      <label for="passwordInput">تغییر رمز:</label>
+      <input type="password" id="passwordInput" placeholder="رمز جدید">
+
+      <button onclick="updateProfile()">ذخیره تغییرات</button>
+    </div>
+
+    <div class="reservations">
+      <h3>رزروهای من</h3>
+      <div id="reservationList"></div>
+    </div>
+
+    <div class="admin-controls" id="adminPanel" style="display: none">
+      <h3>مدیریت ادمین</h3>
+      <button onclick="location.href='admin.html'">ورود به پنل مدیریت</button>
+    </div>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('token');
+    if (!token) location.href = '/login.html';
+
+    async function fetchProfile() {
+      const res = await fetch('/profile', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      document.getElementById('fullname').innerText = data.profile.fullname;
+      document.getElementById('phone').innerText = data.profile.phone;
+      document.getElementById('role').innerText = data.profile.role;
+      document.getElementById('fullnameInput').value = data.profile.fullname;
+
+      if (data.profile.role === 'admin') {
+        document.getElementById('adminPanel').style.display = 'block';
+      }
+
+      // دریافت لیست رزروها
+      const res2 = await fetch('/my-reservations', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const result = await res2.json();
+      const list = document.getElementById('reservationList');
+      list.innerHTML = result.reservations.map(r => `<div class='reservation-item'>تاریخ: ${r.date}<br>نوع: ${r.event}</div>`).join('');
+    }
+
+    async function updateProfile() {
+      const fullname = document.getElementById('fullnameInput').value;
+      const password = document.getElementById('passwordInput').value;
+
+      const res = await fetch('/update-profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ fullname, password })
+      });
+
+      const result = await res.json();
+      alert(result.message);
+      if (res.ok) fetchProfile();
+    }
+
+    fetchProfile();
+  </script>
+</body>
+</html>
