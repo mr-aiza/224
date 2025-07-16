@@ -223,3 +223,42 @@ await uploadFile(
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+// --- استخدام مهماندار ---
+app.post('/waiter', async (req, res) => {
+  try {
+    const cooperationDir = 'cooperation2';  // مسیر پوشه تغییر کرد به cooperation2
+    const now = new Date();
+    const timeStr = now.toISOString().replace(/[:.]/g, '-');
+    const fileName = `waiter-${timeStr}.txt`; // نام فایل یکتا برای مهماندار
+    const filePath = `${cooperationDir}/${fileName}`;
+
+    const { fullname, phone, city, experience, availability, description } = req.body;
+
+    const content = `
+فرم استخدام مهماندار جدید:
+
+نام: ${fullname}
+تلفن: ${phone}
+شهر/منطقه: ${city}
+تجربه: ${experience}
+وضعیت حضور: ${availability}
+توضیحات:
+${description || '---'}
+
+ارسال شده در: ${now.toLocaleString('fa-IR')}
+    `.trim();
+
+    const contentBase64 = Buffer.from(content).toString('base64');
+
+    await uploadFile(
+      filePath,
+      contentBase64,
+      `افزودن فرم استخدام مهماندار ${fullname} - ${timeStr}`
+    );
+
+    res.status(200).json({ message: 'فرم استخدام مهماندار با موفقیت ثبت شد ✅' });
+  } catch (err) {
+    console.error('❌ خطا در ثبت فرم استخدام مهماندار:', err.response?.data || err.message);
+    res.status(500).json({ error: 'خطا در ثبت فرم استخدام مهماندار' });
+  }
+});
