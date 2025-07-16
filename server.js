@@ -4,7 +4,6 @@ const path = require('path');
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_OWNER = 'mr-aiza';
 const REPO_NAME = '224';
@@ -47,54 +46,53 @@ async function uploadFile(filePath, contentBase64, message, sha = null) {
   return res.data;
 }
 
-// --- سرو کردن داینامیک sitemap.xml ---
+// --- داینامیک sitemap.xml ---
 app.get('/sitemap.xml', (req, res) => {
   res.header('Content-Type', 'application/xml');
   res.send(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
   <url>
     <loc>https://two24-96ud.onrender.com/</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-
   <url>
     <loc>https://two24-96ud.onrender.com/about.html</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://two24-96ud.onrender.com/services.html</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://two24-96ud.onrender.com/portfolio.html</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://two24-96ud.onrender.com/booking.html</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://two24-96ud.onrender.com/contact.html</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
+  <url>
+    <loc>https://two24-96ud.onrender.com/waiter.html</loc>
+    <lastmod>2025-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>`);
 });
 
@@ -105,7 +103,6 @@ app.post('/submit', async (req, res) => {
     const todayISO = now.toISOString().split('T')[0];
     const reservedDatesPath = 'reserved_dates.json';
     const bookingDir = 'booking';
-
     const eventDate = req.body.eventDate;
 
     const reservedData = await getFileContent(reservedDatesPath);
@@ -125,17 +122,11 @@ app.post('/submit', async (req, res) => {
       .join('\n');
 
     const contractBase64 = Buffer.from(contractContent).toString('base64');
-
     const timeStr = now.toISOString().replace(/[:.]/g, '-');
     const contractFilename = `contract-${timeStr}.txt`;
     const contractPath = `${bookingDir}/${contractFilename}`;
 
-    await uploadFile(
-      contractPath,
-      contractBase64,
-      `افزودن فایل رزرو جدید برای ${eventDate}`
-    );
-
+    await uploadFile(contractPath, contractBase64, `افزودن فایل رزرو جدید برای ${eventDate}`);
     reservedDates.push(eventDate);
     const reservedDatesBase64 = Buffer.from(JSON.stringify(reservedDates, null, 2)).toString('base64');
 
@@ -147,7 +138,6 @@ app.post('/submit', async (req, res) => {
     );
 
     res.status(200).json({ message: 'رزرو با موفقیت ثبت و ذخیره شد!' });
-
   } catch (err) {
     console.error('❌ خطا در ذخیره رزرو:', err.response?.data || err.message);
     res.status(500).json({ error: 'خطا در ثبت رزرو' });
@@ -169,19 +159,15 @@ app.post('/contact', async (req, res) => {
 
     const contentBase64 = Buffer.from(messageContent).toString('base64');
 
-    await uploadFile(
-      filePath,
-      contentBase64,
-      `افزودن پیام جدید تماس با ما - ${timeStr}`
-    );
-
+    await uploadFile(filePath, contentBase64, `افزودن پیام جدید تماس با ما - ${timeStr}`);
     res.status(200).json({ message: 'پیام شما با موفقیت ثبت شد!' });
   } catch (err) {
     console.error('❌ خطا در ذخیره پیام تماس با ما:', err.response?.data || err.message);
     res.status(500).json({ error: 'خطا در ثبت پیام تماس با ما' });
   }
 });
-// --- همکاری با باغ‌دار، سالن‌دار و ... ---
+
+// --- همکاری عمومی (باغ‌دار، سالن‌دار و...) ---
 app.post('/cooperation', async (req, res) => {
   try {
     const cooperationDir = 'cooperation1';
@@ -192,7 +178,7 @@ app.post('/cooperation', async (req, res) => {
 
     const { fullname, phone, type, location, description } = req.body;
 
-const content = `
+    const content = `
 فرم همکاری جدید:
 
 نام: ${fullname}
@@ -205,40 +191,34 @@ ${description || '---'}
 ارسال شده در: ${now.toLocaleString('fa-IR')}
 `.trim();
 
-const contentBase64 = Buffer.from(content).toString('base64');
+    const contentBase64 = Buffer.from(content).toString('base64');
 
-await uploadFile(
-  filePath,
-  contentBase64,
-  `افزودن فرم همکاری ${fullname} - ${timeStr}`
-);
-
-
+    await uploadFile(filePath, contentBase64, `افزودن فرم همکاری ${fullname} - ${timeStr}`);
     res.status(200).json({ message: 'فرم همکاری با موفقیت ثبت شد ✅' });
   } catch (err) {
     console.error('❌ خطا در ثبت فرم همکاری:', err.response?.data || err.message);
     res.status(500).json({ error: 'خطا در ثبت فرم همکاری' });
   }
 });
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+
 // --- استخدام مهماندار ---
 app.post('/waiter', async (req, res) => {
   try {
-    const cooperationDir = 'cooperation2';  // مسیر پوشه تغییر کرد به cooperation2
+    const cooperationDir = 'cooperation2';
     const now = new Date();
     const timeStr = now.toISOString().replace(/[:.]/g, '-');
-    const fileName = `waiter-${timeStr}.txt`; // نام فایل یکتا برای مهماندار
+    const fileName = `waiter-${timeStr}.txt`;
     const filePath = `${cooperationDir}/${fileName}`;
 
-    const { fullname, phone, city, experience, availability, description } = req.body;
+    const { fullname, phone, age, gender, city, experience, availability, description } = req.body;
 
     const content = `
 فرم استخدام مهماندار جدید:
 
 نام: ${fullname}
 تلفن: ${phone}
+سن: ${age}
+جنسیت: ${gender}
 شهر/منطقه: ${city}
 تجربه: ${experience}
 وضعیت حضور: ${availability}
@@ -246,19 +226,18 @@ app.post('/waiter', async (req, res) => {
 ${description || '---'}
 
 ارسال شده در: ${now.toLocaleString('fa-IR')}
-    `.trim();
+`.trim();
 
     const contentBase64 = Buffer.from(content).toString('base64');
 
-    await uploadFile(
-      filePath,
-      contentBase64,
-      `افزودن فرم استخدام مهماندار ${fullname} - ${timeStr}`
-    );
-
+    await uploadFile(filePath, contentBase64, `افزودن فرم استخدام مهماندار ${fullname} - ${timeStr}`);
     res.status(200).json({ message: 'فرم استخدام مهماندار با موفقیت ثبت شد ✅' });
   } catch (err) {
     console.error('❌ خطا در ثبت فرم استخدام مهماندار:', err.response?.data || err.message);
     res.status(500).json({ error: 'خطا در ثبت فرم استخدام مهماندار' });
   }
+});
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
