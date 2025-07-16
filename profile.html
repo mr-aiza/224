@@ -3,111 +3,412 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>پروفایل کاربر</title>
+  <title>پروفایل کاربر | تشریفات رویایی</title>
   <style>
-    body { font-family: Vazir, sans-serif; max-width: 500px; margin: 20px auto; padding: 10px; }
-    h1 { text-align: center; }
-    .info { background: #f0f0f0; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-    label { display: block; margin-top: 15px; }
-    input { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
-    button { margin-top: 15px; padding: 10px; width: 100%; background-color: #007bff; color: white; border: none; cursor: pointer; }
-    .error { color: red; margin-top: 10px; }
-    .success { color: green; margin-top: 10px; }
-    #logoutBtn { background-color: #dc3545; margin-top: 30px; }
+    @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
+    body {
+      font-family: 'Vazir', sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 10px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .profile-section {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px 0;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="tel"], input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      width: 100%;
+      background-color: #4a90e2;
+      color: white;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #357ABD;
+    }
+    #logoutBtn {
+      background-color: #dc3545;
+      margin-top: 30px;
+    }
+    .notifications {
+      text-align: center;
+      margin-bottom: 15px;
+      font-weight: bold;
+      display: none;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .notifications.success {
+      color: #155724;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+    }
+    .notifications.error {
+      color: #721c24;
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li {
+      background: #eee;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    ul li button {
+      width: auto;
+      padding: 5px 10px;
+      font-size: 0.9rem;
+      background-color: #e74c3c;
+      border-radius: 6px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    ul li button:hover {
+      background-color: #c0392b;
+    }
+    .profile-img {
+      display: block;
+      margin: 0 auto 15px auto;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border: 3px solid #4a90e2;
+    }
   </style>
 </head>
 <body>
 
   <h1>پروفایل شما</h1>
 
-  <div id="userInfo" class="info">
-    در حال بارگذاری اطلاعات...
+  <div class="notifications" id="notification"></div>
+
+  <div class="profile-section" id="profileInfo">
+    <img src="" alt="تصویر پروفایل" id="profileImage" class="profile-img" />
+    <label for="fullnameInput">نام و نام خانوادگی:</label>
+    <input type="text" id="fullnameInput" />
+    <label for="phoneInput">شماره تلفن:</label>
+    <input type="tel" id="phoneInput" pattern="09\d{9}" />
+    <label>نقش کاربری:</label>
+    <div id="roleDisplay" style="font-weight:bold; margin-bottom:15px;"></div>
+    <button id="saveProfileBtn">ذخیره تغییرات</button>
   </div>
 
-  <form id="changePasswordForm">
-    <h2>تغییر رمز عبور</h2>
-    <label for="oldPassword">رمز فعلی:</label>
-    <input type="password" id="oldPassword" name="oldPassword" required />
+  <div class="profile-section">
+    <h2>تاریخ‌های رزرو شما</h2>
+    <div>تعداد کل رزروها: <span id="totalReservations">0</span></div>
+    <h3>رزروهای آینده</h3>
+    <ul id="futureReservations"></ul>
+    <h3>رزروهای گذشته</h3>
+    <ul id="pastReservations"></ul>
+  </div>
 
-    <label for="newPassword">رمز جدید:</label>
-    <input type="password" id="newPassword" name="newPassword" minlength="6" required />
+  <div class="profile-section">
+    <h2>تاریخچه رزروهای لغو شده</h2>
+    <ul id="cancelledReservations"></ul>
+  </div>
 
-    <button type="submit">تغییر رمز</button>
-  </form>
-
-  <div id="message"></div>
+  <div class="profile-section">
+    <h2>آپلود تصویر پروفایل</h2>
+    <input type="file" id="profileImageInput" accept="image/*" />
+    <button id="uploadImageBtn">آپلود تصویر</button>
+  </div>
 
   <button id="logoutBtn">خروج از حساب</button>
 
-  <script>
-    const userInfoDiv = document.getElementById('userInfo');
-    const changePasswordForm = document.getElementById('changePasswordForm');
-    const messageDiv = document.getElementById('message');
-    const logoutBtn = document.getElementById('logoutBtn');
+<script>
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('ابتدا وارد شوید');
+    window.location.href = 'auth.html';
+  }
 
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert('ابتدا وارد شوید');
-      window.location.href = 'login.html';
-    }
+  const notificationDiv = document.getElementById('notification');
+  const profileImage = document.getElementById('profileImage');
+  const fullnameInput = document.getElementById('fullnameInput');
+  const phoneInput = document.getElementById('phoneInput');
+  const roleDisplay = document.getElementById('roleDisplay');
+  const saveProfileBtn = document.getElementById('saveProfileBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
 
-    async function fetchProfile() {
-      try {
-        const res = await fetch('/profile', {
-          headers: { Authorization: 'Bearer ' + token }
-        });
-        if (!res.ok) throw new Error('توکن نامعتبر یا دسترسی غیرمجاز');
-        const data = await res.json();
-        const user = data.user;
-        userInfoDiv.textContent = '';
-        const ul = document.createElement('ul');
-        for (const key in user) {
-          const li = document.createElement('li');
-          li.textContent = `${key}: ${user[key]}`;
-          ul.appendChild(li);
-        }
-        userInfoDiv.appendChild(ul);
-      } catch (err) {
-        userInfoDiv.textContent = err.message;
-        localStorage.removeItem('token');
-        setTimeout(() => window.location.href = 'login.html', 2000);
-      }
-    }
+  const futureReservationsUL = document.getElementById('futureReservations');
+  const pastReservationsUL = document.getElementById('pastReservations');
+  const totalReservationsSpan = document.getElementById('totalReservations');
+  const cancelledReservationsUL = document.getElementById('cancelledReservations');
 
-    fetchProfile();
+  const profileImageInput = document.getElementById('profileImageInput');
+  const uploadImageBtn = document.getElementById('uploadImageBtn');
 
-    changePasswordForm.addEventListener('submit', async e => {
-      e.preventDefault();
-      messageDiv.textContent = '';
-      messageDiv.className = '';
+  let currentUser = null;
+  let reservations = [];
+  let cancelledReservations = [];
 
-      const oldPassword = changePasswordForm.oldPassword.value;
-      const newPassword = changePasswordForm.newPassword.value;
+  // نوتیفیکیشن
+  function showNotification(message, type='success') {
+    notificationDiv.textContent = message;
+    notificationDiv.className = 'notifications ' + type;
+    notificationDiv.style.display = 'block';
+    setTimeout(() => {
+      notificationDiv.style.display = 'none';
+    }, 4000);
+  }
 
-      try {
-        const res = await fetch('/change-password', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token
-          },
-          body: JSON.stringify({ oldPassword, newPassword })
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'خطا در تغییر رمز');
-        messageDiv.textContent = data.message;
-        messageDiv.className = 'success';
-        changePasswordForm.reset();
-      } catch (err) {
-        messageDiv.textContent = err.message;
-        messageDiv.className = 'error';
-      }
-    });
+  // دریافت اطلاعات کاربر
+  async function fetchProfile() {
+    try {
+      const res = await fetch('/profile', {
+        headers: { Authorization: 'Bearer ' + token }
+      });
+      if (!res.ok) throw new Error('توکن نامعتبر یا دسترسی غیرمجاز');
+      const data = await res.json();
+      currentUser = data.user;
+      fullnameInput.value = currentUser.fullname || '';
+      phoneInput.value = currentUser.phone || '';
+      roleDisplay.textContent = currentUser.role || 'نامشخص';
 
-    logoutBtn.addEventListener('click', () => {
+      // بارگذاری تصویر پروفایل اگر ذخیره شده باشد
+      fetchProfileImage();
+
+      // بارگذاری رزروها
+      await fetchReservations();
+      await fetchCancelledReservations();
+    } catch (err) {
+      alert(err.message);
       localStorage.removeItem('token');
-      window.location.href = 'login.html';
+      window.location.href = 'auth.html';
+    }
+  }
+
+ // دریافت تصویر پروفایل از گیت‌هاب یا localStorage
+async function fetchProfileImage() {
+  try {
+    // اگر تصویر در localStorage هست از آن استفاده کن
+    const cachedImg = localStorage.getItem('profileImageBase64');
+    if (cachedImg) {
+      profileImage.src = cachedImg;
+      return;
+    }
+
+    // یا اگر روی گیت‌هاب ذخیره شده، اینجا میتونی API بزنید و تصویر رو بگیری
+    // فعلا تصویر پیش‌فرض میذاریم
+    profileImage.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+  } catch (err) {
+    console.error('خطا در بارگذاری تصویر پروفایل:', err);
+    profileImage.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+  }
+}
+
+// ذخیره تصویر پروفایل در گیت‌هاب و localStorage
+async function uploadProfileImage(base64Image) {
+  try {
+    // ارسال تصویر به سرور یا گیت‌هاب از طریق API مخصوص شما
+    // این قسمت باید با توجه به بک‌اند شما تغییر کند
+    // برای نمونه فرض می‌کنیم یک endpoint /upload-profile-image داریم
+
+    const res = await fetch('/upload-profile-image', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      },
+      body: JSON.stringify({ imageBase64: base64Image })
     });
-  </script>
-</body>
-</html>
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || 'خطا در آپلود تصویر');
+    }
+
+    // ذخیره در localStorage برای بارگذاری سریعتر
+    localStorage.setItem('profileImageBase64', base64Image);
+    profileImage.src = base64Image;
+    showNotification('تصویر پروفایل با موفقیت آپلود شد', 'success');
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+// دریافت رزروهای کاربر
+async function fetchReservations() {
+  try {
+    const res = await fetch('/reservations', {
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    if (!res.ok) throw new Error('خطا در دریافت رزروها');
+    reservations = await res.json();
+
+    // فیلتر رزروهای این کاربر
+    const userReservations = reservations.filter(r => r.phone === currentUser.phone);
+
+    totalReservationsSpan.textContent = userReservations.length;
+
+    // جداکردن رزروهای آینده و گذشته
+    const now = new Date();
+    futureReservationsUL.innerHTML = '';
+    pastReservationsUL.innerHTML = '';
+
+    userReservations.forEach(r => {
+      const li = document.createElement('li');
+      li.textContent = `تاریخ: ${r.date} - مراسم: ${r.eventType || 'نامشخص'}`;
+      // دکمه لغو رزرو فقط برای رزروهای آینده
+      if (new Date(r.date) > now) {
+        const cancelBtn = document.createElement('button');
+        cancelBtn.textContent = 'لغو';
+        cancelBtn.addEventListener('click', () => cancelReservation(r.id));
+        li.appendChild(cancelBtn);
+        futureReservationsUL.appendChild(li);
+      } else {
+        pastReservationsUL.appendChild(li);
+      }
+    });
+
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+// دریافت رزروهای لغو شده
+async function fetchCancelledReservations() {
+  try {
+    const res = await fetch('/cancelled-reservations', {
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    if (!res.ok) throw new Error('خطا در دریافت رزروهای لغو شده');
+    cancelledReservations = await res.json();
+
+    const userCancelled = cancelledReservations.filter(r => r.phone === currentUser.phone);
+
+    cancelledReservationsUL.innerHTML = '';
+    if(userCancelled.length === 0){
+      cancelledReservationsUL.textContent = 'رزرو لغو شده‌ای وجود ندارد.';
+      return;
+    }
+
+    userCancelled.forEach(r => {
+      const li = document.createElement('li');
+      li.textContent = `تاریخ: ${r.date} - مراسم: ${r.eventType || 'نامشخص'}`;
+      cancelledReservationsUL.appendChild(li);
+    });
+
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+// لغو رزرو
+async function cancelReservation(reservationId) {
+  if (!confirm('آیا مطمئن هستید که می‌خواهید این رزرو را لغو کنید؟')) return;
+
+  try {
+    const res = await fetch(`/cancel-reservation/${reservationId}`, {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    if (!res.ok) throw new Error('خطا در لغو رزرو');
+
+    showNotification('رزرو با موفقیت لغو شد', 'success');
+    await fetchReservations();
+    await fetchCancelledReservations();
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+// ذخیره ویرایش پروفایل
+saveProfileBtn.addEventListener('click', async () => {
+  const newFullname = fullnameInput.value.trim();
+  const newPhone = phoneInput.value.trim();
+
+  if (!newFullname || !/^09\d{9}$/.test(newPhone)) {
+    showNotification('لطفاً نام و شماره تلفن صحیح را وارد کنید', 'error');
+    return;
+  }
+
+  try {
+    const res = await fetch('/update-profile', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      },
+      body: JSON.stringify({ fullname: newFullname, phone: newPhone })
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || 'خطا در به‌روزرسانی پروفایل');
+    }
+    showNotification('پروفایل با موفقیت به‌روزرسانی شد', 'success');
+    currentUser.fullname = newFullname;
+    currentUser.phone = newPhone;
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+});
+
+// آپلود تصویر پروفایل
+uploadImageBtn.addEventListener('click', () => {
+  const file = profileImageInput.files[0];
+  if (!file) {
+    showNotification('لطفاً یک تصویر انتخاب کنید', 'error');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    const base64Image = reader.result;
+    uploadProfileImage(base64Image);
+  };
+  reader.readAsDataURL(file);
+});
+
+// لاگ‌اوت خودکار پس از 30 دقیقه
+setTimeout(() => {
+  localStorage.removeItem('token');
+  alert('به دلیل عدم فعالیت، از حساب کاربری خارج شدید');
+  window.location.href = 'auth.html';
+}, 30 * 60 * 1000);
+
+// دکمه خروج
+logoutBtn.addEventListener('click', () => {
+  localStorage.removeItem('token');
+  window.location.href = 'auth.html';
+});
+
+// شروع بارگذاری پروفایل
+fetchProfile();
