@@ -17,11 +17,7 @@ const SECRET_KEY = 'very_secret_key';
 app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-fetch('/register', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  //body: JSON.stringify({ fullname, phone, password })
-})
+
 
 // --- توابع کمکی ---
 async function getFileContent(filePath) {
