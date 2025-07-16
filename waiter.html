@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>استخدام مهماندار | تشریفات رویایی</title>
+  <meta name="description" content="فرم استخدام مهماندار برای همکاری با تیم حرفه‌ای تشریفات رویایی. شرایط، تجربه و مهارت‌های خود را ثبت کنید." />
+  <meta name="keywords" content="استخدام مهماندار، همکاری، تشریفات عروسی، مهماندار عروسی، فرصت شغلی" />
+  <meta name="robots" content="index, follow" />
+  <meta http-equiv="Content-Language" content="fa" />
+  <script src="waiter-script.js" defer></script>
+  <link rel="stylesheet" href="Style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+<audio id="bgMusic" src="wigen_wedding.mp3" loop></audio>
+<button id="audioToggle" title="پخش/توقف موسیقی"><i class="fa fa-music"></i></button>
+
+<nav>
+  <a href="index.html">خانه</a>
+  <a href="services.html">خدمات</a>
+  <a href="portfolio.html">نمونه‌کارها</a>
+  <a href="booking.html">رزرو</a>
+  <a href="cooperation.html">همکاری</a>
+  <a href="waiter.html" class="active">استخدام مهماندار</a>
+  <a href="about.html">درباره ما</a>
+  <a href="contact.html">تماس با ما</a>
+</nav>
+
+<main class="cooperation-page">
+  <section class="intro">
+    <h1>📣 فرم استخدام مهماندار در تشریفات رویایی</h1>
+    <p>اگر به دنبال فرصت همکاری به عنوان مهماندار در تیم ما هستید، فرم زیر را با دقت پر کنید تا با شما تماس بگیریم.</p>
+  </section>
+
+  <section class="form-section">
+    <form id="waiterForm">
+      <label>نام و نام خانوادگی:
+        <input type="text" name="fullname" required />
+      </label>
+
+      <label>شماره تماس:
+        <input type="tel" name="phone" required pattern="^\+?\d{10,15}$" placeholder="مثلاً +989123456789" />
+      </label>
+
+      <label>سن:
+        <input type="number" name="age" required min="18" max="60" />
+      </label>
+
+      <label>جنسیت:
+        <select name="gender" required>
+          <option value="">انتخاب کنید</option>
+          <option value="مرد">مرد</option>
+          <option value="زن">زن</option>
+          <option value="سایر">سایر</option>
+        </select>
+      </label>
+
+      <label>تجربه کاری (سال):
+        <input type="number" name="experience" min="0" max="50" />
+      </label>
+
+      <label>مهارت‌ها و توضیحات بیشتر:
+        <textarea name="skills" rows="4" placeholder="مثلاً زبان‌ها، مهارت‌های مهمانداری، توانایی‌ها..."></textarea>
+      </label>
+
+      <label>
+        <input type="checkbox" required />
+        با شرایط استخدام و همکاری موافقم.
+      </label>
+
+      <button type="submit">📩 ارسال فرم استخدام</button>
+      <p id="formMessage"></p>
+    </form>
+  </section>
+</main>
+
+</body>
+</html>
