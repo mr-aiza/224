@@ -11,13 +11,14 @@ const REPO_OWNER = 'mr-aiza';
 const REPO_NAME = '224';
 const BRANCH = 'main';
 const USERS_FILE = 'auth/users.json';
+const RESERVED_DATES_FILE = 'reserved_dates.json';
 const SECRET_KEY = 'very_secret_key';
 
 app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// --- کمک‌ها برای GitHub ---
+// --- توابع کمکی ---
 async function getFileContent(filePath) {
   try {
     const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}?ref=${BRANCH}`;
@@ -96,7 +97,7 @@ app.post('/admin/delete-user', async (req, res) => {
 // --- ثبت‌نام ---
 app.post('/register', async (req, res) => {
   try {
-    const { fullname, phone, password, role } = req.body;
+    const { fullname, phone, password, role = 'user' } = req.body;
     const fileData = await getFileContent(USERS_FILE);
     let users = [];
     if (fileData) {
@@ -109,7 +110,7 @@ app.post('/register', async (req, res) => {
     }
 
     const hash = await bcrypt.hash(password, 10);
-    const newUser = { fullname, phone, password: hash, role };
+    const newUser = { fullname, phone, password: hash, role, reservations: [] };
     users.push(newUser);
     const base64 = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
     await uploadFile(USERS_FILE, base64, `ثبت‌نام کاربر جدید: ${phone}`, fileData?.sha);
@@ -149,7 +150,24 @@ app.get('/profile', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   const user = verifyToken(token);
   if (!user) return res.status(401).json({ error: 'توکن نامعتبر' });
-  res.status(200).json({ user });
+
+  try {
+    const fileData = await getFileContent(USERS_FILE);
+    const users = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
+    const currentUser = users.find(u => u.phone === user.phone);
+    if (!currentUser) return res.status(404).json({ error: 'کاربر یافت نشد' });
+
+    const safeUser = {
+      fullname: currentUser.fullname,
+      phone: currentUser.phone,
+      role: currentUser.role,
+      reservations: currentUser.reservations || []
+    };
+    res.status(200).json({ user: safeUser });
+  } catch (err) {
+    console.error('❌ خطا در دریافت پروفایل:', err);
+    res.status(500).json({ error: 'خطا در دریافت پروفایل' });
+  }
 });
 
 // --- تغییر رمز عبور ---
@@ -177,40 +195,64 @@ app.post('/change-password', async (req, res) => {
   }
 });
 
-
-
-// تابع کمکی: دریافت محتویات فایل از GitHub
-async function getFileContent(filePath) {
+// --- رزرو مراسم ---
+app.post('/submit', async (req, res) => {
   try {
-    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}?ref=${BRANCH}`;
-    const res = await axios.get(url, {
-      headers: { Authorization: `Bearer ${GITHUB_TOKEN}` }
-    });
-    return res.data;
-  } catch (error) {
-    if (error.response?.status === 404) return null;
-    throw error;
-  }
-}
+    const token = req.headers.authorization?.split(' ')[1];
+    const user = verifyToken(token);
+    if (!user) return res.status(401).json({ error: 'توکن نامعتبر' });
 
-// تابع کمکی: آپلود یا بروزرسانی فایل در GitHub
-async function uploadFile(filePath, contentBase64, message, sha = null) {
-  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}`;
-  const body = {
-    message,
-    content: contentBase64,
-    branch: BRANCH
-  };
-  if (sha) body.sha = sha;
+    const eventDate = req.body.eventDate;
+    if (!eventDate) return res.status(400).json({ error: 'تاریخ رزرو ارسال نشده' });
 
-  const res = await axios.put(url, body, {
-    headers: {
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
-      Accept: 'application/vnd.github+json'
+    const reservedData = await getFileContent(RESERVED_DATES_FILE);
+    let reservedDates = [];
+    let reservedSha = null;
+    if (reservedData) {
+      reservedDates = JSON.parse(Buffer.from(reservedData.content, 'base64').toString('utf8'));
+      reservedSha = reservedData.sha;
     }
-  });
-  return res.data;
-}
+
+    if (reservedDates.includes(eventDate)) {
+      return res.status(400).json({ error: 'این تاریخ قبلاً رزرو شده است.' });
+    }
+
+    const usersData = await getFileContent(USERS_FILE);
+    const users = JSON.parse(Buffer.from(usersData.content, 'base64').toString('utf8'));
+    const currentUser = users.find(u => u.phone === user.phone);
+    if (!currentUser) return res.status(404).json({ error: 'کاربر یافت نشد' });
+
+    if (!currentUser.reservations) currentUser.reservations = [];
+    if (currentUser.reservations.includes(eventDate)) {
+      return res.status(400).json({ error: 'شما قبلا این تاریخ را رزرو کرده‌اید.' });
+    }
+    currentUser.reservations.push(eventDate);
+
+    const usersBase64 = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
+    await uploadFile(USERS_FILE, usersBase64, `آپدیت رزرو برای کاربر ${user.phone}`, usersData.sha);
+
+    reservedDates.push(eventDate);
+    const reservedBase64 = Buffer.from(JSON.stringify(reservedDates, null, 2)).toString('base64');
+    await uploadFile(RESERVED_DATES_FILE, reservedBase64, `افزودن تاریخ رزرو ${eventDate}`, reservedSha);
+
+    const bookingDir = 'booking';
+    const now = new Date();
+    const timeStr = now.toISOString().replace(/[:.]/g, '-');
+    const contractContent = Object.entries(req.body)
+      .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(', ') : value}`)
+      .join('\n');
+    const contractBase64 = Buffer.from(contractContent).toString('base64');
+    const contractFilename = `contract-${timeStr}.txt`;
+    const contractPath = `${bookingDir}/${contractFilename}`;
+    await uploadFile(contractPath, contractBase64, `افزودن فایل رزرو جدید برای ${eventDate}`);
+
+    res.status(200).json({ message: 'رزرو با موفقیت ثبت و ذخیره شد!' });
+
+  } catch (err) {
+    console.error('❌ خطا در ذخیره رزرو:', err.response?.data || err.message);
+    res.status(500).json({ error: 'خطا در ثبت رزرو' });
+  }
+});
 
 // --- داینامیک sitemap.xml ---
 app.get('/sitemap.xml', (req, res) => {
@@ -261,6 +303,8 @@ app.get('/sitemap.xml', (req, res) => {
   </url>
 </urlset>`);
 });
+
+
 
 // --- رزرو مراسم ---
 app.post('/submit', async (req, res) => {
