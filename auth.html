@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ورود و ثبت‌نام | تشریفات رویایی</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
+    body {
+      font-family: 'Vazir', sans-serif;
+      background: #f0f2f5;
+      margin: 0; padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #555;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    input:focus, select:focus {
+      border-color: #4a90e2;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      background-color: #4a90e2;
+      color: white;
+      font-size: 1.1rem;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #357ABD;
+    }
+    .switch {
+      margin: 15px 0;
+      text-align: center;
+      color: #666;
+      cursor: pointer;
+      user-select: none;
+    }
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      display: none;
+    }
+    .success {
+      color: green;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="form-container">
+
+    <!-- فرم ثبت‌نام -->
+    <form id="register-form">
+      <h2>ثبت‌نام</h2>
+      <div class="error" id="register-error"></div>
+      <div class="success" id="register-success"></div>
+
+      <label for="fullname">نام و نام خانوادگی</label>
+      <input type="text" id="fullname" name="fullname" placeholder="مثلاً علیرضا رضایی" required />
+
+      <label for="phone">شماره تلفن</label>
+      <input type="tel" id="phone" name="phone" placeholder="مثلاً 09123456789" pattern="09\d{9}" required />
+
+      <label for="password">رمز عبور</label>
+      <input type="password" id="password" name="password" placeholder="رمز عبور خود را وارد کنید" minlength="6" required />
+
+      <label for="role">نقش کاربری</label>
+      <select id="role" name="role" required>
+        <option value="" disabled selected>انتخاب نقش</option>
+        <option value="user">کاربر عادی</option>
+        <option value="admin">ادمین</option>
+        <option value="waiter">مهماندار</option>
+      </select>
+
+      <button type="submit">ثبت‌نام</button>
+
+      <div class="switch" id="to-login">قبلاً ثبت‌نام کرده‌اید؟ ورود</div>
+    </form>
+
+    <!-- فرم ورود (پنهان) -->
+    <form id="login-form" style="display:none;">
+      <h2>ورود</h2>
+      <div class="error" id="login-error"></div>
+
+      <label for="login-phone">شماره تلفن</label>
+      <input type="tel" id="login-phone" name="phone" placeholder="مثلاً 09123456789" pattern="09\d{9}" required />
+
+      <label for="login-password">رمز عبور</label>
+      <input type="password" id="login-password" name="password" placeholder="رمز عبور خود را وارد کنید" required />
+
+      <button type="submit">ورود</button>
+
+      <div class="switch" id="to-register">حساب کاربری ندارید؟ ثبت‌نام</div>
+    </form>
+
+  </div>
+
+<script>
+  const registerForm = document.getElementById('register-form');
+  const loginForm = document.getElementById('login-form');
+  const toLoginBtn = document.getElementById('to-login');
+  const toRegisterBtn = document.getElementById('to-register');
+
+  const registerError = document.getElementById('register-error');
+  const registerSuccess = document.getElementById('register-success');
+  const loginError = document.getElementById('login-error');
+
+  // جابجایی بین فرم‌ها
+  toLoginBtn.addEventListener('click', () => {
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'block';
+    clearMessages();
+  });
+  toRegisterBtn.addEventListener('click', () => {
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'block';
+    clearMessages();
+  });
+
+  function clearMessages() {
+    registerError.style.display = 'none';
+    registerSuccess.style.display = 'none';
+    loginError.style.display = 'none';
+    registerError.textContent = '';
+    registerSuccess.textContent = '';
+    loginError.textContent = '';
+  }
+
+  // ثبت‌نام
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearMessages();
+
+    const data = {
+      fullname: registerForm.fullname.value.trim(),
+      phone: registerForm.phone.value.trim(),
+      password: registerForm.password.value,
+      role: registerForm.role.value,
+    };
+
+    try {
+      const res = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        registerError.style.display = 'block';
+        registerError.textContent = result.error || 'خطایی رخ داد';
+        return;
+      }
+
+      registerSuccess.style.display = 'block';
+      registerSuccess.textContent = result.message || 'ثبت‌نام با موفقیت انجام شد';
+      registerForm.reset();
+
+    } catch (err) {
+      registerError.style.display = 'block';
+      registerError.textContent = 'خطا در ارتباط با سرور';
+    }
+  });
+
+  // ورود
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearMessages();
+
+    const data = {
+      phone: loginForm.phone.value.trim(),
+      password: loginForm.password.value,
+    };
+
+    try {
+      const res = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        loginError.style.display = 'block';
+        loginError.textContent = result.error || 'خطایی رخ داد';
+        return;
+      }
+
+      // ورود موفق: توکن JWT دریافت شده
+      localStorage.setItem('token', result.token);
+      alert('ورود موفق! اکنون می‌توانید به بخش‌های محافظت‌شده دسترسی داشته باشید.');
+      loginForm.reset();
+
+    } catch (err) {
+      loginError.style.display = 'block';
+      loginError.textContent = 'خطا در ارتباط با سرور';
+    }
+  });
+</script>
+
+</body>
+</html>
