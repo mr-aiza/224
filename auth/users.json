@@ -4,5 +4,11 @@
     "phone": "09388088657",
     "password": "$2b$10$kWzevqFnrB/ylf8kkXLPi.A4zpmq30/ig7YpdXREXazEMvG2Ioexe",
     "role": "admin"
+  },
+  {
+    "fullname": "تست",
+    "phone": "09388088658",
+    "password": "$2b$10$ZvwDO./ZHVfC8MkjbteY1eTDRKZueFh85JgLdMBp5b4HqHaJOYhPS",
+    "role": "user"
   }
 ]
