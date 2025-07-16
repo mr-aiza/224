@@ -16,60 +16,59 @@ document.addEventListener("DOMContentLoaded", () => {
   toggleBtn.innerHTML = "🎵"; // حالت اولیه
 });
 
-// قلب‌های پس‌زمینه
-  const canvas = document.getElementById('bgCanvas');
-  const ctx = canvas.getContext('2d');
-  let W = canvas.width = window.innerWidth;
-  let H = canvas.height = window.innerHeight;
+// ❤️ قلب‌های پس‌زمینه
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let W = canvas.width = window.innerWidth;
+let H = canvas.height = window.innerHeight;
 
-  function drawHeart(ctx, x, y, size, color) {
-    ctx.save();
-    ctx.beginPath();
-    const topCurveHeight = size * 0.3;
-    ctx.moveTo(x, y + topCurveHeight);
-    ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
-    ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + (size + topCurveHeight) / 1.2, x, y + size);
-    ctx.bezierCurveTo(x, y + (size + topCurveHeight) / 1.2, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
-    ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
-    ctx.closePath();
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.restore();
-  }
+function drawHeart(ctx, x, y, size, color) {
+  ctx.save();
+  ctx.beginPath();
+  const topCurveHeight = size * 0.3;
+  ctx.moveTo(x, y + topCurveHeight);
+  ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
+  ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + (size + topCurveHeight) / 1.2, x, y + size);
+  ctx.bezierCurveTo(x, y + (size + topCurveHeight) / 1.2, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
+  ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.restore();
+}
 
-  const hearts = [];
-  for (let i = 0; i < 70; i++) {
-    hearts.push({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      size: Math.random() * 16 + 8,
-      speedX: Math.random() * 0.5 + 0.2,
-      speedY: Math.random() * 0.5 + 0.2,
-      color: `rgba(236,64,122,${Math.random() * 0.4 + 0.3})`
-    });
-  }
-
-  function update() {
-    ctx.clearRect(0, 0, W, H);
-    for (const h of hearts) {
-      h.x += h.speedX;
-      h.y += h.speedY;
-      if (h.x > W) h.x = -h.size;
-      if (h.y > H) h.y = -h.size;
-      drawHeart(ctx, h.x, h.y, h.size, h.color);
-    }
-    requestAnimationFrame(update);
-  }
-
-  window.addEventListener('resize', () => {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+const hearts = [];
+for (let i = 0; i < 70; i++) {
+  hearts.push({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    size: Math.random() * 16 + 8,
+    speedX: Math.random() * 0.5 + 0.2,
+    speedY: Math.random() * 0.5 + 0.2,
+    color: `rgba(236,64,122,${Math.random() * 0.4 + 0.3})`
   });
+}
 
-  update();
-</script>
+function update() {
+  ctx.clearRect(0, 0, W, H);
+  for (const h of hearts) {
+    h.x += h.speedX;
+    h.y += h.speedY;
+    if (h.x > W) h.x = -h.size;
+    if (h.y > H) h.y = -h.size;
+    drawHeart(ctx, h.x, h.y, h.size, h.color);
+  }
+  requestAnimationFrame(update);
+}
 
-// ✅ ارسال فرم استخدام مهماندار با اعتبارسنجی و fetch به /waiter
+window.addEventListener('resize', () => {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+});
+
+update();
+
+// ✅ ارسال فرم استخدام مهماندار
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("waiterForm");
   const formMessage = document.getElementById("formMessage");
@@ -81,13 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = {
       fullname: formData.get("fullname").trim(),
       phone: formData.get("phone").trim(),
+      age: formData.get("age").trim(),
+      gender: formData.get("gender").trim(),
       city: formData.get("city").trim(),
       experience: formData.get("experience").trim(),
       availability: formData.get("availability").trim(),
-      description: formData.get("description")?.trim() || ""
+      description: formData.get("skills")?.trim() || ""
     };
 
-    // بررسی فیلدهای الزامی
     if (!data.fullname || !data.phone || !data.city || !data.experience || !data.availability) {
       formMessage.textContent = "لطفاً همه فیلدهای الزامی را پر کنید.";
       formMessage.style.color = "red";
@@ -113,4 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (err) {
       console.error("❌ خطا:", err);
-      formMessage
+      formMessage.textContent = "ارسال فرم با خطا مواجه شد.";
+      formMessage.style.color = "red";
+    }
+  });
+});
