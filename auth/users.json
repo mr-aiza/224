@@ -17,5 +17,12 @@
     "phone": "09388088658",
     "password": "$2b$10$ZvwDO./ZHVfC8MkjbteY1eTDRKZueFh85JgLdMBp5b4HqHaJOYhPS",
     "role": "user"
+  },
+  {
+    "fullname": "علیرضا عبدلی",
+    "phone": "09388038657",
+    "password": "$2b$10$8C6doW/7AXJ3o/c7k75YpOXubalnpvuQtPDYVR1gRS0rbi8bhFWt.",
+    "role": "waiter",
+    "reservations": []
   }
 ]
