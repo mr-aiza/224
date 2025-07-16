@@ -1,3 +1,62 @@
+// لاگین کاربر و ذخیره توکن
+async function login(phone, password) {
+  const res = await fetch('/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone, password })
+  });
+  const data = await res.json();
+  if (data.token) {
+    localStorage.setItem('token', data.token);
+    alert('ورود موفق');
+  } else {
+    alert('خطا در ورود: ' + (data.error || ''));
+  }
+}
+
+// ارسال فرم رزرو با توکن
+document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('لطفا ابتدا وارد شوید');
+    return;
+  }
+
+  const formData = {
+    fullname: e.target.fullname.value,
+    phone: e.target.phone.value,
+    email: e.target.email.value,
+    eventDate: e.target.eventDate.value,
+    eventType: e.target.eventType.value,
+    services: Array.from(e.target.querySelectorAll('input[name="services"]:checked')).map(i => i.value),
+    guestCount: e.target.guestCount.value,
+    notes: e.target.notes.value
+  };
+
+  try {
+    const res = await fetch('/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.message);
+    } else {
+      alert('خطا در رزرو: ' + (data.error || ''));
+    }
+  } catch (err) {
+    alert('خطا در ارسال درخواست');
+    console.error(err);
+  }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const guestInput = document.getElementById("guestCount");
   const staffText = document.getElementById("staffCountText");
