@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ثبت‌نام کاربر</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="auth-style.css">
+</head>
+<body>
+  <div class="auth-container">
+    <h2>ثبت‌نام</h2>
+    <form id="registerForm">
+      <input type="text" name="fullname" placeholder="نام کامل" required>
+      <input type="tel" name="phone" placeholder="شماره تلفن" required>
+      <input type="password" name="password" placeholder="رمز عبور" required>
+      <select name="role" required>
+        <option value="customer">مشتری</option>
+        <option value="staff">کارکنان</option>
+      </select>
+      <button type="submit">ثبت‌نام</button>
+      <p class="link">حساب دارید؟ <a href="login.html">ورود</a></p>
+    </form>
+    <p id="registerMessage" class="message"></p>
+  </div>
+  <script src="register.js"></script>
+</body>
+</html>
