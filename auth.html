@@ -236,6 +236,9 @@
     }
   });
 </script>
+// بعد از ورود یا ثبت‌نام موفق:
+localStorage.setItem('token', data.token);
+window.location.href = 'index.html';  // برگرد صفحه اصلی
 
 </body>
 </html>
