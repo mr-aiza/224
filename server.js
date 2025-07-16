@@ -181,7 +181,44 @@ app.post('/contact', async (req, res) => {
     res.status(500).json({ error: 'خطا در ثبت پیام تماس با ما' });
   }
 });
+// --- همکاری با باغ‌دار، سالن‌دار و ... ---
+app.post('/cooperation', async (req, res) => {
+  try {
+    const cooperationDir = 'cooperation1';
+    const now = new Date();
+    const timeStr = now.toISOString().replace(/[:.]/g, '-');
+    const fileName = partner-${timeStr}.txt;
+    const filePath = ${cooperationDir}/${fileName};
 
+    const { fullname, phone, type, location, description } = req.body;
+
+    const content = 
+📌 فرم همکاری جدید:
+
+👤 نام: ${fullname}
+📞 تلفن: ${phone}
+🎯 نوع همکاری: ${type}
+📍 منطقه/شهر: ${location}
+📝 توضیحات:
+${description || '---'}
+
+🕒 ارسال شده در: ${now.toLocaleString('fa-IR')}
+    .trim();
+
+    const contentBase64 = Buffer.from(content).toString('base64');
+
+    await uploadFile(
+      filePath,
+      contentBase64,
+      افزودن فرم همکاری ${fullname} - ${timeStr}
+    );
+
+    res.status(200).json({ message: 'فرم همکاری با موفقیت ثبت شد ✅' });
+  } catch (err) {
+    console.error('❌ خطا در ثبت فرم همکاری:', err.response?.data || err.message);
+    res.status(500).json({ error: 'خطا در ثبت فرم همکاری' });
+  }
+});
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
