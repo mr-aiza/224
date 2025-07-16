@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   toggleBtn.innerHTML = "🎵"; // حالت اولیه
 });
 
-// 💖 انیمیشن قلب‌ها روی canvas#bgCanvas
+// 💖 انیمیشن قلب‌ها روی canvas #bgCanvas
 window.addEventListener("load", () => {
   const canvas = document.getElementById('bgCanvas');
   const ctx = canvas.getContext('2d');
@@ -70,7 +70,7 @@ window.addEventListener("load", () => {
   update();
 });
 
-// ✅ ارسال فرم استخدام مهماندار با اعتبارسنجی
+// ✅ ارسال فرم استخدام مهماندار با اعتبارسنجی و fetch به /waiter
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("waiterForm");
   const formMessage = document.getElementById("formMessage");
@@ -82,14 +82,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = {
       fullname: formData.get("fullname").trim(),
       phone: formData.get("phone").trim(),
-      age: formData.get("age").trim(),
-      gender: formData.get("gender").trim(),
-      experience: formData.get("experience")?.trim() || "",
-      skills: formData.get("skills")?.trim() || ""
+      city: formData.get("city").trim(),
+      experience: formData.get("experience").trim(),
+      availability: formData.get("availability").trim(),
+      description: formData.get("description")?.trim() || ""
     };
 
-    // اعتبارسنجی فیلدهای ضروری
-    if (!data.fullname || !data.phone || !data.age || !data.gender) {
+    // بررسی فیلدهای الزامی
+    if (!data.fullname || !data.phone || !data.city || !data.experience || !data.availability) {
       formMessage.textContent = "لطفاً همه فیلدهای الزامی را پر کنید.";
       formMessage.style.color = "red";
       return;
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await res.json();
 
       if (res.ok) {
-        formMessage.textContent = result.message || "فرم با موفقیت ارسال شد.";
+        formMessage.textContent = result.message;
         formMessage.style.color = "green";
         form.reset();
       } else {
@@ -114,8 +114,4 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (err) {
       console.error("❌ خطا:", err);
-      formMessage.textContent = "ارتباط با سرور برقرار نشد.";
-      formMessage.style.color = "red";
-    }
-  });
-});
+      formMessage
