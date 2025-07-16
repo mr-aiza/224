@@ -1,5 +1,5 @@
-// 🎵 کنترل موزیک
 document.addEventListener("DOMContentLoaded", () => {
+  // 🎵 کنترل موزیک
   const audio = document.getElementById("bgMusic");
   const toggleBtn = document.getElementById("audioToggle");
 
@@ -14,6 +14,53 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   toggleBtn.innerHTML = "🎵"; // حالت اولیه
+
+  // ✅ ارسال فرم همکاری با اعتبارسنجی
+  const form = document.getElementById("cooperationForm");
+  const formMessage = document.getElementById("formMessage");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = {
+      fullname: formData.get("fullname").trim(),
+      phone: formData.get("phone").trim(),
+      type: formData.get("type").trim(),
+      location: formData.get("location").trim(),
+      description: formData.get("description")?.trim() || ""
+    };
+
+    // بررسی فیلدهای الزامی
+    if (!data.fullname || !data.phone || !data.type || !data.location) {
+      formMessage.textContent = "لطفاً همه فیلدهای الزامی را پر کنید.";
+      formMessage.style.color = "red";
+      return;
+    }
+
+    try {
+      const res = await fetch("/cooperation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        formMessage.textContent = result.message;
+        formMessage.style.color = "green";
+        form.reset();
+      } else {
+        formMessage.textContent = result.error || "خطایی رخ داده است.";
+        formMessage.style.color = "red";
+      }
+    } catch (err) {
+      console.error("❌ خطا:", err);
+      formMessage.textContent = "ارتباط با سرور برقرار نشد.";
+      formMessage.style.color = "red";
+    }
+  });
 });
 
 // 💖 انیمیشن قلب‌ها
@@ -62,53 +109,4 @@ window.addEventListener("load", () => {
   resizeCanvas();
   animate();
   window.addEventListener("resize", resizeCanvas);
-});
-
-// ✅ ارسال فرم همکاری با اعتبارسنجی
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("cooperationForm");
-  const formMessage = document.getElementById("formMessage");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const data = {
-      fullname: formData.get("fullname").trim(),
-      phone: formData.get("phone").trim(),
-      type: formData.get("type").trim(),
-      location: formData.get("location").trim(),
-      description: formData.get("description")?.trim() || ""
-    };
-
-    // بررسی فیلدهای الزامی
-    if (!data.fullname || !data.phone || !data.type || !data.location) {
-      formMessage.textContent = "لطفاً همه فیلدهای الزامی را پر کنید.";
-      formMessage.style.color = "red";
-      return;
-    }
-
-    try {
-      const res = await fetch("/cooperation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      const result = await res.json();
-
-      if (res.ok) {
-        formMessage.textContent = result.message;
-        formMessage.style.color = "green";
-        form.reset();
-      } else {
-        formMessage.textContent = result.error || "خطایی رخ داده است.";
-        formMessage.style.color = "red";
-      }
-    } catch (err) {
-      console.error("❌ خطا:", err);
-      formMessage.textContent = "ارتباط با سرور برقرار نشد.";
-      formMessage.style.color = "red";
-    }
-  });
 });
