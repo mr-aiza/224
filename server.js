@@ -192,7 +192,7 @@ app.post('/cooperation', async (req, res) => {
 
     const { fullname, phone, type, location, description } = req.body;
 
-   const content = `
+const content = `
 فرم همکاری جدید:
 
 نام: ${fullname}
@@ -205,14 +205,14 @@ ${description || '---'}
 ارسال شده در: ${now.toLocaleString('fa-IR')}
 `.trim();
 
+const contentBase64 = Buffer.from(content).toString('base64');
 
-    const contentBase64 = Buffer.from(content).toString('base64');
+await uploadFile(
+  filePath,
+  contentBase64,
+  `افزودن فرم همکاری ${fullname} - ${timeStr}`
+);
 
-    await uploadFile(
-      filePath,
-      contentBase64,
-      افزودن فرم همکاری ${fullname} - ${timeStr}
-    );
 
     res.status(200).json({ message: 'فرم همکاری با موفقیت ثبت شد ✅' });
   } catch (err) {
