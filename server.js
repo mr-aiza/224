@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 fetch('/register', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ fullname, phone, password })
+  //body: JSON.stringify({ fullname, phone, password })
 })
 
 // --- توابع کمکی ---
