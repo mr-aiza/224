@@ -16,8 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   toggleBtn.innerHTML = "🎵"; // حالت اولیه
 });
 
-// 💖 انیمیشن قلب‌ها روی canvas #bgCanvas
-window.addEventListener("load", () => {
+// قلب‌های پس‌زمینه
   const canvas = document.getElementById('bgCanvas');
   const ctx = canvas.getContext('2d');
   let W = canvas.width = window.innerWidth;
@@ -68,7 +67,7 @@ window.addEventListener("load", () => {
   });
 
   update();
-});
+</script>
 
 // ✅ ارسال فرم استخدام مهماندار با اعتبارسنجی و fetch به /waiter
 document.addEventListener("DOMContentLoaded", () => {
