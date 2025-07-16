@@ -51,6 +51,14 @@ nav a.active {
   background-color: #f48fb1;
   color: #fff;
 }
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
 /* دکمه موزیک */
 #audioToggle {
