@@ -194,6 +194,13 @@
       registerSuccess.textContent = result.message || 'ثبت‌نام با موفقیت انجام شد';
       registerForm.reset();
 
+      // بعد از ثبت‌نام موفق، ریدایرکت به صفحه ورود
+      setTimeout(() => {
+        registerForm.style.display = 'none';
+        loginForm.style.display = 'block';
+        clearMessages();
+      }, 1500);
+
     } catch (err) {
       registerError.style.display = 'block';
       registerError.textContent = 'خطا در ارتباط با سرور';
@@ -225,10 +232,13 @@
         return;
       }
 
-      // ورود موفق: توکن JWT دریافت شده
+      // ورود موفق: توکن JWT دریافت شده را ذخیره کن
       localStorage.setItem('token', result.token);
-      alert('ورود موفق! اکنون می‌توانید به بخش‌های محافظت‌شده دسترسی داشته باشید.');
+      alert('ورود موفق! اکنون به صفحه اصلی منتقل می‌شوید.');
       loginForm.reset();
+
+      // ریدایرکت به صفحه اصلی
+      window.location.href = 'index.html';
 
     } catch (err) {
       loginError.style.display = 'block';
@@ -236,9 +246,6 @@
     }
   });
 </script>
-// بعد از ورود یا ثبت‌نام موفق:
-localStorage.setItem('token', data.token);
-window.location.href = 'index.html';  // برگرد صفحه اصلی
 
 </body>
 </html>
