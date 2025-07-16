@@ -193,16 +193,16 @@ app.post('/cooperation', async (req, res) => {
     const { fullname, phone, type, location, description } = req.body;
 
     const content = 
-📌 فرم همکاری جدید:
+ فرم همکاری جدید:
 
-👤 نام: ${fullname}
-📞 تلفن: ${phone}
-🎯 نوع همکاری: ${type}
-📍 منطقه/شهر: ${location}
-📝 توضیحات:
+ نام: ${fullname}
+ تلفن: ${phone}
+ نوع همکاری: ${type}
+ منطقه/شهر: ${location}
+ توضیحات:
 ${description || '---'}
 
-🕒 ارسال شده در: ${now.toLocaleString('fa-IR')}
+ ارسال شده در: ${now.toLocaleString('fa-IR')}
     .trim();
 
     const contentBase64 = Buffer.from(content).toString('base64');
