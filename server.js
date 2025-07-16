@@ -1,6 +1,8 @@
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -8,10 +10,137 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_OWNER = 'mr-aiza';
 const REPO_NAME = '224';
 const BRANCH = 'main';
+const USERS_FILE = 'auth/users.json';
+const SECRET_KEY = 'very_secret_key';
 
 app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// --- کمک‌ها برای GitHub ---
+async function getFileContent(filePath) {
+  try {
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}?ref=${BRANCH}`;
+    const res = await axios.get(url, {
+      headers: { Authorization: `Bearer ${GITHUB_TOKEN}` }
+    });
+    return res.data;
+  } catch (error) {
+    if (error.response?.status === 404) return null;
+    throw error;
+  }
+}
+
+async function uploadFile(filePath, contentBase64, message, sha = null) {
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}`;
+  const body = { message, content: contentBase64, branch: BRANCH };
+  if (sha) body.sha = sha;
+
+  const res = await axios.put(url, body, {
+    headers: {
+      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      Accept: 'application/vnd.github+json'
+    }
+  });
+  return res.data;
+}
+
+function generateToken(user) {
+  return jwt.sign(user, SECRET_KEY, { expiresIn: '7d' });
+}
+
+function verifyToken(token) {
+  try {
+    return jwt.verify(token, SECRET_KEY);
+  } catch {
+    return null;
+  }
+}
+
+// --- ثبت‌نام ---
+app.post('/register', async (req, res) => {
+  try {
+    const { fullname, phone, password, role } = req.body;
+    const fileData = await getFileContent(USERS_FILE);
+    let users = [];
+    if (fileData) {
+      const decoded = Buffer.from(fileData.content, 'base64').toString('utf8');
+      users = JSON.parse(decoded);
+    }
+
+    if (users.some(u => u.phone === phone)) {
+      return res.status(400).json({ error: 'کاربری با این شماره وجود دارد.' });
+    }
+
+    const hash = await bcrypt.hash(password, 10);
+    const newUser = { fullname, phone, password: hash, role };
+    users.push(newUser);
+    const base64 = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
+    await uploadFile(USERS_FILE, base64, `ثبت‌نام کاربر جدید: ${phone}`, fileData?.sha);
+
+    res.status(200).json({ message: 'ثبت‌نام موفق بود' });
+  } catch (err) {
+    console.error('❌ خطای ثبت‌نام:', err);
+    res.status(500).json({ error: 'خطا در ثبت‌نام' });
+  }
+});
+
+// --- ورود ---
+app.post('/login', async (req, res) => {
+  try {
+    const { phone, password } = req.body;
+    const fileData = await getFileContent(USERS_FILE);
+    if (!fileData) return res.status(404).json({ error: 'داده‌ای موجود نیست' });
+
+    const decoded = Buffer.from(fileData.content, 'base64').toString('utf8');
+    const users = JSON.parse(decoded);
+    const user = users.find(u => u.phone === phone);
+    if (!user) return res.status(400).json({ error: 'کاربر یافت نشد' });
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return res.status(401).json({ error: 'رمز اشتباه است' });
+
+    const token = generateToken({ fullname: user.fullname, phone: user.phone, role: user.role });
+    res.status(200).json({ token });
+  } catch (err) {
+    console.error('❌ خطای لاگین:', err);
+    res.status(500).json({ error: 'خطا در ورود' });
+  }
+});
+
+// --- اطلاعات پروفایل ---
+app.get('/profile', async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  const user = verifyToken(token);
+  if (!user) return res.status(401).json({ error: 'توکن نامعتبر' });
+  res.status(200).json({ user });
+});
+
+// --- تغییر رمز عبور ---
+app.post('/change-password', async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    const user = verifyToken(token);
+    if (!user) return res.status(401).json({ error: 'توکن نامعتبر' });
+
+    const { oldPassword, newPassword } = req.body;
+    const fileData = await getFileContent(USERS_FILE);
+    const users = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
+    const target = users.find(u => u.phone === user.phone);
+
+    const match = await bcrypt.compare(oldPassword, target.password);
+    if (!match) return res.status(400).json({ error: 'رمز فعلی اشتباه است' });
+
+    target.password = await bcrypt.hash(newPassword, 10);
+    const base64 = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
+    await uploadFile(USERS_FILE, base64, `تغییر رمز برای ${user.phone}`, fileData.sha);
+    res.status(200).json({ message: 'رمز با موفقیت تغییر یافت' });
+  } catch (err) {
+    console.error('❌ خطا در تغییر رمز:', err);
+    res.status(500).json({ error: 'خطا در تغییر رمز' });
+  }
+});
+
 
 // تابع کمکی: دریافت محتویات فایل از GitHub
 async function getFileContent(filePath) {
