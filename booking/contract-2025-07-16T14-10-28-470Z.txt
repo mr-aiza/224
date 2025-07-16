@@ -1,0 +1,8 @@
+fullname: علیرضا عبدلی
+phone: 09388088658
+email: aliabdoli161@gmail.com
+eventDate: 2025-07-31
+eventType: 
+services: flowerDecoration
+guestCount: 3
+notes: 
