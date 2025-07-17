@@ -1,66 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const authPopup = document.getElementById("auth-popup");
-  const openAuthBtn = document.getElementById("open-auth");
-  const closeBtn = document.getElementById("close-auth");
-  const toLogin = document.getElementById("to-login");
-  const toRegister = document.getElementById("to-register");
-  const loginForm = document.getElementById("login-form");
-  const registerForm = document.getElementById("register-form");
-  const profileBox = document.getElementById("profile-box");
-  const profileInfo = document.getElementById("profile-info");
-  const logoutBtn = document.getElementById("logout-btn");
+  const authBtn = document.getElementById("authBtn");
+  const modal = document.getElementById("authModal");
+  const closeBtn = document.querySelector(".close");
+  const authForm = document.getElementById("authForm");
+  const profile = document.getElementById("userProfile");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const userNameSpan = document.getElementById("userName");
 
-  openAuthBtn.onclick = () => authPopup.classList.remove("hidden");
-  closeBtn.onclick = () => authPopup.classList.add("hidden");
-
-  toLogin.onclick = () => {
-    registerForm.classList.add("hidden");
-    loginForm.classList.remove("hidden");
-  };
-  toRegister.onclick = () => {
-    loginForm.classList.add("hidden");
-    registerForm.classList.remove("hidden");
+  // باز کردن پاپ‌آپ
+  authBtn.onclick = () => {
+    modal.style.display = "block";
   };
 
-  registerForm.onsubmit = async (e) => {
+  // بستن پاپ‌آپ
+  closeBtn.onclick = () => {
+    modal.style.display = "none";
+  };
+
+  // ارسال فرم
+  authForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(registerForm));
-    const res = await fetch("/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    alert(result.message);
-    if (res.ok) {
-      authPopup.classList.add("hidden");
-      showProfile(data.fullname);
-    }
-  };
+    const fullName = document.getElementById("fullName").value;
+    const phoneNumber = document.getElementById("phoneNumber").value;
 
-  loginForm.onsubmit = async (e) => {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(loginForm));
-    const res = await fetch("/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    alert(result.message);
-    if (res.ok) {
-      authPopup.classList.add("hidden");
-      showProfile(result.fullname);
-    }
-  };
+    try {
+      const res = await fetch("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fullName, phoneNumber })
+      });
 
+      const data = await res.json();
+      if (res.ok) {
+        localStorage.setItem("user", JSON.stringify({ fullName, phoneNumber }));
+        modal.style.display = "none";
+        userNameSpan.textContent = fullName;
+        profile.style.display = "block";
+        authBtn.style.display = "none";
+      } else {
+        alert(data.message || "خطایی رخ داد");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  });
+
+  // خروج از حساب
   logoutBtn.onclick = () => {
-    profileBox.classList.add("hidden");
-    alert("با موفقیت خارج شدید");
+    localStorage.removeItem("user");
+    profile.style.display = "none";
+    authBtn.style.display = "inline-block";
   };
 
-  function showProfile(name) {
-    profileBox.classList.remove("hidden");
-    profileInfo.textContent = `سلام، ${name} عزیز خوش اومدی!`;
+  // بررسی وضعیت لاگین
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (user) {
+    userNameSpan.textContent = user.fullName;
+    profile.style.display = "block";
+    authBtn.style.display = "none";
   }
 });
