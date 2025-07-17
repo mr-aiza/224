@@ -33,33 +33,48 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
 
-app.use(bodyParser.json());
-app.use("/styles", express.static(path.join(__dirname, "styles")));
-app.use("/scripts", express.static(path.join(__dirname, "scripts")));
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
+const app = express();
+app.use(express.json());
 app.use(express.static("public"));
 
-let users = [];
+const USERS_PATH = path.join(__dirname, "users.json");
 
-app.post("/auth/register", (req, res) => {
-  const { username, password } = req.body;
+// ثبت‌نام
+app.post("/register", (req, res) => {
+  const { fullname, username, password } = req.body;
+  const users = fs.existsSync(USERS_PATH)
+    ? JSON.parse(fs.readFileSync(USERS_PATH))
+    : [];
+
   if (users.find(u => u.username === username)) {
-    return res.status(400).json({ error: "کاربر تکراری است" });
+    return res.status(400).json({ message: "این نام کاربری قبلا ثبت شده" });
   }
-  const user = { username, password };
-  users.push(user);
-  res.json(user);
+
+  users.push({ fullname, username, password });
+  fs.writeFileSync(USERS_PATH, JSON.stringify(users, null, 2));
+  res.status(200).json({ message: "ثبت‌نام با موفقیت انجام شد" });
 });
 
-app.post("/auth/login", (req, res) => {
+// ورود
+app.post("/login", (req, res) => {
   const { username, password } = req.body;
+  const users = fs.existsSync(USERS_PATH)
+    ? JSON.parse(fs.readFileSync(USERS_PATH))
+    : [];
+
   const user = users.find(u => u.username === username && u.password === password);
-  if (!user) return res.status(401).json({ error: "نام کاربری یا رمز عبور اشتباه است" });
-  res.json(user);
+  if (!user) {
+    return res.status(401).json({ message: "نام کاربری یا رمز اشتباه است" });
+  }
+
+  res.status(200).json({ message: "ورود موفق", fullname: user.fullname });
 });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server started at http://localhost:${PORT}`);
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
 });
 
 
