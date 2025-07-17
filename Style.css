@@ -297,3 +297,45 @@ button {
   padding: 10px;
   width: 90%;
 }
+body {
+  font-family: Vazir, sans-serif;
+  background: #f7f7f7;
+  text-align: center;
+  padding-top: 50px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.popup {
+  position: fixed;
+  top: 0; right: 0; left: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+.popup-content {
+  background: white;
+  width: 300px;
+  margin: 100px auto;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: right;
+}
+
+.hidden {
+  display: none;
+}
+
+input {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 8px;
+}
