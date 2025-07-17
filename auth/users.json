@@ -34,5 +34,12 @@
     "reservations": [
       "2025-07-30"
     ]
+  },
+  {
+    "fullname": "علیرضا عبدلی",
+    "phone": "09388088600",
+    "password": "$2b$10$/yrkGpws8h39vpNTwh8r0eeoATJjjMjCnfNkpT2wmica95kB4rOne",
+    "role": "waiter",
+    "reservations": []
   }
 ]
