@@ -18,7 +18,6 @@ const BRANCH = 'main';
 const USERS_FILE = 'auth/users.json';
 const RESERVED_DATES_FILE = 'reserved_dates.json';
 
-const SECRET_KEY = 'very_secret_key';
 // استفاده از مقادیر از محیط
 const MONGO_URI = process.env.MONGO_URI;
 const SECRET_KEY = process.env.JWT_SECRET;
