@@ -1,68 +1,44 @@
+require("dotenv").config();
 const express = require('express');
 const axios = require('axios');
-const path = require('path');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const fs = require("fs");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const cors = require("cors");
+const bodyParser = require("body-parser");
+
 const app = express();
-const SECRET = "secret123";
-const usersPath = "./users.json";
 const PORT = process.env.PORT || 3000;
+
+// تنظیمات GitHub
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_OWNER = 'mr-aiza';
 const REPO_NAME = '224';
 const BRANCH = 'main';
 const USERS_FILE = 'auth/users.json';
 const RESERVED_DATES_FILE = 'reserved_dates.json';
+
 const SECRET_KEY = 'very_secret_key';
-const User = require('User');
-const bodyParser = require("body-parser");
-const fetch = require("node-fetch");
-const cors = require("cors");
-require("dotenv").config();
 
-const OWNER = "YourGitHubUser";
-const REPO = "YourRepo";
-const FILE_PATH = "users.json";
-app.use(express.json());
+// 🧠 Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static("public"));
 
-app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password)
-    return res.status(400).json({ error: 'نام کاربری و رمز عبور الزامی است.' });
+// 📌 توابع توکن
+function generateToken(user) {
+  return jwt.sign(user, SECRET_KEY, { expiresIn: '7d' });
+}
 
-  const userFile = `users/${username}.json`;
-  const exists = await checkIfFileExists(userFile);
-  if (exists) return res.status(409).json({ error: 'نام کاربری قبلاً ثبت شده.' });
-
-  const content = Buffer.from(JSON.stringify({ username, password }), 'utf8').toString('base64');
-
+function verifyToken(token) {
   try {
-    await uploadFile(userFile, content, `ثبت‌نام کاربر ${username}`);
-    res.json({ message: 'ثبت‌نام موفق بود.' });
-  } catch (e) {
-    res.status(500).json({ error: 'خطا در ثبت‌نام.' });
+    return jwt.verify(token, SECRET_KEY);
+  } catch {
+    return null;
   }
-});
+}
 
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const userFile = `users/${username}.json`;
-
-  try {
-    const { content } = await getFile(userFile);
-    const user = JSON.parse(Buffer.from(content, 'base64').toString('utf8'));
-
-    if (user.password !== password)
-      return res.status(401).json({ error: 'رمز عبور نادرست است.' });
-
-    res.json({ message: 'ورود موفق بود.' });
-  } catch (e) {
-    res.status(404).json({ error: 'کاربر یافت نشد.' });
-  }
-});
-
-// --- توابع کمکی ---
+// 📂 GitHub API
 async function getFileContent(filePath) {
   try {
     const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}?ref=${BRANCH}`;
@@ -90,19 +66,95 @@ async function uploadFile(filePath, contentBase64, message, sha = null) {
   return res.data;
 }
 
-function generateToken(user) {
-  return jwt.sign(user, SECRET_KEY, { expiresIn: '7d' });
-}
+// ✅ ثبت‌نام
+app.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password)
+    return res.status(400).json({ error: 'نام کاربری و رمز عبور الزامی است.' });
 
-function verifyToken(token) {
+  const userFile = `users/${username}.json`;
+  const exists = await getFileContent(userFile);
+  if (exists) return res.status(409).json({ error: 'نام کاربری قبلاً ثبت شده.' });
+
+  const content = Buffer.from(JSON.stringify({ username, password }), 'utf8').toString('base64');
+
   try {
-    return jwt.verify(token, SECRET_KEY);
-  } catch {
-    return null;
+    await uploadFile(userFile, content, `ثبت‌نام کاربر ${username}`);
+    const token = generateToken({ username });
+    res.json({ message: 'ثبت‌نام موفق بود.', token });
+  } catch (e) {
+    res.status(500).json({ error: 'خطا در ثبت‌نام.' });
   }
-}
+});
 
-// --- مدیریت کاربران توسط ادمین ---
+// ✅ ورود
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  const userFile = `users/${username}.json`;
+
+  try {
+    const fileData = await getFileContent(userFile);
+    const user = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
+
+    if (user.password !== password)
+      return res.status(401).json({ error: 'رمز عبور نادرست است.' });
+
+    const token = generateToken({ username });
+    res.json({ message: 'ورود موفق بود.', token });
+  } catch (e) {
+    res.status(404).json({ error: 'کاربر یافت نشد.' });
+  }
+});
+
+// 🔐 دریافت پروفایل
+app.get('/profile', async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  const user = verifyToken(token);
+  if (!user) return res.status(401).json({ error: 'توکن نامعتبر' });
+
+  try {
+    const fileData = await getFileContent(USERS_FILE);
+    const users = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
+    const currentUser = users.find(u => u.username === user.username);
+    if (!currentUser) return res.status(404).json({ error: 'کاربر یافت نشد' });
+
+    const safeUser = {
+      username: currentUser.username,
+      role: currentUser.role || 'user',
+      reservations: currentUser.reservations || []
+    };
+    res.status(200).json({ user: safeUser });
+  } catch (err) {
+    res.status(500).json({ error: 'خطا در دریافت پروفایل' });
+  }
+});
+
+// 🔐 تغییر رمز
+app.post('/change-password', async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  const user = verifyToken(token);
+  if (!user) return res.status(401).json({ error: 'توکن نامعتبر' });
+
+  const { oldPassword, newPassword } = req.body;
+
+  try {
+    const fileData = await getFileContent(USERS_FILE);
+    const users = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
+    const target = users.find(u => u.username === user.username);
+
+    const match = oldPassword === target.password;
+    if (!match) return res.status(400).json({ error: 'رمز فعلی اشتباه است' });
+
+    target.password = newPassword;
+    const base64 = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
+    await uploadFile(USERS_FILE, base64, `تغییر رمز برای ${user.username}`, fileData.sha);
+    res.status(200).json({ message: 'رمز با موفقیت تغییر یافت' });
+  } catch (err) {
+    res.status(500).json({ error: 'خطا در تغییر رمز' });
+  }
+});
+
+// 🛡️ مدیریت کاربران (فقط برای ادمین)
 app.get('/admin/users', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   const user = verifyToken(token);
@@ -114,7 +166,6 @@ app.get('/admin/users', async (req, res) => {
     const users = JSON.parse(decoded);
     res.status(200).json({ users });
   } catch (err) {
-    console.error('❌ خطا در دریافت کاربران:', err);
     res.status(500).json({ error: 'خطا در دریافت کاربران' });
   }
 });
@@ -124,132 +175,19 @@ app.post('/admin/delete-user', async (req, res) => {
   const user = verifyToken(token);
   if (!user || user.role !== 'admin') return res.status(403).json({ error: 'دسترسی غیرمجاز' });
 
-  const { phone } = req.body;
+  const { username } = req.body;
+
   try {
     const fileData = await getFileContent(USERS_FILE);
     const users = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
-    const updatedUsers = users.filter(u => u.phone !== phone);
+    const updatedUsers = users.filter(u => u.username !== username);
     const base64 = Buffer.from(JSON.stringify(updatedUsers, null, 2)).toString('base64');
-    await uploadFile(USERS_FILE, base64, `حذف کاربر: ${phone}`, fileData.sha);
+    await uploadFile(USERS_FILE, base64, `حذف کاربر: ${username}`, fileData.sha);
     res.status(200).json({ message: 'کاربر حذف شد' });
   } catch (err) {
-    console.error('❌ خطا در حذف کاربر:', err);
     res.status(500).json({ error: 'خطا در حذف کاربر' });
   }
 });
-
-app.use(cors());
-app.use(bodyParser.json());
-app.use(express.static("public"));
-
-if (!fs.existsSync(usersPath)) fs.writeFileSync(usersPath, JSON.stringify([]));
-// ثبت‌نام
-app.post("/register", (req, res) => {
-  const { username, password } = req.body;
-  const users = JSON.parse(fs.readFileSync(usersPath));
-
-  if (users.find(u => u.username === username)) {
-    return res.status(400).json({ message: "این کاربر قبلاً ثبت‌نام کرده" });
-  }
-
-  users.push({ username, password });
-  fs.writeFileSync(usersPath, JSON.stringify(users));
-  const token = jwt.sign({ username }, SECRET);
-  res.json({ token });
-});
-
-// ورود
-app.post("/login", (req, res) => {
-  const { username, password } = req.body;
-  const users = JSON.parse(fs.readFileSync(usersPath));
-
-  const user = users.find(u => u.username === username && u.password === password);
-  if (!user) return res.status(401).json({ message: "اطلاعات نادرست است" });
-
-  const token = jwt.sign({ username }, SECRET);
-  res.json({ token });
-});
-
-app.listen(3000, () => console.log("Server on http://localhost:3000"));
-
-// --- اطلاعات پروفایل ---
-app.get('/profile', async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  const user = verifyToken(token);
-  if (!user) return res.status(401).json({ error: 'توکن نامعتبر' });
-
-  try {
-    const fileData = await getFileContent(USERS_FILE);
-    const users = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
-    const currentUser = users.find(u => u.phone === user.phone);
-    if (!currentUser) return res.status(404).json({ error: 'کاربر یافت نشد' });
-
-    const safeUser = {
-      fullname: currentUser.fullname,
-      phone: currentUser.phone,
-      role: currentUser.role,
-      reservations: currentUser.reservations || []
-    };
-    res.status(200).json({ user: safeUser });
-  } catch (err) {
-    console.error('❌ خطا در دریافت پروفایل:', err);
-    res.status(500).json({ error: 'خطا در دریافت پروفایل' });
-  }
-});
-
-// --- تغییر رمز عبور ---
-app.post('/change-password', async (req, res) => {
-  try {
-    const token = req.headers.authorization?.split(' ')[1];
-    const user = verifyToken(token);
-    if (!user) return res.status(401).json({ error: 'توکن نامعتبر' });
-
-    const { oldPassword, newPassword } = req.body;
-    const fileData = await getFileContent(USERS_FILE);
-    const users = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
-    const target = users.find(u => u.phone === user.phone);
-
-    const match = await bcrypt.compare(oldPassword, target.password);
-    if (!match) return res.status(400).json({ error: 'رمز فعلی اشتباه است' });
-
-    target.password = await bcrypt.hash(newPassword, 10);
-    const base64 = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
-    await uploadFile(USERS_FILE, base64, `تغییر رمز برای ${user.phone}`, fileData.sha);
-    res.status(200).json({ message: 'رمز با موفقیت تغییر یافت' });
-  } catch (err) {
-    console.error('❌ خطا در تغییر رمز:', err);
-    res.status(500).json({ error: 'خطا در تغییر رمز' });
-  }
-});
-
-// --- رزرو مراسم ---
-app.post('/update-profile', async (req, res) => {
-  try {
-    const token = req.headers.authorization?.split(' ')[1];
-    const user = verifyToken(token);
-    if (!user) return res.status(401).json({ error: 'توکن نامعتبر' });
-
-    const { fullname, phone } = req.body;
-    if (!fullname || !phone) return res.status(400).json({ error: 'اطلاعات ناقص است' });
-
-    const fileData = await getFileContent(USERS_FILE);
-    const users = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
-    const currentUser = users.find(u => u.phone === user.phone);
-    if (!currentUser) return res.status(404).json({ error: 'کاربر یافت نشد' });
-
-    currentUser.fullname = fullname;
-    currentUser.phone = phone;
-
-    const base64 = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
-    await uploadFile(USERS_FILE, base64, `بروزرسانی پروفایل ${user.phone}`, fileData.sha);
-
-    res.status(200).json({ message: 'پروفایل با موفقیت به‌روزرسانی شد' });
-  } catch (err) {
-    console.error('❌ خطا در بروزرسانی پروفایل:', err);
-    res.status(500).json({ error: 'خطا در بروزرسانی پروفایل' });
-  }
-});
-
 
 // --- داینامیک sitemap.xml ---
 app.get('/sitemap.xml', (req, res) => {
