@@ -13,8 +13,50 @@ const BRANCH = 'main';
 const USERS_FILE = 'auth/users.json';
 const RESERVED_DATES_FILE = 'reserved_dates.json';
 const SECRET_KEY = 'very_secret_key';
+const User = require('User');
 
-app.use(express.static(path.join(__dirname)));
+dotenv.config();
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.log(err));
+
+app.use(express.json());
+app.use(express.static('public'));
+
+app.post('/api/register', async (req, res) => {
+  const { name, phone, password } = req.body;
+
+  if (!name || !phone || !password) {
+    return res.status(400).json({ message: 'همه فیلدها الزامی است.' });
+  }
+
+  const existing = await User.findOne({ phone });
+  if (existing) return res.status(400).json({ message: 'شماره قبلاً ثبت شده است.' });
+
+  const hashed = await bcrypt.hash(password, 10);
+  const newUser = new User({ name, phone, password: hashed });
+  await newUser.save();
+
+  res.json({ message: 'ثبت‌نام موفق بود!' });
+});
+
+app.post('/api/login', async (req, res) => {
+  const { phone, password } = req.body;
+  const user = await User.findOne({ phone });
+  if (!user) return res.status(401).json({ message: 'کاربر یافت نشد.' });
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return res.status(401).json({ message: 'رمز اشتباه است.' });
+
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+  res.json({ message: 'ورود موفق', token, name: user.name });
+});
+
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
