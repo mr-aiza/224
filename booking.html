@@ -201,5 +201,30 @@
 </script>
 <!-- چت آنلاین -->
 <script src="tawk.js"></script>
+  <!-- 🔐 پاپ‌آپ لاگین و ثبت‌نام -->
+<div id="authModal" class="auth-modal hidden">
+  <div class="auth-box">
+    <span class="close-auth" onclick="closeAuth()">&times;</span>
+    <h2 id="authTitle">ورود</h2>
+    <form id="authForm">
+      <input type="text" id="authUsername" placeholder="نام کاربری" required />
+      <input type="password" id="authPassword" placeholder="رمز عبور" required />
+      <button type="submit" id="authBtn">ورود</button>
+    </form>
+    <p id="authToggleText">
+      حساب ندارید؟ <a href="#" onclick="toggleAuthMode()">ثبت‌نام کنید</a>
+    </p>
+  </div>
+</div>
+
+<!-- 🔘 دکمه ورود یا پروفایل -->
+<div id="userPanel">
+  <button id="loginBtn" onclick="openAuth()">ورود</button>
+  <div id="userProfile" class="hidden">
+    <span id="userNameDisplay"></span>
+    <button onclick="logout()">خروج</button>
+  </div>
+</div>
+
 </body>
 </html>
