@@ -14,51 +14,52 @@ const USERS_FILE = 'auth/users.json';
 const RESERVED_DATES_FILE = 'reserved_dates.json';
 const SECRET_KEY = 'very_secret_key';
 const User = require('User');
-
-dotenv.config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const fetch = require("node-fetch");
 const app = express();
-const PORT = process.env.PORT || 3000;
+require("dotenv").config();
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
+const OWNER = "YourGitHubUser";
+const REPO = "YourRepo";
+const FILE_PATH = "users.json";
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-app.use(express.json());
-app.use(express.static('public'));
-
-app.post('/api/register', async (req, res) => {
-  const { name, phone, password } = req.body;
-
-  if (!name || !phone || !password) {
-    return res.status(400).json({ message: 'همه فیلدها الزامی است.' });
-  }
-
-  const existing = await User.findOne({ phone });
-  if (existing) return res.status(400).json({ message: 'شماره قبلاً ثبت شده است.' });
-
-  const hashed = await bcrypt.hash(password, 10);
-  const newUser = new User({ name, phone, password: hashed });
-  await newUser.save();
-
-  res.json({ message: 'ثبت‌نام موفق بود!' });
-});
+app.use(bodyParser.json());
+app.use(express.static("public")); // محل فایل‌های html, css, js
 
 app.post('/api/login', async (req, res) => {
   const { phone, password } = req.body;
-  const user = await User.findOne({ phone });
-  if (!user) return res.status(401).json({ message: 'کاربر یافت نشد.' });
 
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) return res.status(401).json({ message: 'رمز اشتباه است.' });
+  try {
+    // بررسی وجود کاربر
+    const user = await User.findOne({ phone });
+    if (!user) {
+      return res.status(401).json({ message: 'کاربر یافت نشد.' });
+    }
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-  res.json({ message: 'ورود موفق', token, name: user.name });
+    // بررسی رمز
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'رمز عبور اشتباه است.' });
+    }
+
+    // تولید توکن
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+
+    // پاسخ موفق
+    res.json({
+      message: 'ورود موفق',
+      token,
+      name: user.name,
+      phone: user.phone
+    });
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ message: 'خطایی در سرور رخ داد.' });
+  }
 });
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 
 // --- توابع کمکی ---
