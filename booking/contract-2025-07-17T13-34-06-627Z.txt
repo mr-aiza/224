@@ -1,0 +1,11 @@
+fullname: علیرضا عبدلی
+phone: 09388088657
+email: aliabdoli161@gmail.com
+eventDate: 2025-08-08
+eventType: نامزدی
+services: fingerFood
+fingerFoodLevel: اقتصادی
+guestCount: 3333
+notes: 
+shamsiDate: 1404/05/17
+trackingCode: TRK-246091
