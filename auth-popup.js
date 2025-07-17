@@ -16,6 +16,6 @@
     <p id="error"></p>
   </div>
 
-  <script src="/scripts/auth.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>
