@@ -257,26 +257,4 @@ footer {
   }
 }
 
-body {
-  font-family: 'Vazir', sans-serif;
-  text-align: center;
-  padding: 40px;
-  background: #f0f0f0;
-}
 
-.auth-container, .profile-box {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 400px;
-  margin: auto;
-  box-shadow: 0 0 10px #aaa;
-}
-
-input {
-  display: block;
-  width: 100%;
-  margin: 10px auto;
-  padding: 10px;
-}
