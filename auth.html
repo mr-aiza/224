@@ -1,47 +1,36 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ورود / ثبت‌نام</title>
-  <link rel="stylesheet" href="auth-style.css" />
-</head>
-<body>
+<!-- در تمام صفحات include میشه -->
+<div id="auth-popup" class="popup hidden">
+  <div class="popup-content">
+    <span class="close-btn" id="close-auth">&times;</span>
+    <div id="auth-forms">
+      <form id="register-form" class="auth-form">
+        <h3>ثبت‌نام</h3>
+        <input type="text" placeholder="نام کامل" name="fullname" required />
+        <input type="text" placeholder="نام کاربری" name="username" required />
+        <input type="password" placeholder="رمز عبور" name="password" required />
+        <button type="submit">ثبت‌نام</button>
+      </form>
 
-  <button id="authBtn">ورود / ثبت‌نام</button>
+      <form id="login-form" class="auth-form hidden">
+        <h3>ورود</h3>
+        <input type="text" placeholder="نام کاربری" name="username" required />
+        <input type="password" placeholder="رمز عبور" name="password" required />
+        <button type="submit">ورود</button>
+      </form>
 
-  <!-- Popup فرم -->
-  <div id="authPopup" class="popup">
-    <div class="popup-content">
-      <span class="close-btn" id="closePopup">&times;</span>
-
-      <div id="formContainer">
-        <form id="registerForm">
-          <h3>ثبت‌نام</h3>
-          <input type="text" id="regName" placeholder="نام کامل" required />
-          <input type="email" id="regEmail" placeholder="ایمیل" required />
-          <input type="password" id="regPassword" placeholder="رمز عبور" required />
-          <button type="submit">ثبت‌نام</button>
-        </form>
-
-        <form id="loginForm" style="display:none">
-          <h3>ورود</h3>
-          <input type="email" id="loginEmail" placeholder="ایمیل" required />
-          <input type="password" id="loginPassword" placeholder="رمز عبور" required />
-          <button type="submit">ورود</button>
-        </form>
-
-        <p id="switchForm">حساب دارید؟ وارد شوید</p>
-        <p id="authMessage"></p>
+      <div class="auth-switch">
+        <a href="#" id="to-login">حساب دارید؟ ورود</a> |
+        <a href="#" id="to-register">ثبت‌نام</a>
       </div>
     </div>
   </div>
+</div>
 
-  <div id="userProfile" style="display: none;">
-    <h2>👤 خوش آمدید <span id="userName"></span></h2>
-    <button id="logoutBtn">خروج</button>
-  </div>
+<!-- دکمه ورود -->
+<button id="open-auth">ورود / ثبت‌نام</button>
 
-  <script src="auth-script.js"></script>
-</body>
-</html>
+<!-- پروفایل کاربر -->
+<div id="profile-box" class="hidden">
+  <p id="profile-info">...</p>
+  <button id="logout-btn">خروج</button>
+</div>
