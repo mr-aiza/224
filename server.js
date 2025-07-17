@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
+const mongoose = require('mongoose'); // اگر از MongoDB استفاده می‌کنی
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -19,7 +19,14 @@ const USERS_FILE = 'auth/users.json';
 const RESERVED_DATES_FILE = 'reserved_dates.json';
 
 const SECRET_KEY = 'very_secret_key';
-
+// استفاده از مقادیر از محیط
+const MONGO_URI = process.env.MONGO_URI;
+const SECRET_KEY = process.env.JWT_SECRET;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+// اتصال به MongoDB
+mongoose.connect(MONGO_URI)
+  .then(() => console.log("✅ اتصال به MongoDB برقرار شد"))
+  .catch((err) => console.error("❌ خطا در اتصال به MongoDB:", err));
 // 🧠 Middleware
 app.use(cors());
 app.use(bodyParser.json());
