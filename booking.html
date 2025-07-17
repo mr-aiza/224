@@ -198,6 +198,67 @@
 
   update();
 </script>
+  <script>
+    let isLogin = true;
+
+function openAuth() {
+  document.getElementById("authModal").classList.remove("hidden");
+}
+
+function closeAuth() {
+  document.getElementById("authModal").classList.add("hidden");
+}
+
+function toggleAuthMode() {
+  isLogin = !isLogin;
+  document.getElementById("authTitle").innerText = isLogin ? "ورود" : "ثبت‌نام";
+  document.getElementById("authBtn").innerText = isLogin ? "ورود" : "ثبت‌نام";
+  document.getElementById("authToggleText").innerHTML =
+    isLogin
+      ? 'حساب ندارید؟ <a href="#" onclick="toggleAuthMode()">ثبت‌نام کنید</a>'
+      : 'حساب دارید؟ <a href="#" onclick="toggleAuthMode()">وارد شوید</a>';
+}
+
+document.getElementById("authForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.getElementById("authUsername").value;
+  const password = document.getElementById("authPassword").value;
+
+  const route = isLogin ? "/login" : "/register";
+
+  const res = await fetch(route, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+
+  const data = await res.json();
+  if (res.ok) {
+    closeAuth();
+    localStorage.setItem("username", username);
+    updateUserUI(username);
+  } else {
+    alert(data.error || "خطا در عملیات");
+  }
+});
+
+function updateUserUI(username) {
+  document.getElementById("loginBtn").classList.add("hidden");
+  document.getElementById("userProfile").classList.remove("hidden");
+  document.getElementById("userNameDisplay").innerText = `سلام، ${username}`;
+}
+
+function logout() {
+  localStorage.removeItem("username");
+  document.getElementById("loginBtn").classList.remove("hidden");
+  document.getElementById("userProfile").classList.add("hidden");
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const username = localStorage.getItem("username");
+  if (username) updateUserUI(username);
+});
+
 </script>
 <!-- چت آنلاین -->
 <script src="tawk.js"></script>
