@@ -256,3 +256,44 @@ footer {
     gap: 14px;
   }
 }
+body {
+  font-family: 'Vazir', sans-serif;
+  text-align: center;
+  background: #f0f0f0;
+  padding-top: 50px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  margin: 10% auto;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.authForm input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 90%;
+}
