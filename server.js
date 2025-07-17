@@ -42,36 +42,31 @@ app.use(express.static("public"));
 
 const USERS_PATH = path.join(__dirname, "users.json");
 
-// ثبت‌نام
-app.post("/register", (req, res) => {
-  const { fullname, username, password } = req.body;
-  const users = fs.existsSync(USERS_PATH)
-    ? JSON.parse(fs.readFileSync(USERS_PATH))
-    : [];
+app.post("/register", async (req, res) => {
+  const { fullName, phoneNumber } = req.body;
 
-  if (users.find(u => u.username === username)) {
-    return res.status(400).json({ message: "این نام کاربری قبلا ثبت شده" });
+  if (!fullName || !phoneNumber)
+    return res.status(400).json({ message: "اطلاعات ناقص است" });
+
+  const filename = `users/user-${phoneNumber}.txt`;
+  const content = `نام: ${fullName}\nشماره تماس: ${phoneNumber}\nتاریخ: ${new Date().toLocaleString("fa-IR")}`;
+
+  const base64Content = Buffer.from(content, "utf8").toString("base64");
+
+  try {
+    await uploadFile(
+      filename,
+      base64Content,
+      `ثبت‌نام کاربر ${phoneNumber}`
+    );
+
+    res.status(200).json({ message: "ثبت‌نام موفق بود" });
+  } catch (err) {
+    console.error("خطا در ثبت‌نام:", err);
+    res.status(500).json({ message: "خطا در ثبت‌نام" });
   }
-
-  users.push({ fullname, username, password });
-  fs.writeFileSync(USERS_PATH, JSON.stringify(users, null, 2));
-  res.status(200).json({ message: "ثبت‌نام با موفقیت انجام شد" });
 });
 
-// ورود
-app.post("/login", (req, res) => {
-  const { username, password } = req.body;
-  const users = fs.existsSync(USERS_PATH)
-    ? JSON.parse(fs.readFileSync(USERS_PATH))
-    : [];
-
-  const user = users.find(u => u.username === username && u.password === password);
-  if (!user) {
-    return res.status(401).json({ message: "نام کاربری یا رمز اشتباه است" });
-  }
-
-  res.status(200).json({ message: "ورود موفق", fullname: user.fullname });
-});
 
 app.listen(3000, () => {
   console.log("Server running on http://localhost:3000");
