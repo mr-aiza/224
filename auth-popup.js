@@ -1,44 +1,21 @@
-document.getElementById("openPopup").onclick = () => {
-  document.getElementById("authPopup").classList.remove("hidden");
-};
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>احراز هویت</title>
+  <link rel="stylesheet" href="Style.css" />
+</head>
+<body>
+  <div class="auth-container">
+    <h2>ورود یا ثبت‌نام</h2>
+    <input type="text" id="username" placeholder="نام کاربری" />
+    <input type="password" id="password" placeholder="رمز عبور" />
+    <button onclick="auth('login')">ورود</button>
+    <button onclick="auth('register')">ثبت‌نام</button>
+    <p id="error"></p>
+  </div>
 
-document.getElementById("registerBtn").onclick = async () => {
-  const name = document.getElementById("nameInput").value;
-  const phone = document.getElementById("phoneInput").value;
-  const password = document.getElementById("passwordInput").value;
-
-  const res = await fetch('/api/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, phone, password }),
-  });
-
-  const data = await res.json();
-  document.getElementById("authMsg").innerText = data.message;
-};
-
-document.getElementById("loginBtn").onclick = async () => {
-  const phone = document.getElementById("phoneInput").value;
-  const password = document.getElementById("passwordInput").value;
-
-  const res = await fetch('/api/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phone, password }),
-  });
-
-  const data = await res.json();
-  document.getElementById("authMsg").innerText = data.message;
-
-  if (res.ok) {
-    localStorage.setItem("token", data.token);
-    document.getElementById("authPopup").classList.add("hidden");
-    document.getElementById("profile").classList.remove("hidden");
-    document.getElementById("userName").innerText = data.name;
-  }
-};
-
-function logout() {
-  localStorage.removeItem("token");
-  location.reload();
-}
+  <script src="/scripts/auth.js"></script>
+</body>
+</html>
