@@ -21,7 +21,6 @@ const RESERVED_DATES_FILE = 'reserved_dates.json';
 // استفاده از مقادیر از محیط
 const MONGO_URI = process.env.MONGO_URI;
 const SECRET_KEY = process.env.JWT_SECRET;
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 // اتصال به MongoDB
 mongoose.connect(MONGO_URI)
   .then(() => console.log("✅ اتصال به MongoDB برقرار شد"))
