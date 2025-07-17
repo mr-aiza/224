@@ -3,8 +3,10 @@ const axios = require('axios');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const fs = require("fs");
 const app = express();
-
+const SECRET = "secret123";
+const usersPath = "./users.json";
 const PORT = process.env.PORT || 3000;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_OWNER = 'mr-aiza';
@@ -16,13 +18,12 @@ const SECRET_KEY = 'very_secret_key';
 const User = require('User');
 const bodyParser = require("body-parser");
 const fetch = require("node-fetch");
+const cors = require("cors");
 require("dotenv").config();
 
 const OWNER = "YourGitHubUser";
 const REPO = "YourRepo";
 const FILE_PATH = "users.json";
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-
 app.use(express.json());
 
 app.post('/register', async (req, res) => {
@@ -137,56 +138,39 @@ app.post('/admin/delete-user', async (req, res) => {
   }
 });
 
-// --- ثبت‌نام ---
-app.post('/register', async (req, res) => {
-  try {
-    const { fullname, phone, password, role = 'user' } = req.body;
-    const fileData = await getFileContent(USERS_FILE);
-    let users = [];
-    if (fileData) {
-      const decoded = Buffer.from(fileData.content, 'base64').toString('utf8');
-      users = JSON.parse(decoded);
-    }
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static("public"));
 
-    if (users.some(u => u.phone === phone)) {
-      return res.status(400).json({ error: 'کاربری با این شماره وجود دارد.' });
-    }
+if (!fs.existsSync(usersPath)) fs.writeFileSync(usersPath, JSON.stringify([]));
+// ثبت‌نام
+app.post("/register", (req, res) => {
+  const { username, password } = req.body;
+  const users = JSON.parse(fs.readFileSync(usersPath));
 
-    const hash = await bcrypt.hash(password, 10);
-    const newUser = { fullname, phone, password: hash, role, reservations: [] };
-    users.push(newUser);
-    const base64 = Buffer.from(JSON.stringify(users, null, 2)).toString('base64');
-    await uploadFile(USERS_FILE, base64, `ثبت‌نام کاربر جدید: ${phone}`, fileData?.sha);
-
-    res.status(200).json({ message: 'ثبت‌نام موفق بود' });
-  } catch (err) {
-    console.error('❌ خطای ثبت‌نام:', err);
-    res.status(500).json({ error: 'خطا در ثبت‌نام' });
+  if (users.find(u => u.username === username)) {
+    return res.status(400).json({ message: "این کاربر قبلاً ثبت‌نام کرده" });
   }
+
+  users.push({ username, password });
+  fs.writeFileSync(usersPath, JSON.stringify(users));
+  const token = jwt.sign({ username }, SECRET);
+  res.json({ token });
 });
 
-// --- ورود ---
-app.post('/login', async (req, res) => {
-  try {
-    const { phone, password } = req.body;
-    const fileData = await getFileContent(USERS_FILE);
-    if (!fileData) return res.status(404).json({ error: 'داده‌ای موجود نیست' });
+// ورود
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  const users = JSON.parse(fs.readFileSync(usersPath));
 
-    const decoded = Buffer.from(fileData.content, 'base64').toString('utf8');
-    const users = JSON.parse(decoded);
-    const user = users.find(u => u.phone === phone);
-    if (!user) return res.status(400).json({ error: 'کاربر یافت نشد' });
+  const user = users.find(u => u.username === username && u.password === password);
+  if (!user) return res.status(401).json({ message: "اطلاعات نادرست است" });
 
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ error: 'رمز اشتباه است' });
-
-    const token = generateToken({ fullname: user.fullname, phone: user.phone, role: user.role });
-    res.status(200).json({ token });
-  } catch (err) {
-    console.error('❌ خطای لاگین:', err);
-    res.status(500).json({ error: 'خطا در ورود' });
-  }
+  const token = jwt.sign({ username }, SECRET);
+  res.json({ token });
 });
+
+app.listen(3000, () => console.log("Server on http://localhost:3000"));
 
 // --- اطلاعات پروفایل ---
 app.get('/profile', async (req, res) => {
