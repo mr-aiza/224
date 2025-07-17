@@ -25,54 +25,43 @@ const REPO = "YourRepo";
 const FILE_PATH = "users.json";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-app.use(bodyParser.json());
-app.use(express.static("public")); // محل فایل‌های html, css, js
-
-const express = require("express");
-const bodyParser = require("body-parser");
-const path = require("path");
-const app = express();
-
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const app = express();
 app.use(express.json());
-app.use(express.static("public"));
 
-const USERS_PATH = path.join(__dirname, "users.json");
+app.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password)
+    return res.status(400).json({ error: 'نام کاربری و رمز عبور الزامی است.' });
 
-app.post("/register", async (req, res) => {
-  const { fullName, phoneNumber } = req.body;
+  const userFile = `users/${username}.json`;
+  const exists = await checkIfFileExists(userFile);
+  if (exists) return res.status(409).json({ error: 'نام کاربری قبلاً ثبت شده.' });
 
-  if (!fullName || !phoneNumber)
-    return res.status(400).json({ message: "اطلاعات ناقص است" });
-
-  const filename = `users/user-${phoneNumber}.txt`;
-  const content = `نام: ${fullName}\nشماره تماس: ${phoneNumber}\nتاریخ: ${new Date().toLocaleString("fa-IR")}`;
-
-  const base64Content = Buffer.from(content, "utf8").toString("base64");
+  const content = Buffer.from(JSON.stringify({ username, password }), 'utf8').toString('base64');
 
   try {
-    await uploadFile(
-      filename,
-      base64Content,
-      `ثبت‌نام کاربر ${phoneNumber}`
-    );
-
-    res.status(200).json({ message: "ثبت‌نام موفق بود" });
-  } catch (err) {
-    console.error("خطا در ثبت‌نام:", err);
-    res.status(500).json({ message: "خطا در ثبت‌نام" });
+    await uploadFile(userFile, content, `ثبت‌نام کاربر ${username}`);
+    res.json({ message: 'ثبت‌نام موفق بود.' });
+  } catch (e) {
+    res.status(500).json({ error: 'خطا در ثبت‌نام.' });
   }
 });
 
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  const userFile = `users/${username}.json`;
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+  try {
+    const { content } = await getFile(userFile);
+    const user = JSON.parse(Buffer.from(content, 'base64').toString('utf8'));
+
+    if (user.password !== password)
+      return res.status(401).json({ error: 'رمز عبور نادرست است.' });
+
+    res.json({ message: 'ورود موفق بود.' });
+  } catch (e) {
+    res.status(404).json({ error: 'کاربر یافت نشد.' });
+  }
 });
-
-
 
 // --- توابع کمکی ---
 async function getFileContent(filePath) {
