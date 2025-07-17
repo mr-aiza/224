@@ -28,36 +28,38 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 app.use(bodyParser.json());
 app.use(express.static("public")); // محل فایل‌های html, css, js
 
-app.post('/api/login', async (req, res) => {
-  const { phone, password } = req.body;
+const express = require("express");
+const bodyParser = require("body-parser");
+const path = require("path");
+const app = express();
 
-  try {
-    // بررسی وجود کاربر
-    const user = await User.findOne({ phone });
-    if (!user) {
-      return res.status(401).json({ message: 'کاربر یافت نشد.' });
-    }
+app.use(bodyParser.json());
+app.use("/styles", express.static(path.join(__dirname, "styles")));
+app.use("/scripts", express.static(path.join(__dirname, "scripts")));
+app.use(express.static("public"));
 
-    // بررسی رمز
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: 'رمز عبور اشتباه است.' });
-    }
+let users = [];
 
-    // تولید توکن
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-
-    // پاسخ موفق
-    res.json({
-      message: 'ورود موفق',
-      token,
-      name: user.name,
-      phone: user.phone
-    });
-  } catch (err) {
-    console.error('Login error:', err);
-    res.status(500).json({ message: 'خطایی در سرور رخ داد.' });
+app.post("/auth/register", (req, res) => {
+  const { username, password } = req.body;
+  if (users.find(u => u.username === username)) {
+    return res.status(400).json({ error: "کاربر تکراری است" });
   }
+  const user = { username, password };
+  users.push(user);
+  res.json(user);
+});
+
+app.post("/auth/login", (req, res) => {
+  const { username, password } = req.body;
+  const user = users.find(u => u.username === username && u.password === password);
+  if (!user) return res.status(401).json({ error: "نام کاربری یا رمز عبور اشتباه است" });
+  res.json(user);
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server started at http://localhost:${PORT}`);
 });
 
 
