@@ -18,7 +18,39 @@
 
 </head>
 <body>
+<button id="authBtn">ورود / ثبت‌نام</button>
+<div id="profileBox" style="display: none;">
+  <p id="welcomeMsg"></p>
+  <button onclick="logout()">خروج</button>
+</div>
 
+<!-- پاپ‌آپ -->
+<div id="authModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+
+    <div id="formToggle">
+      <button onclick="toggleForm('login')">ورود</button>
+      <button onclick="toggleForm('register')">ثبت‌نام</button>
+    </div>
+
+    <form id="loginForm" class="authForm">
+      <h3>ورود</h3>
+      <input type="text" id="loginUsername" placeholder="نام کاربری" required />
+      <input type="password" id="loginPassword" placeholder="رمز عبور" required />
+      <button type="submit">ورود</button>
+    </form>
+
+    <form id="registerForm" class="authForm" style="display: none;">
+      <h3>ثبت‌نام</h3>
+      <input type="text" id="registerUsername" placeholder="نام کاربری" required />
+      <input type="password" id="registerPassword" placeholder="رمز عبور" required />
+      <button type="submit">ثبت‌نام</button>
+    </form>
+  </div>
+</div>
+
+<script src="auth.js"></script>
 <canvas id="bgCanvas"></canvas>
 
 <!-- دکمه موزیک -->
