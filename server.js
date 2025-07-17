@@ -14,10 +14,8 @@ const USERS_FILE = 'auth/users.json';
 const RESERVED_DATES_FILE = 'reserved_dates.json';
 const SECRET_KEY = 'very_secret_key';
 const User = require('User');
-const express = require("express");
 const bodyParser = require("body-parser");
 const fetch = require("node-fetch");
-const app = express();
 require("dotenv").config();
 
 const OWNER = "YourGitHubUser";
