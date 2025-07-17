@@ -18,44 +18,24 @@
 
 </head>
 <body>
-<!-- فقط بخش‌هایی که نیاز به اصلاح داشتند (تکمیلی نیست) -->
-
-  <button id="authBtn">ورود / ثبت‌نام</button>
-
-  <div id="profileBox" style="display: none;">
-    <p id="welcomeMsg"></p>
+ <button id="openPopup">ورود / ثبت‌نام</button>
+  <div id="authPopup" class="popup hidden">
+    <div class="popup-content">
+      <h2>ورود یا ثبت‌نام</h2>
+      <input type="text" id="nameInput" placeholder="نام کامل (فقط ثبت‌نام)" />
+      <input type="text" id="phoneInput" placeholder="شماره موبایل" />
+      <input type="password" id="passwordInput" placeholder="رمز عبور" />
+      <button id="registerBtn">ثبت‌نام</button>
+      <button id="loginBtn">ورود</button>
+      <p id="authMsg"></p>
+    </div>
+  </div>
+  <div id="profile" class="hidden">
+    <h2>سلام <span id="userName"></span> عزیز!</h2>
     <button onclick="logout()">خروج</button>
   </div>
 
-  <!-- پاپ‌آپ ورود/ثبت‌نام -->
-  <div id="authModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeModal">&times;</span>
-
-      <div id="formToggle">
-        <button onclick="toggleForm('login')">ورود</button>
-        <button onclick="toggleForm('register')">ثبت‌نام</button>
-      </div>
-
-      <form id="loginForm" class="authForm">
-        <h3>ورود</h3>
-        <input type="text" id="loginUsername" placeholder="شماره تماس" required />
-        <input type="password" id="loginPassword" placeholder="رمز عبور" required />
-        <button type="submit">ورود</button>
-      </form>
-
-      <form id="registerForm" class="authForm" style="display: none;">
-        <h3>ثبت‌نام</h3>
-        <input type="text" id="registerUsername" placeholder="نام کامل" required />
-        <input type="text" id="registerPhone" placeholder="شماره تماس" required />
-        <input type="password" id="registerPassword" placeholder="رمز عبور" required />
-        <button type="submit">ثبت‌نام</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- فایل اسکریپت مربوط به احراز هویت -->
-  <script src="auth.js"></script>
+  <script src="auth-popup.js"></script>
 
 
 <canvas id="bgCanvas"></canvas>
