@@ -1,0 +1,11 @@
+fullname: علیرضا عبدلی
+phone: 09388088657
+email: aliabdoli161@gmail.com
+eventDate: 2025-07-22
+eventType: سایر
+services: flowerDecoration
+flowerDecorationLevel: معمولی
+guestCount: 333
+notes: 
+shamsiDate: 1404/04/31
+trackingCode: TRK-071244
