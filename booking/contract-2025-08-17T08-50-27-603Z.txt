@@ -1,0 +1,14 @@
+fullname: علیرضا عبدلی
+phone: 09388088657
+email: aliabdoli161@gmail.com
+eventDate: 2025-08-24
+eventType: عروسی
+services: fingerFood, flowerDecoration, juice, dinner
+fingerFoodLevel: اقتصادی
+flowerDecorationLevel: معمولی
+juiceLevel: ویژه
+dinnerType: دیس پرس
+guestCount: 238
+notes: 00
+shamsiDate: 1404/06/02
+trackingCode: TRK-626600
