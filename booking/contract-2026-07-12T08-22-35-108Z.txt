@@ -1,0 +1,8 @@
+fullname: Alireza Abdoli
+phone: 09388088657
+email: aliabdoli161@gmail.com
+eventDate: 2026-07-13
+eventType: سایر
+services: fingerFood, dinner
+guestCount: 3999
+notes: ت
